@@ -1,7 +1,17 @@
 <template>
     <div>
         <group>
-           <x-input title="title" v-model="value"></x-input>
+           <x-input title="用户名"
+                    required
+                    v-model="name"
+                    placeholder="请输入用户名"
+           ></x-input>
+           <x-input title="密 码"
+                    required
+                    type="password"
+                    v-model="pwd"
+                    placeholder="请输入密码"
+           ></x-input>
         </group>
     </div>
 </template>
@@ -15,16 +25,8 @@
         },
         data () {
             return {
-                list: [{
-                  label: 'Apple',
-                  value: '3.29'
-                }, {
-                  label: 'Banana',
-                  value: '1.04'
-                }, {
-                  label: 'Fish',
-                  value: '8.00'
-                }]
+                name: '',
+                pwd: ''
             }
         }
     }
