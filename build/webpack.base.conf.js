@@ -12,7 +12,9 @@ function resolve (dir) {
 const webpackConfig  = {
   context: path.resolve(__dirname, '../'),
   entry: {
-      login: './src/entry/login.js'
+      login: './src/entry/login/login.js',
+      forgetPwd: './src/entry/login/forgetPwd.js',
+      goods: './src/entry/shop/goods.js',
   },
   output: {
     path: config.build.assetsRoot,
@@ -80,15 +82,15 @@ const webpackConfig  = {
   }
 }
 
-if(config.build.autoPx2Rem){
-  webpackConfig.module.rules.push({
-    test: /\.(css|less|vue)$/,
-    loader: 'webpack-px-to-rem',
-    query: {
-      basePx: 75,
-      min: 1
-    }
-  })
-}
+// if(config.build.autoPx2Rem){
+//   webpackConfig.module.rules.push({
+//     test: /\.(css|less|vue)$/,
+//     loader: 'webpack-px-to-rem',
+//     query: {
+//       basePx: 75,
+//       min: 1
+//     }
+//   })
+// }
 
 module.exports = vuxLoader.merge(webpackConfig, { plugins: ['vux-ui'] });

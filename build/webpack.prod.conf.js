@@ -62,7 +62,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../dist/login.html'),
-      template: './src/views/login.html',
+      template: './src/views/login/login.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -75,6 +75,25 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency',
       chunks: ['login','vendor','manifest']
     }),
+      new HtmlWebpackPlugin({
+          filename: path.resolve(__dirname, '../dist/forgetPwd.html'),
+          template: './src/views/login/forgetPwd.html',
+          inject: true,
+          minify: {
+              removeComments: true,
+              collapseWhitespace: true,
+              removeAttributeQuotes: true
+              // more options:
+              // https://github.com/kangax/html-minifier#options-quick-reference
+          },
+          // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+          chunksSortMode: 'dependency',
+          chunks: ['forgetPwd','vendor','manifest']
+      }),
+
+
+
+
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting

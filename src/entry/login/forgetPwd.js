@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import App from '../pages/login'
-import '../assets/js/flexible'
+import App from '../../pages/login/forgetPwd.vue'
+import '../../assets/js/flexible'
 import { AlertPlugin, ToastPlugin,Icon  } from 'vux'
 
 
