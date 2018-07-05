@@ -5,20 +5,19 @@
                 @on-change="getResult"
                 :results="results"
                 v-model="search"
-                position="absolute"
-                auto-scroll-to-top
+                position="static"
                 @on-focus="onFocus"
                 @on-cancel="onCancel"
                 @on-submit="onSubmit"
-                placeholder="输入商品名称"
+                placeholder="请输入商品名称"
                 ref="search">
         </search>
-        <tab>
+        <tab class="tab">
             <tab-item selected @on-item-click="onItemClick">全部</tab-item>
             <tab-item @on-item-click="onItemClick">促销</tab-item>
             <tab-item @on-item-click="onItemClick">正价</tab-item>
         </tab>
-        <scroller lock-x height="450px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
+        <scroller lock-x height="600px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
             <div class="box2">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-b">
                     <div class="shop-img">
@@ -35,31 +34,30 @@
                         <div class="shop-data">
                             <div class="shop-price">￥28.80</div>
                             <div style="text-align:center;">
-                                <inline-x-number width="40px"></inline-x-number>
+                                <inline-x-number button-style="round" min="0" width="30px"></inline-x-number>
                             </div>
                         </div>
                     </div>
                 </div>
-                <load-more tip="加载中"></load-more>
+                <load-more :show-loading="true" tip="加载中"></load-more>
+                <load-more :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more>
             </div>
         </scroller>
-        <!-- 页脚部分 -->
-        <tabbar @tabbar-index="88">
-            <tabbar-item selected>
-                <!--<img slot="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAAAAXNSR0IArs4c6QAABIpJREFUaAXtWk9IVEEYn2/LSomIiAJDMLU6GWkQ/TtoGQSdDDL04iYdulqXDhF76FBQdO0Q/iFIMqhLQaCmh0oI0sgumlYQGkVERGilven7vX2zvre7rr6debgub2D3zXvzfd/8fvPNm/m+4QkRlnAEcnoEKB26A60vCr/9mD4qhagUUq5NJ5Mzz4j+MImRzRuL+gZvHpxJxpVCcNfZ3t2zs+K+EHJnsnBu39NYQYE4NXq77o0bp4cgPPfl+/RrkCNBw+zBJxGSf90KuVa3JK1hEselkFVC0NjWTUV73J5c7QaMaanIlWxftW8gVjvnbs/Vek2s//KnD/9egmScg3iksEZUBVf7nYtfn6wUcsANrJhtqCsOqKN4CKoFJdenZRy69z+BOWlR9BL06uTFXUhwpbsx9GDowRwfgbyfop5IJghnSClpR8vTKkuIXWTJYvQhIzTFIzv6ru3IMBHx3hxcCYxg+bnnW+TM74sV0b4GDqG2gUKCiSUFExbcNlnW3NdNheuuTtw69DUImoFM0fLm3gtiZmZCCKvVJkf0kQPiLorQDfvHdcHP4sStVsjaOgEwNOrBmmj/uk9yro2BNwIrZyQPmdCV8fajQ+mwV5zpq5aWvMTy9dx+vby5Z28JrW4Z6Kj9nU4+m2dGCcbJiUb21k+ejk0TnXWPM4FyiJ8sa+45wTp3WaeRbUClKZOenzZjUxRTDABtciQOv+88lpGcGyRkJes4A9NocroaIYgFhQHHABqee99xbAR1PwU60HV0Yo5NPybSyhohiNWS36P1eOf8eC4ZEXRhA7ZgM7k9m3ttgtjniKzT6BwLSjYg3DrKBgnZANvutmzq2gQrov3VUopiLPsLrZZ+gNk2nC0Etv3oppPVJigj8dM3knIwXQfZPFO2lO1sbCgdbYIq/BIcfimj2lfHVsK2hkFtghp9L6pK/CIuKrSIgDZBBM52H04gvUh/S2uWwo5dLaLPS1NYWEqbIFk0BvO8lh5YuBt/Ley2/dBgcKP+NFOltQmOd9QO8VSa4iPHUsSWqV34e2LbYFu8H04infKnnSqtTRD5nJSRezCNwDm1C39PlA0pqNtErqhNEPCLCuQ1HvFfyAoQOPujNC8NXdiALeSI8y3Z14wQfHu77gtDiAEGsoKyaE8l6n4KdKDr6MRMJcBGCAIUp0Y3GGAXLxAb+BDimR9P2ukS69i6bAO2/AxOJlljBNEJklVFkm8fcdrzINPCgzbIQFaRgw3YMlWMJrxOJt7EoF8xwBjeJ1406suivR/t8Mu1Z2JbsSyrFETwzkEenuNzDqPFKEGFDEA5n7sjOOVBpsHLbCl7qFTwYVOicISO7cVegQM8dAqEIEg4i8R5JnfBzjg4KFexJaIfBAjj7dhDV+ixofKUQwBTFj9PoU7PbSA3RheZQBBqGg0Jag7gsquHHlx2F2gCCD2oOYDLru71IH/YBkT4PGrZkfkEkMDscFDqHoIcKNtH7nw9zp9HBRblqM5NXYEVmGFPcVC2+X6+5OPHeB6CoJrXn1MqX+bTB7GKU3gNRyBHR+A/KFjbvWAqMXEAAAAASUVORK5CYII=">-->
-                <span slot="label">内构商城</span>
-            </tabbar-item>
-            <tabbar-item show-dot>
-                <!--<img slot="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAAAAXNSR0IArs4c6QAABIpJREFUaAXtWk9IVEEYn2/LSomIiAJDMLU6GWkQ/TtoGQSdDDL04iYdulqXDhF76FBQdO0Q/iFIMqhLQaCmh0oI0sgumlYQGkVERGilven7vX2zvre7rr6debgub2D3zXvzfd/8fvPNm/m+4QkRlnAEcnoEKB26A60vCr/9mD4qhagUUq5NJ5Mzz4j+MImRzRuL+gZvHpxJxpVCcNfZ3t2zs+K+EHJnsnBu39NYQYE4NXq77o0bp4cgPPfl+/RrkCNBw+zBJxGSf90KuVa3JK1hEselkFVC0NjWTUV73J5c7QaMaanIlWxftW8gVjvnbs/Vek2s//KnD/9egmScg3iksEZUBVf7nYtfn6wUcsANrJhtqCsOqKN4CKoFJdenZRy69z+BOWlR9BL06uTFXUhwpbsx9GDowRwfgbyfop5IJghnSClpR8vTKkuIXWTJYvQhIzTFIzv6ru3IMBHx3hxcCYxg+bnnW+TM74sV0b4GDqG2gUKCiSUFExbcNlnW3NdNheuuTtw69DUImoFM0fLm3gtiZmZCCKvVJkf0kQPiLorQDfvHdcHP4sStVsjaOgEwNOrBmmj/uk9yro2BNwIrZyQPmdCV8fajQ+mwV5zpq5aWvMTy9dx+vby5Z28JrW4Z6Kj9nU4+m2dGCcbJiUb21k+ejk0TnXWPM4FyiJ8sa+45wTp3WaeRbUClKZOenzZjUxRTDABtciQOv+88lpGcGyRkJes4A9NocroaIYgFhQHHABqee99xbAR1PwU60HV0Yo5NPybSyhohiNWS36P1eOf8eC4ZEXRhA7ZgM7k9m3ttgtjniKzT6BwLSjYg3DrKBgnZANvutmzq2gQrov3VUopiLPsLrZZ+gNk2nC0Etv3oppPVJigj8dM3knIwXQfZPFO2lO1sbCgdbYIq/BIcfimj2lfHVsK2hkFtghp9L6pK/CIuKrSIgDZBBM52H04gvUh/S2uWwo5dLaLPS1NYWEqbIFk0BvO8lh5YuBt/Ley2/dBgcKP+NFOltQmOd9QO8VSa4iPHUsSWqV34e2LbYFu8H04infKnnSqtTRD5nJSRezCNwDm1C39PlA0pqNtErqhNEPCLCuQ1HvFfyAoQOPujNC8NXdiALeSI8y3Z14wQfHu77gtDiAEGsoKyaE8l6n4KdKDr6MRMJcBGCAIUp0Y3GGAXLxAb+BDimR9P2ukS69i6bAO2/AxOJlljBNEJklVFkm8fcdrzINPCgzbIQFaRgw3YMlWMJrxOJt7EoF8xwBjeJ1406suivR/t8Mu1Z2JbsSyrFETwzkEenuNzDqPFKEGFDEA5n7sjOOVBpsHLbCl7qFTwYVOicISO7cVegQM8dAqEIEg4i8R5JnfBzjg4KFexJaIfBAjj7dhDV+ixofKUQwBTFj9PoU7PbSA3RheZQBBqGg0Jag7gsquHHlx2F2gCCD2oOYDLru71IH/YBkT4PGrZkfkEkMDscFDqHoIcKNtH7nw9zp9HBRblqM5NXYEVmGFPcVC2+X6+5OPHeB6CoJrXn1MqX+bTB7GKU3gNRyBHR+A/KFjbvWAqMXEAAAAASUVORK5CYII=">-->
-                <span slot="label">个人中心</span>
-            </tabbar-item>
-        </tabbar>
+        <!-- 去购物车 -->
+        <div class="vux-1px-t shopping-cart">
+            <div class="total-price">
+                合计：<span>￥1234（返利¥20）</span>
+            </div>
+            <div class="shopping-cart-btn">
+                进货车(12)
+            </div>
+        </div>
     </div>
 
 </template>
 
 <script>
-    import { Search, Tab, TabItem, Scroller, LoadMore, XImg, InlineXNumber, Group, Tabbar, TabbarItem     } from 'vux'
+    import { Search, Tab, TabItem, Scroller, LoadMore, XImg,  InlineXNumber, Group,  } from 'vux'
     export default {
         components: {
             Search,
@@ -70,8 +68,6 @@
             XImg,
             Group,
             InlineXNumber,
-            Tabbar,
-            TabbarItem
         },
         data () {
             return {
@@ -80,6 +76,7 @@
                 onFetching: false,
                 bottomCount: 20,
                 changeValue: 1,
+                value: 1
             }
         },
         methods:{
@@ -137,63 +134,102 @@
   @import '~vux/src/styles/close.less';
   @import '../../assets/css/reset';
   body{
-      background: #fff;
+      background: #F5F5F5;
   }
   #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      font-family: '微软雅黑','PingFangSC','Avenir', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
       color: #2c3e50;
       margin-top: 60px;
   }
-  .box2-wrap {
-      height: 300px;
-      overflow: hidden;
+  .tab{
+      margin-top: -2px;
   }
     .box2{
-
+      margin-top: 10px;
+      padding: 0 10px;
+      background: #fff;
     }
     .shop-container{
         display: flex;
-        padding: 10px;
+        padding: 10px 0;
         .shop-img{
+            width: 70px;
+            height: 70px;
             overflow: hidden;
             margin-right: 20px;
             .shop-detail-image{
-                width: 100px;
-                height: 120px;
+                width: 70px;
+                height: 70px;
             }
         }
         .shop-detail{
             display: flex;
-            width: 100%;
+            flex: 1;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
             text-align: left;
+            font-size: 15px;
             .shop-title{
                 width: 100%;
+                color: #323232;
             }
             .shop-nums{
                 width: 100%;
+                margin-top: 10px;
+                font-size: 13px;
+                color: #909090;
             }
         }
     }
   .shop-data{
       display: flex;
+      margin-top: 7px;
       width: 100%;
       justify-content: space-between;
       align-items: center;
+      color: #E1B113;
   }
     .vux-number-selector-plus{
-        padding: 0px 8px!important;
+        padding: 0px 0px!important;
     }
     .vux-number-selector-sub{
-        padding: 0px 8px!important;
+        padding: 0px 0px!important;
     }
-  .vux-number-input{
-      font-size: 14px!important;
+    .vux-number-input{
+        font-size: 14px!important;
+    }
+    svg{
+      width: 15px;
+      height: 15px;
+      margin-bottom: 2px;
+    }
+  .shopping-cart{
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      height: 45px;
+      line-height: 45px;
+      font-size: 15px;
+      background: #fff;
+      .total-price{
+          flex: 1;
+          color: #323232;
+          padding-left: 15px;
+          span{
+              color: #F52C2C;
+          }
+      }
+      .shopping-cart-btn{
+          width: 127px;
+          color: #000;
+          background: #F9CD3B;
+          padding-left: 38.5px;
+      }
   }
-
 </style>

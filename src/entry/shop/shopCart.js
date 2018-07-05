@@ -1,14 +1,12 @@
 import Vue from 'vue'
-import App from '../../pages/login/login.vue'
+import App from '../../pages/shop/shopCart.vue'
 // import '../../assets/js/flexible'
-import { AlertPlugin, ToastPlugin, AjaxPlugin, LoadingPlugin  } from 'vux'
+import { AlertPlugin, ToastPlugin,Icon  } from 'vux'
 
 
 Vue.use(AlertPlugin)
-Vue.use(AjaxPlugin)
-Vue.use(LoadingPlugin)
-Vue.use(ToastPlugin, {position: 'middle'})
-
+Vue.use(ToastPlugin)
+Vue.component('icon', Icon)
 
 const FastClick = require('fastclick')
 FastClick.attach(document.body)

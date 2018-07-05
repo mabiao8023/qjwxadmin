@@ -90,7 +90,21 @@ const webpackConfig = merge(baseWebpackConfig, {
           chunksSortMode: 'dependency',
           chunks: ['forgetPwd','vendor','manifest']
       }),
-
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/shopCart.html'),
+      template: './src/views/shop/shopCart.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['shopCart','vendor','manifest']
+    }),
 
 
 

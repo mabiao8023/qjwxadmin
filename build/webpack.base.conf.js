@@ -15,6 +15,7 @@ const webpackConfig  = {
       login: './src/entry/login/login.js',
       forgetPwd: './src/entry/login/forgetPwd.js',
       goods: './src/entry/shop/goods.js',
+      shopCart: './src/entry/shop/shopCart.js',
   },
   output: {
     path: config.build.assetsRoot,
@@ -93,4 +94,11 @@ const webpackConfig  = {
 //   })
 // }
 
-module.exports = vuxLoader.merge(webpackConfig, { plugins: ['vux-ui'] });
+module.exports = vuxLoader.merge(webpackConfig, {
+  plugins: [
+    { name : 'vux-ui'},
+    {
+      name: 'less-theme',
+      path: 'src/assets/css/mytheme.less'
+    }
+    ] });
