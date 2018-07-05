@@ -85,6 +85,48 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         inject: true,
         chunks:['shopCart']
       }),
+      new HtmlWebpackPlugin({
+        filename: './me.html',
+        template: './src/views/me/me.html',
+        inject: true,
+        chunks:['me']
+      }),
+      new HtmlWebpackPlugin({
+        filename: './setting.html',
+        template: './src/views/me/setting.html',
+        inject: true,
+        chunks:['setting']
+      }),
+      new HtmlWebpackPlugin({
+        filename: './modifyPwd.html',
+        template: './src/views/me/modifyPwd.html',
+        inject: true,
+        chunks:['modifyPwd']
+      }),
+    new HtmlWebpackPlugin({
+      filename: './balance.html',
+      template: './src/views/me/balance.html',
+      inject: true,
+      chunks:['balance']
+    }),
+    new HtmlWebpackPlugin({
+      filename: './balanceDetail.html',
+      template: './src/views/me/balanceDetail.html',
+      inject: true,
+      chunks:['balanceDetail']
+    }),
+    new HtmlWebpackPlugin({
+      filename: './tixian.html',
+      template: './src/views/me/tixian.html',
+      inject: true,
+      chunks:['tixian']
+    }),
+    new HtmlWebpackPlugin({
+      filename: './tixiansuc.html',
+      template: './src/views/me/tixiansuc.html',
+      inject: true,
+      chunks:['tixiansuc']
+    }),
   ]
 })
 

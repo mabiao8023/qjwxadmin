@@ -106,6 +106,117 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunks: ['shopCart','vendor','manifest']
     }),
 
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/me.html'),
+      template: './src/views/me/me.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['me','vendor','manifest']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/setting.html'),
+      template: './src/views/me/setting.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['setting','vendor','manifest']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/modifyPwd.html'),
+      template: './src/views/me/modifyPwd.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['modifyPwd','vendor','manifest']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/balance.html'),
+      template: './src/views/me/balance.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['balance','vendor','manifest']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/balanceDetail.html'),
+      template: './src/views/me/balanceDetail.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['balanceDetail','vendor','manifest']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/tixian.html'),
+      template: './src/views/me/tixian.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['tixian','vendor','manifest']
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/tixiansuc.html'),
+      template: './src/views/me/tixiansuc.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['tixiansuc','vendor','manifest']
+    }),
+
 
 
     // keep module.id stable when vendor modules does not change

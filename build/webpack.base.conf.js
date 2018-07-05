@@ -16,6 +16,13 @@ const webpackConfig  = {
       forgetPwd: './src/entry/login/forgetPwd.js',
       goods: './src/entry/shop/goods.js',
       shopCart: './src/entry/shop/shopCart.js',
+      me: './src/entry/me/me.js',
+      setting: './src/entry/me/setting.js',
+      modifyPwd: './src/entry/me/modifyPwd.js',
+      balance: './src/entry/me/balance.js',
+      balanceDetail: './src/entry/me/balanceDetail.js',
+      tixian: './src/entry/me/tixian.js',
+      tixiansuc: './src/entry/me/tixiansuc.js',
   },
   output: {
     path: config.build.assetsRoot,
