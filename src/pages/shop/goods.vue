@@ -17,7 +17,6 @@
             <tab-item @on-item-click="onItemClick">促销</tab-item>
             <tab-item @on-item-click="onItemClick">正价</tab-item>
         </tab>
-        <scroller lock-x height="600px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
             <div class="box2">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-b">
                     <div class="shop-img">
@@ -39,10 +38,15 @@
                         </div>
                     </div>
                 </div>
-                <load-more :show-loading="true" tip="加载中"></load-more>
-                <load-more :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more>
+              <infinite-loading :on-infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
+          				<span slot="no-results">
+                       暂无商品
+                  </span>
+                  <span slot="no-more">
+                       暂无更多商品
+                  </span>
+              </infinite-loading>
             </div>
-        </scroller>
         <!-- 去购物车 -->
         <div class="vux-1px-t shopping-cart">
             <div class="total-price">
@@ -57,24 +61,25 @@
 </template>
 
 <script>
-    import { Search, Tab, TabItem, Scroller, LoadMore, XImg,  InlineXNumber, Group,  } from 'vux'
+    import { Search, Tab, TabItem, LoadMore, XImg, InlineXNumber, Group,  } from 'vux'
+    import InfiniteLoading from 'vue-infinite-loading';
     export default {
         components: {
             Search,
             Tab,
             TabItem,
-            Scroller,
             LoadMore,
             XImg,
             Group,
             InlineXNumber,
+            InfiniteLoading
         },
         data () {
             return {
                 search: '',
                 results: [],
                 onFetching: false,
-                bottomCount: 20,
+                bottomCount: 0,
                 changeValue: 1,
                 value: 1
             }
@@ -107,19 +112,19 @@
             onItemClick (index) {
                 console.log('on item click:', index)
             },
-            onScrollBottom () {
-                if (this.onFetching) {
-                    // do nothing
-                } else {
-                    this.onFetching = true
-                    setTimeout(() => {
-                        this.bottomCount += 10
+            getGoods () {
+                setTimeout(() => {
+                    this.bottomCount += 10
+                    if( this.bottomCount < 50 ){
                         this.$nextTick(() => {
-                            this.$refs.scrollerBottom.reset()
+                            this.$refs["infiniteLoading"].$emit('$InfiniteLoading:loaded');
                         })
-                        this.onFetching = false
-                    }, 2000)
-                }
+                    } else{
+                        this.$nextTick(() => {
+                            this.$refs["infiniteLoading"].$emit('$InfiniteLoading:complete');
+                        })
+                    }
+                }, 2000)
             },
             change( data ){
                 console.log(data)
@@ -150,6 +155,7 @@
     .box2{
       margin-top: 10px;
       padding: 0 10px;
+      padding-bottom: 50px;
       background: #fff;
     }
     .shop-container{

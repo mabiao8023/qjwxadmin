@@ -23,6 +23,9 @@ const webpackConfig  = {
       balanceDetail: './src/entry/me/balanceDetail.js',
       tixian: './src/entry/me/tixian.js',
       tixiansuc: './src/entry/me/tixiansuc.js',
+      jiesuan: './src/entry/me/jiesuan.js',
+      orders: './src/entry/me/orders.js',
+      ordersDetail: './src/entry/me/orderDetail.js',
   },
   output: {
     path: config.build.assetsRoot,

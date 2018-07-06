@@ -216,7 +216,51 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency',
       chunks: ['tixiansuc','vendor','manifest']
     }),
-
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/jiesuan.html'),
+      template: './src/views/me/jiesuan.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['jiesuan','vendor','manifest']
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/orders.html'),
+      template: './src/views/me/orders.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['orders','vendor','manifest']
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/orderDetail.html'),
+      template: './src/views/me/orderDetail.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['ordersDetail','vendor','manifest']
+    }),
 
 
     // keep module.id stable when vendor modules does not change

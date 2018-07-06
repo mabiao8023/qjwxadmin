@@ -19,7 +19,7 @@
             </li>
         </ul>
         <ul class="setting-list">
-          <li class="setting-item">
+          <li class="setting-item" @click="gotoPage('/balance.html')">
             <div class="setting-title">
               账号余额管理
             </div>
@@ -27,7 +27,7 @@
 
             </div>
           </li>
-          <li class="setting-item vux-1px-t">
+          <li class="setting-item vux-1px-t" @click="gotoPage('/modifyPwd.html')">
             <div class="setting-title">
                 修改登录密码
             </div>
@@ -76,6 +76,9 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
+            gotoPage( link ) {
+              location.href = link;
+            }
 
         },
         mounted() {

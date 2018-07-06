@@ -2,15 +2,30 @@
     <div class="page-container">
         <div class="shuaixuan">
               <div class="sx-title sx-item">条件筛选</div>
-              <div class="sx-con sx-item">
-                <popup-radio :options="options1" v-model="option1"></popup-radio>
+              <div class="sx-con sx-item" @click="isShowRadio = true">
+                  {{ option1 }}
               </div>
               <div class="sx-date sx-item" @click="showDate">
                   {{date.split('-')[0] + '年' + date.split('-')[1] + '月' }}
               </div>
         </div>
+        <div v-transfer-dom>
+            <popup v-model="isShowRadio">
+                <!-- group already has a top border, so we need to hide header's bottom border-->
+                <!--<popup-header-->
+                  <!--:left-text="$t('cancel')"-->
+                  <!--:right-text="$t('done')"-->
+                  <!--:title="$t('Please select your card')"-->
+                  <!--:show-bottom-border="false"-->
+                  <!--@on-click-left="show1 = false"-->
+                  <!--@on-click-right="show1 = false"></popup-header>-->
+                <group gutter="0" @click.native="isShowRadio = false">
+                  <radio :options="options1" v-model="option1"></radio>
+                </group>
+            </popup>
+        </div>
         <ul class="b-list">
-            <li class="b-item vux-1px-b">
+            <li class="b-item vux-1px-b" v-for="i in bottomCount">
                 <div class="b-item-left">
                     <div class="title">
                         返利收入
@@ -23,35 +38,39 @@
                       + 70.00
                 </div>
             </li>
-            <li class="b-item">
-            <div class="b-item-left">
-              <div class="title">
-                返利收入
-              </div>
-              <div class="time">
-                2018-7-31 12:53
-              </div>
-            </div>
-            <div class="b-data">
-              + 70.00
-            </div>
-          </li>
         </ul>
+        <infinite-loading @infinite="getList" :distance="100" spinner="circles" ref="infiniteLoading">
+           <span slot="no-results">
+                暂无数据
+            </span>
+            <span slot="no-more">
+                暂无更多数据
+            </span>
+        </infinite-loading>
     </div>
 </template>
 
 <script>
-    import { XInput, PopupRadio   } from 'vux'
+    import {  Popup, TransferDom, Group, Radio   } from 'vux'
+    import InfiniteLoading from 'vue-infinite-loading';
+
     export default {
         components: {
-          XInput,
-          PopupRadio
+          Popup,
+          Group,
+          Radio,
+          InfiniteLoading
         },
+      directives: {
+        TransferDom
+      },
         data () {
             return {
               date:'2017-05',
               options1: ['全部','未开始','已结算'],
-              option1:'全部'
+              option1:'全部',
+              bottomCount: 0,
+              isShowRadio: false
             }
         },
         methods:{
@@ -83,8 +102,17 @@
                    _this.date = val
                 }
               })
-            }
-
+            },
+            getList ( $state ) {
+              setTimeout(() => {
+                this.bottomCount += 10
+                if( this.bottomCount < 50 ){
+                    $state.loaded();
+                } else{
+                    $state.complete();
+                }
+              }, 1000)
+            },
         },
         mounted() {
 
@@ -155,5 +183,11 @@
           color: @fontColor;
           font-size: 20px;
       }
+  }
+    /* 隐藏显示 */
+  .popup-radio{
+      width: 0;
+      height: 0;
+      opacity: 0;
   }
 </style>

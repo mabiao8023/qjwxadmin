@@ -12,11 +12,11 @@
           </div>
           <!--余额和结算-->
           <div class="me-money">
-                <div class="yuen">
+                <div class="yuen" @click="gotoPage('/balance.html')">
                     <p class="money-title">余额(元)</p>
                     <p class="money-num">4970.00</p>
                 </div>
-                <div class="jiesuan">
+                <div class="jiesuan" @click="gotoPage('/jiesuan.html')">
                     <p class="money-title">待结算(元)</p>
                     <p class="money-num">4970.00</p>
                 </div>
@@ -86,7 +86,9 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
-
+            gotoPage( link ) {
+                location.href = link;
+            }
         },
         mounted() {
 

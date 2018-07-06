@@ -1,8 +1,8 @@
 <template>
   <div class="page-container">
-    <div class="zhmx">
+    <div class="zhmx" @click="gotoPage('/balanceDetail.html')">
       <div class="zhmx-title">
-        账户明细
+          账户明细
       </div>
       <div  class="zhmx-arrow">
 
@@ -10,14 +10,14 @@
     </div>
     <img class="money-icon" src="../../assets/image/money.png" alt="">
     <p class="current-title">
-      当前余额(元)
+        当前余额(元)
     </p>
     <p  class="current-money">
-      1,000.00
+        1,000.00
     </p>
     <!-- 提现 -->
-    <div class="logout">
-      提现
+    <div class="logout" @click="submit">
+        提现
     </div>
   </div>
 
@@ -25,30 +25,35 @@
 
 <script>
   export default {
-    components: {
-    },
-    data () {
-      return {
+      components: {
+      },
+      data () {
+        return {
+
+        }
+      },
+      methods:{
+          layer( text ){
+             this.$vux.toast.text( text || 'hello', 'middle')
+          },
+          showLoading(){
+              this.$vux.loading.show({
+                text: '加载中'
+              })
+          },
+          hideLoading(){
+              this.$vux.loading.hide()
+          },
+          gotoPage( link ) {
+              location.href = link;
+          },
+          submit() {
+              location.href = '/tixiansuc.html';
+          }
+      },
+      mounted() {
 
       }
-    },
-    methods:{
-      layer( text ){
-        this.$vux.toast.text( text || 'hello', 'middle')
-      },
-      showLoading(){
-        this.$vux.loading.show({
-          text: '加载中'
-        })
-      },
-      hideLoading(){
-        this.$vux.loading.hide()
-      },
-
-    },
-    mounted() {
-
-    }
   }
 </script>
 

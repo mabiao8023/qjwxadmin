@@ -127,6 +127,24 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true,
       chunks:['tixiansuc']
     }),
+    new HtmlWebpackPlugin({
+      filename: './jiesuan.html',
+      template: './src/views/me/jiesuan.html',
+      inject: true,
+      chunks:['jiesuan']
+    }),
+    new HtmlWebpackPlugin({
+      filename: './orders.html',
+      template: './src/views/me/orders.html',
+      inject: true,
+      chunks:['orders']
+    }),
+    new HtmlWebpackPlugin({
+      filename: './orderDetail.html',
+      template: './src/views/me/orderDetail.html',
+      inject: true,
+      chunks:['ordersDetail']
+    }),
   ]
 })
 
