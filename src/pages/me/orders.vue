@@ -1,13 +1,13 @@
 <template>
     <div class="page-container">
       <div class="nav">
-        <tab class="tab" scroll-threshold="5" >
-          <tab-item selected @on-item-click="onItemClick">全部</tab-item>
-          <tab-item @on-item-click="onItemClick">待付款</tab-item>
-          <tab-item @on-item-click="onItemClick">待发货</tab-item>
-          <tab-item @on-item-click="onItemClick">待提货</tab-item>
-          <tab-item @on-item-click="onItemClick">待收货</tab-item>
-        </tab>
+          <tab class="tab" scroll-threshold="5" >
+              <tab-item selected @on-item-click="onItemClick">全部</tab-item>
+              <tab-item @on-item-click="onItemClick">待付款</tab-item>
+              <tab-item @on-item-click="onItemClick">待发货</tab-item>
+              <tab-item @on-item-click="onItemClick">待提货</tab-item>
+              <tab-item @on-item-click="onItemClick">待收货</tab-item>
+          </tab>
       </div>
         <ul class="js-list">
             <li class="js-item" v-for="i in bottomCount">
@@ -33,6 +33,22 @@
                             <p class="numbers">×12</p>
                         </div>
                     </div>
+                    <div class="goods-item">
+                    <div class="img">
+                      <img src="../../assets/image/logo.png" alt="">
+                    </div>
+                    <div class="name">
+                      产品名称产品名称
+                    </div>
+                    <div class="data">
+                      <p class="price">￥88</p>
+                      <p class="fanli">返利￥2.00</p>
+                      <p class="numbers">×12</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="total vux-1px-b">
+                    共13件 合计：<span>¥1230</span>（含运费¥0.00） <span>已返利￥26</span>
                 </div>
                 <div class="option-btn">
                     <div class="btn">
@@ -41,15 +57,15 @@
                     <div class="btn">
                         确认收货
                     </div>
-                    <div class="btn">
+                    <div class="btn active">
                         取消订单
                     </div>
-                    <div class="btn">
-                        删除订单
-                    </div>
-                    <div class="btn">
-                        去支付
-                    </div>
+                    <!--<div class="btn">-->
+                        <!--删除订单-->
+                    <!--</div>-->
+                    <!--<div class="btn">-->
+                        <!--去支付-->
+                    <!--</div>-->
                 </div>
             </li>
         </ul>
@@ -164,6 +180,63 @@
                   margin-top: 0;
               }
           }
+          .img{
+              width: 70px;
+              height: 70px;
+          }
+          .name{
+              flex: 1;
+              height: 70px;
+              text-align: left;
+              color: #323232;
+              font-size: 15px;
+              padding: 0 10px;
+          }
+          .data{
+              text-align: right;
+              padding-left: 10px;
+              color: #323232;
+              font-size: 15px;
+          }
+          .fanli{
+              color: #646464;
+          }
+          .numbers{
+              color: #909090;
+              font-size: 12px;
+          }
+      }
+  }
+  .option-btn{
+      padding: 12px 16px;
+      font-size: 0;
+      text-align: right;
+      .btn{
+            display: inline-block;
+            margin-left: 10px;
+            line-height: 30px;
+            text-align: center;
+            color: #323232;
+            font-size: 15px;
+            border-radius: 15px;
+            padding: 0 15px;
+            border: 1px solid #C2C2C2;
+            overflow: hidden;
+            &.active{
+                color: @mainColor;
+                border: 1px solid @mainColor;
+             }
+      }
+
+  }
+
+  .total{
+      text-align: right;
+      font-size: 13px;
+      color: #909090;
+      padding: 8px 12px;
+      span{
+          color: #323232;
       }
   }
 </style>
