@@ -26,6 +26,9 @@ const webpackConfig  = {
       jiesuan: './src/entry/me/jiesuan.js',
       orders: './src/entry/me/orders.js',
       ordersDetail: './src/entry/me/orderDetail.js',
+      shouhuosuc: './src/entry/me/shouhuosuc.js',
+      youjisuc: './src/entry/me/youjisuc.js',
+      zitisuc: './src/entry/me/zitisuc.js',
   },
   output: {
     path: config.build.assetsRoot,

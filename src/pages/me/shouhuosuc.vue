@@ -1,8 +1,9 @@
 <template>
     <div class="page-container">
         <img class="success-icon" src="../../assets/image/success-icon.png" alt="">
-        <p class="success-tip">提交成功</p>
-        <p class="success-desc">提现申请已提交，我们将进行1-3个工作日进行审核 届时打入您的微信账户</p>
+        <p class="success-tip">交易成功</p>
+        <p class="success-desc">交易成功，又到一波返利在来的路上～</p>
+        <a class="goto" href="/me.html">查看订单详情></a>
         <a class="back" href="/me.html"></a>
     </div>
 
@@ -75,11 +76,16 @@
       font-size: 14px;
   }
   .back{
-    position: fixed;
-    bottom: 60px;
-    right: 23px;
-    width: 40px;
-    height: 40px;
-    background: url(../../assets/image/back-home.png) no-repeat center center/100% 100%;
+      position: fixed;
+      bottom: 60px;
+      right: 23px;
+      width: 40px;
+      height: 40px;
+      background: url(../../assets/image/back-home.png) no-repeat center center/100% 100%;
+  }
+  .goto{
+      color: @fontColor;
+      font-size: 15px;
+      margin-top: 22px;
   }
 </style>
