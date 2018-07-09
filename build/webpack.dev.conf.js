@@ -79,12 +79,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           inject: true,
           chunks:['goods']
       }),
-    //   new HtmlWebpackPlugin({
-    //     filename: './shopCart.html',
-    //     template: './src/views/shop/shopCart.html',
-    //     inject: true,
-    //     chunks:['shopCart']
-    //   }),
+      new HtmlWebpackPlugin({
+        filename: './shopCart.html',
+        template: './src/views/shop/shopCart.html',
+        inject: true,
+        chunks:['shopCart']
+      }),
+      new HtmlWebpackPlugin({
+        filename: './confirmOrder.html',
+        template: './src/views/shop/confirmOrder.html',
+        inject: true,
+        chunks:['confirmOrder']
+      }),
     //   new HtmlWebpackPlugin({
     //     filename: './me.html',
     //     template: './src/views/me/me.html',

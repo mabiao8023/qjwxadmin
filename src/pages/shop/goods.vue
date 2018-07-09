@@ -35,9 +35,7 @@
                         </div>
                         <div class="shop-data">
                             <div class="shop-price">￥28.80(返利￥2.00)</div>
-                            <!--<div style="text-align:center;">-->
-                                <inline-x-number button-style="round" min="0" width="30px"></inline-x-number>
-                            <!--</div>-->
+                            <inline-x-number button-style="round" min="0" width="30px"></inline-x-number>
                         </div>
                     </div>
                 </div>

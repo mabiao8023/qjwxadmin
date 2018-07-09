@@ -1,33 +1,24 @@
 <template>
     <div>
-        <div class="nav vux-1px-b">
-            <div class="nav-l">
-                共<span>12</span>件商品
+        <div class="header">
+            <div class="header-con">
+                请选择配送方式，并仔细核对订单信息
             </div>
-            <div class="nav-r"
-                 v-if="!isEdit"
-                 @click="isEdit = true"
-            >
-                编辑
+            <div class="dashed-line">
             </div>
-            <div class="options"
-                 v-else
-            >
-                <span class="options-del">
-                    删除
-                </span>
-                <span class="options-com"
-                      @click="isEdit = false"
-                >
-                    完成
-                </span>
+            <div class="fahuo-methods">
+                <div class="youji fahuo-item">
+                    <check-icon :value.sync="demo1"></check-icon>
+                    <span>邮寄方式</span>
+                </div>
+                <div class="ziti fahuo-item">
+                    <check-icon :value.sync="demo1"></check-icon>
+                    <span>自提方式</span>
+                </div>
             </div>
         </div>
-            <div class="shop-box">
+        <div class="shop-box">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-t">
-                    <div class="checked">
-                        <check-icon :value.sync="demo1"></check-icon>
-                    </div>
                     <div class="shop-img">
                         <x-img class="shop-detail-image" src="http://weikongimg.oss-cn-shenzhen.aliyuncs.com/uploads/20180516/a325eaa661da68f423eca4beb8fa5168.png" alt="">
                         </x-img>
@@ -39,22 +30,31 @@
                         <div class="shop-data">
                             <div class="shop-price">￥28.80(返利¥2.00)</div>
                             <div class="shop-choice-nums" style="text-align:center;">
-                                <span v-if="!isEdit">×12</span>
-                                <inline-x-number v-else button-style="round" min="0" width="30px"></inline-x-number>
+                                <span>×12</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        <infinite-loading @infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
-                  <span slot="no-results">
-                      暂无商品
-                  </span>
-          <span slot="no-more">
-                      暂无更多商品
-                  </span>
-        </infinite-loading>
-      <!-- 去购物车 -->
+        <div class="shop-others">
+            <div class="others-item">
+              <div class="title">
+                  配送费
+              </div>
+              <div class="feiyong">
+                  ￥10.00
+              </div>
+            </div>
+            <div class="others-item youhui vux-1px-t">
+                <div class="title">
+                    优惠券
+                </div>
+                <div class="feiyong">
+                    -￥10.00
+                </div>
+            </div>
+        </div>
+        <!-- 去购物车 -->
         <div class="vux-1px-t shopping-cart">
             <div class="all-checked">
               <check-icon :value.sync="demo1"></check-icon>全选
@@ -68,38 +68,23 @@
                 </div>
             </div>
             <div class="shopping-cart-btn">
-              提交订单
+                提交订单
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import {  Tab, TabItem, Scroller, LoadMore, XImg,  InlineXNumber, Group, Tabbar, TabbarItem, CheckIcon    } from 'vux'
-    import InfiniteLoading from 'vue-infinite-loading';
+    import {  XImg, CheckIcon  } from 'vux'
     export default {
         components: {
-            Tab,
-            TabItem,
-            Scroller,
-            LoadMore,
             XImg,
-            Group,
-            InlineXNumber,
-            Tabbar,
-            TabbarItem,
-            CheckIcon,
-            InfiniteLoading
+            CheckIcon
         },
         data () {
             return {
-                results: [],
-                onFetching: false,
-                bottomCount: 0,
-                changeValue: 1,
-                value: 1,
                 demo1: true,
-                isEdit: false,          // 是否处于编辑状态
+                bottomCount: 2,
             }
         },
         methods:{
@@ -130,32 +115,8 @@
             onItemClick (index) {
                 console.log('on item click:', index)
             },
-            onScrollBottom () {
-                if (this.onFetching) {
-                    // do nothing
-                } else {
-                    this.onFetching = true
-                    setTimeout(() => {
-                        this.bottomCount += 10
-                        this.$nextTick(() => {
-                            this.$refs.scrollerBottom.reset()
-                        })
-                        this.onFetching = false
-                    }, 2000)
-                }
-            },
             change( data ){
                 console.log(data)
-            },
-            getGoods ( $state ) {
-                setTimeout(() => {
-                    this.bottomCount += 10
-                    if( this.bottomCount < 50 ){
-                        $state.loaded();
-                    } else{
-                        $state.complete();
-                    }
-                }, 2000)
             },
         }
     }
@@ -179,7 +140,7 @@
   }
   .shop-box{
     background: #fff;
-    margin-top: 41px;
+    margin-top: 10px;
   }
   .shop-container{
     display: flex;
@@ -230,20 +191,6 @@
         align-items: center;
     }
   }
-  .vux-number-selector-plus{
-    padding: 0px 0px!important;
-  }
-  .vux-number-selector-sub{
-    padding: 0px 0px!important;
-  }
-  .vux-number-input{
-    font-size: 14px!important;
-  }
-  svg{
-    width: 15px;
-    height: 15px;
-    margin-bottom: 2px;
-  }
   .shopping-cart{
     position: fixed;
     left: 0;
@@ -282,35 +229,45 @@
         font-size: 15px;
     }
   }
-  /* 购物车导航 */
-  .nav{
-      display: flex;
-      justify-content: space-between;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 0 15px;
-      width: 100%;
+  .header{
       background: #fff;
-      line-height: 41px;
-      font-size: 15px;
       color: #323232;
-      span{
-          color: #F52C2C;
-          font-size: 15px;
+      font-size: 15px;
+      .header-con{
+          padding: 9px 14px;
+      }
+      .dashed-line{
+        width: 100%;
+        height: 3px;
+        background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
+      }
+      .fahuo-methods{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 16px 0;
+          .fahuo-item{
+              display: flex;
+              /*align-items: center;*/
+              justify-content: center;
+              width: 50%;
+          }
       }
   }
-  /* 编辑处理 */
-  .options{
-      .options-del{
-          margin-right: 10px;
-          color: #F52C2C;
+  .shop-others{
+      margin-top: 10px;
+      color: #323232;
+      font-size: 15px;
+      .others-item{
+          display: flex;
+          justify-content: space-between;
+          padding: 10px 15px;
+          background: #fff;
+          .feiyong{
+            color: #646464;
+          }
       }
-      .options-com{
-          color: @fontColor;
-      }
+
   }
 
 </style>
