@@ -61,107 +61,125 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       }
     ]),
     // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: './login.html',
-      template: './src/views/login/login.html',
-      inject: true,
-      chunks:['login']
-    }),
-      new HtmlWebpackPlugin({
-          filename: './forgetPwd.html',
-          template: './src/views/login/forgetPwd.html',
-          inject: true,
-          chunks:['forgetPwd']
-      }),
+    // new HtmlWebpackPlugin({
+    //   filename: './login.html',
+    //   template: './src/views/login/login.html',
+    //   inject: true,
+    //   chunks:['login']
+    // }),
+    //   new HtmlWebpackPlugin({
+    //       filename: './forgetPwd.html',
+    //       template: './src/views/login/forgetPwd.html',
+    //       inject: true,
+    //       chunks:['forgetPwd']
+    //   }),
       new HtmlWebpackPlugin({
           filename: './goods.html',
           template: './src/views/shop/goods.html',
           inject: true,
           chunks:['goods']
       }),
-      new HtmlWebpackPlugin({
-        filename: './shopCart.html',
-        template: './src/views/shop/shopCart.html',
-        inject: true,
-        chunks:['shopCart']
-      }),
-      new HtmlWebpackPlugin({
-        filename: './me.html',
-        template: './src/views/me/me.html',
-        inject: true,
-        chunks:['me']
-      }),
-      new HtmlWebpackPlugin({
-        filename: './setting.html',
-        template: './src/views/me/setting.html',
-        inject: true,
-        chunks:['setting']
-      }),
-      new HtmlWebpackPlugin({
-        filename: './modifyPwd.html',
-        template: './src/views/me/modifyPwd.html',
-        inject: true,
-        chunks:['modifyPwd']
-      }),
+    //   new HtmlWebpackPlugin({
+    //     filename: './shopCart.html',
+    //     template: './src/views/shop/shopCart.html',
+    //     inject: true,
+    //     chunks:['shopCart']
+    //   }),
+    //   new HtmlWebpackPlugin({
+    //     filename: './me.html',
+    //     template: './src/views/me/me.html',
+    //     inject: true,
+    //     chunks:['me']
+    //   }),
+    //   new HtmlWebpackPlugin({
+    //     filename: './setting.html',
+    //     template: './src/views/me/setting.html',
+    //     inject: true,
+    //     chunks:['setting']
+    //   }),
+    //   new HtmlWebpackPlugin({
+    //     filename: './modifyPwd.html',
+    //     template: './src/views/me/modifyPwd.html',
+    //     inject: true,
+    //     chunks:['modifyPwd']
+    //   }),
+    // new HtmlWebpackPlugin({
+    //   filename: './balance.html',
+    //   template: './src/views/me/balance.html',
+    //   inject: true,
+    //   chunks:['balance']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './balanceDetail.html',
+    //   template: './src/views/me/balanceDetail.html',
+    //   inject: true,
+    //   chunks:['balanceDetail']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './tixian.html',
+    //   template: './src/views/me/tixian.html',
+    //   inject: true,
+    //   chunks:['tixian']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './tixiansuc.html',
+    //   template: './src/views/me/tixiansuc.html',
+    //   inject: true,
+    //   chunks:['tixiansuc']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './jiesuan.html',
+    //   template: './src/views/me/jiesuan.html',
+    //   inject: true,
+    //   chunks:['jiesuan']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './orders.html',
+    //   template: './src/views/me/orders.html',
+    //   inject: true,
+    //   chunks:['orders']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './orderDetail.html',
+    //   template: './src/views/me/orderDetail.html',
+    //   inject: true,
+    //   chunks:['ordersDetail']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './shouhuosuc.html',
+    //   template: './src/views/me/shouhuosuc.html',
+    //   inject: true,
+    //   chunks:['shouhuosuc']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './youjisuc.html',
+    //   template: './src/views/me/youjisuc.html',
+    //   inject: true,
+    //   chunks:['youjisuc']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './zitisuc.html',
+    //   template: './src/views/me/zitisuc.html',
+    //   inject: true,
+    //   chunks:['zitisuc']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './chuangke.html',
+    //   template: './src/views/me/chuangke.html',
+    //   inject: true,
+    //   chunks:['chuangke']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: './yaoqing.html',
+    //   template: './src/views/me/yaoqing.html',
+    //   inject: true,
+    //   chunks:['yaoqing']
+    // }),
     new HtmlWebpackPlugin({
-      filename: './balance.html',
-      template: './src/views/me/balance.html',
+      filename: './zhuceck.html',
+      template: './src/views/me/zhuceck.html',
       inject: true,
-      chunks:['balance']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './balanceDetail.html',
-      template: './src/views/me/balanceDetail.html',
-      inject: true,
-      chunks:['balanceDetail']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './tixian.html',
-      template: './src/views/me/tixian.html',
-      inject: true,
-      chunks:['tixian']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './tixiansuc.html',
-      template: './src/views/me/tixiansuc.html',
-      inject: true,
-      chunks:['tixiansuc']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './jiesuan.html',
-      template: './src/views/me/jiesuan.html',
-      inject: true,
-      chunks:['jiesuan']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './orders.html',
-      template: './src/views/me/orders.html',
-      inject: true,
-      chunks:['orders']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './orderDetail.html',
-      template: './src/views/me/orderDetail.html',
-      inject: true,
-      chunks:['ordersDetail']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './shouhuosuc.html',
-      template: './src/views/me/shouhuosuc.html',
-      inject: true,
-      chunks:['shouhuosuc']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './youjisuc.html',
-      template: './src/views/me/youjisuc.html',
-      inject: true,
-      chunks:['youjisuc']
-    }),
-    new HtmlWebpackPlugin({
-      filename: './zitisuc.html',
-      template: './src/views/me/zitisuc.html',
-      inject: true,
-      chunks:['zitisuc']
+      chunks:['zhuceck']
     }),
   ]
 })

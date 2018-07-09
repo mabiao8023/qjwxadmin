@@ -1,22 +1,25 @@
 <template>
     <div>
-        <search
+        <div class="header">
+            <search
                 @result-click="resultClick"
                 @on-change="getResult"
                 :results="results"
                 v-model="search"
-                position="static"
+                :auto-fixed="false"
                 @on-focus="onFocus"
                 @on-cancel="onCancel"
                 @on-submit="onSubmit"
                 placeholder="请输入商品名称"
                 ref="search">
-        </search>
-        <tab class="tab">
-            <tab-item selected @on-item-click="onItemClick">全部</tab-item>
-            <tab-item @on-item-click="onItemClick">促销</tab-item>
-            <tab-item @on-item-click="onItemClick">正价</tab-item>
-        </tab>
+            </search>
+            <tab class="tab">
+                <tab-item selected @on-item-click="onItemClick">全部</tab-item>
+                <tab-item @on-item-click="onItemClick">促销</tab-item>
+                <tab-item @on-item-click="onItemClick">正价</tab-item>
+            </tab>
+        </div>
+
             <div class="box2">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-b">
                     <div class="shop-img">
@@ -31,22 +34,22 @@
                             库存：222
                         </div>
                         <div class="shop-data">
-                            <div class="shop-price">￥28.80</div>
-                            <div style="text-align:center;">
+                            <div class="shop-price">￥28.80(返利￥2.00)</div>
+                            <!--<div style="text-align:center;">-->
                                 <inline-x-number button-style="round" min="0" width="30px"></inline-x-number>
-                            </div>
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
-              <infinite-loading :on-infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
-          				<span slot="no-results">
-                       暂无商品
-                  </span>
-                  <span slot="no-more">
-                       暂无更多商品
-                  </span>
-              </infinite-loading>
             </div>
+            <infinite-loading @infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
+                <span slot="no-results">
+                    暂无商品
+                </span>
+                <span slot="no-more">
+                    暂无更多商品
+                </span>
+            </infinite-loading>
         <!-- 去购物车 -->
         <div class="vux-1px-t shopping-cart">
             <div class="total-price">
@@ -112,17 +115,13 @@
             onItemClick (index) {
                 console.log('on item click:', index)
             },
-            getGoods () {
+            getGoods ( $state ) {
                 setTimeout(() => {
                     this.bottomCount += 10
                     if( this.bottomCount < 50 ){
-                        this.$nextTick(() => {
-                            this.$refs["infiniteLoading"].$emit('$InfiniteLoading:loaded');
-                        })
+                        $state.loaded();
                     } else{
-                        this.$nextTick(() => {
-                            this.$refs["infiniteLoading"].$emit('$InfiniteLoading:complete');
-                        })
+                        $state.complete();
                     }
                 }, 2000)
             },
@@ -153,7 +152,7 @@
       margin-top: -2px;
   }
     .box2{
-      margin-top: 10px;
+      margin-top: 83px;
       padding: 0 10px;
       padding-bottom: 50px;
       background: #fff;
@@ -182,10 +181,11 @@
             .shop-title{
                 width: 100%;
                 color: #323232;
+                font-size: 15px;
             }
             .shop-nums{
                 width: 100%;
-                margin-top: 10px;
+                margin-top: 25px;
                 font-size: 13px;
                 color: #909090;
             }
@@ -193,11 +193,15 @@
     }
   .shop-data{
       display: flex;
-      margin-top: 7px;
+      margin-top: 5px;
       width: 100%;
+
       justify-content: space-between;
       align-items: center;
       color: #E1B113;
+      .shop-price{
+          font-size: 15px;
+      }
   }
     .vux-number-selector-plus{
         padding: 0px 0px!important;
@@ -234,8 +238,34 @@
       .shopping-cart-btn{
           width: 127px;
           color: #000;
-          background: #F9CD3B;
+          background: #F9CD3B url(../../assets/image/shopcar.png) no-repeat 16px center/18px 18px;
           padding-left: 38.5px;
       }
+  }
+  .weui-search-bar__label{
+      text-align: left!important;
+      background: #F5F5F5!important;
+      color: #ACACAC!important;
+      font-size: 15px!important;
+  }
+  .weui-search-bar__cancel-btn{
+      font-size: 14px;
+  }
+  .weui-search-bar{
+      padding-bottom: 0!important;
+  }
+  .vux-tab-item{
+      line-height: 40px!important;
+  }
+  .vux-tab{
+      height: 40px!important;
+  }
+  .header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      /*background: #fff;*/
   }
 </style>

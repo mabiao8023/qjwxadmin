@@ -306,7 +306,51 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency',
       chunks: ['zitisuc','vendor','manifest']
     }),
-
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/chuangke.html'),
+      template: './src/views/me/chuangke.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['chuangke','vendor','manifest']
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/yaoqing.html'),
+      template: './src/views/me/yaoqing.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['yaoqing','vendor','manifest']
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/zhuceck.html'),
+      template: './src/views/me/zhuceck.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['zhuceck','vendor','manifest']
+    }),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
