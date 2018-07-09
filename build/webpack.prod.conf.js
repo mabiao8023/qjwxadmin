@@ -105,7 +105,36 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency',
       chunks: ['shopCart','vendor','manifest']
     }),
-
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/adress.html'),
+      template: './src/views/shop/adress.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['adress','vendor','manifest']
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/addAddress.html'),
+      template: './src/views/shop/addAddress.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['addAddress','vendor','manifest']
+    }),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../dist/me.html'),
       template: './src/views/me/me.html',

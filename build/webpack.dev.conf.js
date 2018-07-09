@@ -91,6 +91,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         inject: true,
         chunks:['confirmOrder']
       }),
+      new HtmlWebpackPlugin({
+        filename: './adress.html',
+        template: './src/views/shop/adress.html',
+        inject: true,
+        chunks:['adress']
+      }),
+    new HtmlWebpackPlugin({
+      filename: './addAddress.html',
+      template: './src/views/shop/addAddress.html',
+      inject: true,
+      chunks:['addAddress']
+    }),
     //   new HtmlWebpackPlugin({
     //     filename: './me.html',
     //     template: './src/views/me/me.html',

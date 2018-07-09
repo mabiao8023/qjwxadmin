@@ -16,6 +16,24 @@
                     <span>自提方式</span>
                 </div>
             </div>
+            <div class="adress vux-1px-t">
+                  <div class="choice-adress">
+                      请填写收货信息
+                  </div>
+                  <div class="choice-adress has-adress">
+                      <div class="adress-info">
+                          <div>
+                            收货人：王琪
+                          </div>
+                          <div>
+                            12323434354
+                          </div>
+                      </div>
+                      <div class="has-adress">
+                          收货地址：广东省广州市天河区建中路66号
+                      </div>
+                  </div>
+            </div>
         </div>
         <div class="shop-box">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-t">
@@ -45,30 +63,30 @@
                   ￥10.00
               </div>
             </div>
-            <div class="others-item youhui vux-1px-t">
+            <div class="others-item coupon vux-1px-t">
                 <div class="title">
                     优惠券
                 </div>
                 <div class="feiyong">
                     -￥10.00
                 </div>
+                <div class="more-arrow">
+
+                </div>
             </div>
         </div>
         <!-- 去购物车 -->
         <div class="vux-1px-t shopping-cart">
-            <div class="all-checked">
-              <check-icon :value.sync="demo1"></check-icon>全选
-            </div>
             <div class="total-price">
                 <div class="total-price">
                     合计：<span>￥1234</span>
                 </div>
                 <div class="no-yunfei">
-                  不含运费 | 返利¥20
+                  含运费 | 返利¥20
                 </div>
             </div>
             <div class="shopping-cart-btn">
-                提交订单
+                结算
             </div>
         </div>
     </div>
@@ -253,6 +271,28 @@
               width: 50%;
           }
       }
+      .adress{
+          margin: 0 10px;
+          padding: 10px 0;
+          padding-left: 24px;
+          background: url(../../assets/image/location.png) no-repeat left 12px;
+          background-size: 14px 18px;
+
+
+      }
+      .choice-adress{
+        color: @fontColor;
+        font-size: 15px;
+        padding-right: 20px;
+        background: url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;
+      }
+      .has-adress{
+          color: #323232;
+          .adress-info{
+              display: flex;
+              justify-content: space-between;
+          }
+      }
   }
   .shop-others{
       margin-top: 10px;
@@ -261,13 +301,25 @@
       .others-item{
           display: flex;
           justify-content: space-between;
+          align-items: center;
           padding: 10px 15px;
           background: #fff;
           .feiyong{
             color: #646464;
+            flex: 1;
+            text-align: right;
           }
       }
-
+      .coupon{
+          /*padding-right: 34px;*/
+          /*background: #fff url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;*/
+      }
+      .more-arrow{
+          width: 8px;
+          height: 13px;
+          margin-left: 10px;
+          background: url(../../assets/image/more-arrow.png) no-repeat center center/8px 13px;
+      }
   }
 
 </style>

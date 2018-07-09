@@ -17,6 +17,8 @@ const webpackConfig  = {
       goods: './src/entry/shop/goods.js',
       shopCart: './src/entry/shop/shopCart.js',
       confirmOrder: './src/entry/shop/confirmOrder.js',
+      adress: './src/entry/shop/adress.js',
+      addAddress: './src/entry/shop/addAddress.js',
       // me: './src/entry/me/me.js',
       // setting: './src/entry/me/setting.js',
       // modifyPwd: './src/entry/me/modifyPwd.js',
