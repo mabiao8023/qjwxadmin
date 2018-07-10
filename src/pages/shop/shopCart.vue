@@ -67,7 +67,7 @@
                   不含运费 | 返利¥20
                 </div>
             </div>
-            <div class="shopping-cart-btn">
+            <div class="shopping-cart-btn" @click="submitOrder">
               提交订单
             </div>
         </div>
@@ -157,6 +157,11 @@
                     }
                 }, 2000)
             },
+            submitOrder(){
+                this.$router.push({
+                    path: '/pay'
+                })
+            }
         }
     }
 </script>

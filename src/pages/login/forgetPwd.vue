@@ -126,48 +126,15 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+  @import "../../assets/css/common.less";
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/close.less';
-  @import '../../assets/css/reset';
+ /* @import '../../assets/css/reset';*/
   body{
       background: #fff;
       font-size: 15px;
-  }
-  #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 60px;
-  }
-  .login-group{
-      padding: 30px;
-      border-top: none;
-  }
-  .logo{
-      padding: 100px;
-  }
-  .forget-pwd{
-    display: block;
-    text-align: right;
-    font-size: 26px;
-    padding-right: 40px;
-    text-decoration: underline;
-  }
-  .login-btn{
-      /*width: 680px;*/
-      height: 88px;
-      line-height: 88px;
-      text-align: center;
-      font-size: 28px;
-      color: #fff;
-      border-radius: 10px;
-      background: #2368CB;
-      margin: 40px auto;
-      border: none;
   }
   /* 进度提示条 */
   .progress{

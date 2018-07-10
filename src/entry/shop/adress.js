@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from '../../pages/shop/adress.vue'
+import App from '../../pages/shop/address.vue'
 // import '../../assets/js/flexible'
 import { AlertPlugin, ToastPlugin,Icon,ConfirmPlugin   } from 'vux'
 

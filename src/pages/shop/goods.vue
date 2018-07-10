@@ -53,7 +53,7 @@
             <div class="total-price">
                 合计：<span>￥1234（返利¥20）</span>
             </div>
-            <div class="shopping-cart-btn">
+            <div class="shopping-cart-btn" @click="gotoShopCart">
                 进货车(12)
             </div>
         </div>
@@ -126,6 +126,11 @@
             change( data ){
                 console.log(data)
             },
+            gotoShopCart(){
+                this.$router.push({
+                      path: '/shopCart'
+                })
+            }
         }
     }
 </script>
@@ -134,21 +139,15 @@
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/close.less';
-  @import '../../assets/css/reset';
-  body{
-      background: #F5F5F5;
-  }
-  #app {
-      font-family: '微软雅黑','PingFangSC','Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 60px;
-  }
-  .tab{
-      margin-top: -2px;
-  }
+  @import "../../assets/css/common.less";
+
+    body{
+        background: #F5F5F5;
+        /*padding-bottom: 100px;*/
+    }
+    .tab{
+        margin-top: -2px;
+    }
     .box2{
       margin-top: 83px;
       padding: 0 10px;

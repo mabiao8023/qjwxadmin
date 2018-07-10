@@ -8,18 +8,26 @@ import Vue from 'vue';
 import App from './app.vue';
 import VueRouter from 'vue-router';
 import routes from './router/index.js';
+import { AlertPlugin, ToastPlugin, AjaxPlugin, LoadingPlugin, ConfirmPlugin  } from 'vux'
 
-Vue.use(VueRouter);
+const FastClick = require('fastclick')
+FastClick.attach(document.body)
+
+Vue.use(AlertPlugin)
+Vue.use(AjaxPlugin)
+Vue.use(LoadingPlugin)
+Vue.use(ToastPlugin, {position: 'middle'})
+Vue.use(VueRouter)
+Vue.use(ConfirmPlugin)
 // 配置http头部授权头部
 // Vue.http.headers.common['Authorization'] = token;
 // Vue.http.options.emulateJSON = true;
 
 const router = new VueRouter(routes);
-const store = new Vuex.Store(vuexs);
 const app = new Vue({
     el: '#app',
 	  router,
-	  store,
+	  // store,
     template: '<App/>',
     components: { App }
 });

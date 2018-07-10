@@ -12,30 +12,7 @@ function resolve (dir) {
 const webpackConfig  = {
   context: path.resolve(__dirname, '../'),
   entry: {
-      // login: './src/entry/login/login.js',
-      // forgetPwd: './src/entry/login/forgetPwd.js',
-      goods: './src/entry/shop/goods.js',
-      shopCart: './src/entry/shop/shopCart.js',
-      confirmOrder: './src/entry/shop/confirmOrder.js',
-      adress: './src/entry/shop/adress.js',
-      addAddress: './src/entry/shop/addAddress.js',
-      ziti: './src/entry/shop/ziti.js',
-      // me: './src/entry/me/me.js',
-      // setting: './src/entry/me/setting.js',
-      // modifyPwd: './src/entry/me/modifyPwd.js',
-      // balance: './src/entry/me/balance.js',
-      // balanceDetail: './src/entry/me/balanceDetail.js',
-      // tixian: './src/entry/me/tixian.js',
-      // tixiansuc: './src/entry/me/tixiansuc.js',
-      // jiesuan: './src/entry/me/jiesuan.js',
-      // orders: './src/entry/me/orders.js',
-      // ordersDetail: './src/entry/me/orderDetail.js',
-      // shouhuosuc: './src/entry/me/shouhuosuc.js',
-      // youjisuc: './src/entry/me/youjisuc.js',
-      // zitisuc: './src/entry/me/zitisuc.js',
-      // chuangke: './src/entry/me/chuangke.js',
-      // yaoqing: './src/entry/me/yaoqing.js',
-      zhuceck: './src/entry/me/zhuceck.js',
+      main: './src/main.js',
   },
   output: {
     path: config.build.assetsRoot,
@@ -45,11 +22,11 @@ const webpackConfig  = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json','.less'],
-    alias: {
-        '@': resolve('src'),
-        'vue$': 'vue/dist/vue.esm.js',
-    }
+      extensions: ['.js', '.vue', '.json','.less'],
+      alias: {
+          '@': resolve('src'),
+          'vue$': 'vue/dist/vue.esm.js',
+      }
   },
   module: {
     rules: [

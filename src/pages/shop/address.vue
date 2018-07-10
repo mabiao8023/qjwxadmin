@@ -30,7 +30,7 @@
                         <span>设为默认地址</span>
                     </div>
                     <div class="edit-address-option">
-                        <div class="edit" @click="gotoEdit">
+                        <div class="edit" @click="gotoAddAddress">
                             编辑
                         </div>
                         <div class="delete" @click="deleteAddress">
@@ -41,7 +41,7 @@
             </div>
 
         </div>
-        <div class="add-adress">
+        <div class="add-adress" @click="gotoAddAddress">
               添加新地址
         </div>
     </div>
@@ -87,8 +87,10 @@
                   onConfirm () {}
                 })
             },
-            gotoEdit(){
-                location.href = '/addAddress.html'
+            gotoAddAddress(){
+                this.$router.push({
+                    path: '/addAddress'
+                })
             }
         }
     }

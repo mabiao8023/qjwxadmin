@@ -30,11 +30,11 @@
                   src="../../assets/image/password.png">
            </x-input>
         </div>
-      <a href="/forgetPwd.html" class="forget-pwd">
-          忘记密码?
-      </a>
+        <router-link :to="{ path: 'forgetPwd' }"  class="forget-pwd">
+            忘记密码?
+        </router-link>
       <div class="login-btn" @click="login">
-        登录
+          登录
       </div>
     </div>
 
@@ -80,22 +80,14 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+  @import "../../assets/css/common.less";
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/close.less';
-  @import '../../assets/css/reset';
   body{
       background: #fff;
       font-size: 15px;
-  }
-  #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 60px;
   }
   .login-group{
       padding: 15px;
