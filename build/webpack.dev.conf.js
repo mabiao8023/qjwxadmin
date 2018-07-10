@@ -103,6 +103,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true,
       chunks:['addAddress']
     }),
+    new HtmlWebpackPlugin({
+      filename: './ziti.html',
+      template: './src/views/shop/ziti.html',
+      inject: true,
+      chunks:['ziti']
+    }),
     //   new HtmlWebpackPlugin({
     //     filename: './me.html',
     //     template: './src/views/me/me.html',

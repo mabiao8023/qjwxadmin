@@ -136,6 +136,21 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunks: ['addAddress','vendor','manifest']
     }),
     new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/ziti.html'),
+      template: './src/views/shop/ziti.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+      chunks: ['ziti','vendor','manifest']
+    }),
+    new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../dist/me.html'),
       template: './src/views/me/me.html',
       inject: true,

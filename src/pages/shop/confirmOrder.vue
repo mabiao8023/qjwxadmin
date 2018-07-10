@@ -321,5 +321,7 @@
           background: url(../../assets/image/more-arrow.png) no-repeat center center/8px 13px;
       }
   }
-
+  .weui-icon-circle,.weui-icon-success{
+      font-size: 20px!important;
+  }
 </style>

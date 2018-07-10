@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import App from '../../pages/shop/adress.vue'
+import App from '../../pages/shop/ziti.vue'
 // import '../../assets/js/flexible'
-import { AlertPlugin, ToastPlugin,Icon,ConfirmPlugin   } from 'vux'
+import { AlertPlugin, ToastPlugin,Icon  } from 'vux'
 
 
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
-Vue.use(ConfirmPlugin)
 Vue.component('icon', Icon)
 
 const FastClick = require('fastclick')

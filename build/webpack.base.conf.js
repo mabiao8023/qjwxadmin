@@ -19,6 +19,7 @@ const webpackConfig  = {
       confirmOrder: './src/entry/shop/confirmOrder.js',
       adress: './src/entry/shop/adress.js',
       addAddress: './src/entry/shop/addAddress.js',
+      ziti: './src/entry/shop/ziti.js',
       // me: './src/entry/me/me.js',
       // setting: './src/entry/me/setting.js',
       // modifyPwd: './src/entry/me/modifyPwd.js',
