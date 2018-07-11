@@ -54,6 +54,9 @@
                   ></x-input>
                 </div>
                 <div class="send-btn vux-1px-l">获取验证码</div>
+                <div> 
+                    <countdown v-model="time" :start="start" @on-finish="finish"></countdown>
+                </div>
             </div>
             <div class="next-step" @click="verPhoneStep()">
                 下一步
@@ -99,11 +102,12 @@
 </template>
 
 <script>
-    import { Group, XInput  } from 'vux'
+    import { Group, XInput, Countdown  } from 'vux'
     export default {
         components: {
             XInput,
-            Group
+            Group,
+            Countdown
         },
         data () {
             return {
@@ -114,6 +118,8 @@
                 password: '',
                 togglePwd: true,
                 step: 1,
+                time: 90,
+                start: true
             }
         },
         methods:{
@@ -122,6 +128,9 @@
             },
             pwdSubmit(){
                 this.step = 3;
+            },
+            finish(){
+                  console.log( '倒计时结束')
             }
         }
     }

@@ -30,9 +30,9 @@
                   src="../../assets/image/password.png">
            </x-input>
         </div>
-        <router-link :to="{ path: '/forgetPwd' }"  class="forget-pwd">
+        <div  @click="gotoForgetPwd" class="forget-pwd">
             忘记密码?
-        </router-link>
+        </div>
         <div class="login-btn" @click="login">
             登录
         </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import { XInput,cookie   } from 'vux'
+    import { XInput } from 'vux'
     export default {
         components: {
             XInput,
@@ -73,6 +73,11 @@
                         expires: 30
                     })
                 })
+            },
+            gotoForgetPwd(){
+                this.$router.push({
+                      path: '/forgetPwd' 
+                })  
             }
         },
         mounted() {

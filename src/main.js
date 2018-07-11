@@ -30,7 +30,7 @@ Vue.use(ToastPlugin, {position: 'middle'})
 Vue.use(ConfirmPlugin)
 Vue.use(DatetimePlugin)
 const router = new VueRouter(routes);
-let token = cookie.get('token') || '';
+let token = cookie.get('token') || '77878';
 // 路由遍历是否已经登录，未登录则跳转登录页面
 router.beforeEach((to, from, next) => {
     // ...
@@ -80,7 +80,7 @@ Vue.http.interceptors.response.use(function(response){
 
 const app = new Vue({
     el: '#app',
-	  router,
+	router,
 	  // store,
     template: '<App/>',
     components: { App }
