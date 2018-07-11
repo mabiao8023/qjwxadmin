@@ -1,6 +1,6 @@
 <template>
     <div>
-          <div class="header">
+        <div class="login-header">
           <img class="h-logo" src="../../assets/image/logo.png" alt="">
           <p class="h-title">全家微选创客空间管理系统</p>
         </div>
@@ -30,12 +30,12 @@
                   src="../../assets/image/password.png">
            </x-input>
         </div>
-        <router-link :to="{ path: 'forgetPwd' }"  class="forget-pwd">
+        <router-link :to="{ path: '/forgetPwd' }"  class="forget-pwd">
             忘记密码?
         </router-link>
-      <div class="login-btn" @click="login">
-          登录
-      </div>
+        <div class="login-btn" @click="login">
+            登录
+        </div>
     </div>
 
 </template>
@@ -96,7 +96,7 @@
       font-size: 17px;
       color: #909090;
   }
-  .header{
+  .login-header{
       padding: 55px;
       padding-bottom: 0;
       text-align: center;
