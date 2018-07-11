@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="header">
+        <div class="goods-header">
             <search
                 @result-click="resultClick"
                 @on-change="getResult"
@@ -19,8 +19,7 @@
                 <tab-item @on-item-click="onItemClick">正价</tab-item>
             </tab>
         </div>
-
-            <div class="box2">
+            <div class="goods-box2">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-b">
                     <div class="shop-img">
                         <x-img class="shop-detail-image" src="http://weikongimg.oss-cn-shenzhen.aliyuncs.com/uploads/20180516/a325eaa661da68f423eca4beb8fa5168.png" alt="">
@@ -136,38 +135,63 @@
 </script>
 
 <style lang="less">
-  @import '~vux/src/styles/reset.less';
-  @import '~vux/src/styles/1px.less';
-  @import '~vux/src/styles/close.less';
-  @import "../../assets/css/common.less";
+    @import '~vux/src/styles/reset.less';
+    @import '~vux/src/styles/1px.less';
+    @import '~vux/src/styles/close.less';
+    @import "../../assets/css/common.less";
 
     body{
         background: #F5F5F5;
-        /*padding-bottom: 100px;*/
+        padding-bottom: 50px;
     }
-    .tab{
-        margin-top: -2px;
+    .goods-header{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        /*background: #fff;*/
+        .tab{
+          margin-top: -2px;
+        }
+        .weui-search-bar__label{
+          text-align: left!important;
+          background: #F5F5F5!important;
+          color: #ACACAC!important;
+          font-size: 15px!important;
+        }
+        .weui-search-bar__cancel-btn{
+          font-size: 14px;
+        }
+        .weui-search-bar{
+          padding-bottom: 0!important;
+        }
+        .vux-tab-item{
+          line-height: 40px!important;
+        }
+        .vux-tab{
+          height: 40px!important;
+        }
     }
-    .box2{
-      margin-top: 83px;
-      padding: 0 10px;
-      padding-bottom: 50px;
-      background: #fff;
-    }
-    .shop-container{
-        display: flex;
-        padding: 10px 0;
-        .shop-img{
+    .goods-box2{
+        margin-top: 83px;
+        padding: 0 10px;
+        /*padding-bottom: 50px;*/
+        background: #fff;
+        .shop-container{
+          display: flex;
+          padding: 10px 0;
+          .shop-img{
             width: 70px;
             height: 70px;
             overflow: hidden;
             margin-right: 20px;
             .shop-detail-image{
-                width: 70px;
-                height: 70px;
+              width: 70px;
+              height: 70px;
             }
-        }
-        .shop-detail{
+          }
+          .shop-detail{
             display: flex;
             flex: 1;
             flex-direction: column;
@@ -176,30 +200,31 @@
             text-align: left;
             font-size: 15px;
             .shop-title{
-                width: 100%;
-                color: #323232;
-                font-size: 15px;
+              width: 100%;
+              color: #323232;
+              font-size: 15px;
             }
             .shop-nums{
-                width: 100%;
-                margin-top: 25px;
-                font-size: 13px;
-                color: #909090;
+              width: 100%;
+              margin-top: 25px;
+              font-size: 13px;
+              color: #909090;
             }
+          }
+        }
+        .shop-data{
+          display: flex;
+          margin-top: 5px;
+          width: 100%;
+
+          justify-content: space-between;
+          align-items: center;
+          color: #E1B113;
+          .shop-price{
+            font-size: 15px;
+          }
         }
     }
-  .shop-data{
-      display: flex;
-      margin-top: 5px;
-      width: 100%;
-
-      justify-content: space-between;
-      align-items: center;
-      color: #E1B113;
-      .shop-price{
-          font-size: 15px;
-      }
-  }
     .vux-number-selector-plus{
         padding: 0px 0px!important;
     }
@@ -214,7 +239,7 @@
       height: 15px;
       margin-bottom: 2px;
     }
-  .shopping-cart{
+    .shopping-cart{
       position: fixed;
       left: 0;
       right: 0;
@@ -238,31 +263,5 @@
           background: #F9CD3B url(../../assets/image/shopcar.png) no-repeat 16px center/18px 18px;
           padding-left: 38.5px;
       }
-  }
-  .weui-search-bar__label{
-      text-align: left!important;
-      background: #F5F5F5!important;
-      color: #ACACAC!important;
-      font-size: 15px!important;
-  }
-  .weui-search-bar__cancel-btn{
-      font-size: 14px;
-  }
-  .weui-search-bar{
-      padding-bottom: 0!important;
-  }
-  .vux-tab-item{
-      line-height: 40px!important;
-  }
-  .vux-tab{
-      height: 40px!important;
-  }
-  .header{
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      /*background: #fff;*/
   }
 </style>

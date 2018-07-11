@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <ul class="setting-list">
+    <div class="page-container">
+        <ul class="modify-list">
             <li class="setting-item">
                 <div class="setting-title">
                     旧密码
@@ -95,7 +95,7 @@
       color: #2c3e50;
       margin-top: 60px;
   }
-  .setting-list{
+  .modify-list{
       margin-top: 10px;
       background: #fff;
       padding: 0 12px;

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="header">
+        <div class="pay-header">
             <div class="header-con">
                 请选择配送方式，并仔细核对订单信息
             </div>
@@ -16,7 +16,7 @@
                     <span>自提方式</span>
                 </div>
             </div>
-            <div class="adress vux-1px-t">
+            <div class="adress vux-1px-t"  @click="setRecvier">
                   <div class="choice-adress">
                       请填写收货信息
                   </div>
@@ -35,7 +35,7 @@
                   </div>
             </div>
         </div>
-        <div class="shop-box">
+        <div class="pay-shop-box">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-t">
                     <div class="shop-img">
                         <x-img class="shop-detail-image" src="http://weikongimg.oss-cn-shenzhen.aliyuncs.com/uploads/20180516/a325eaa661da68f423eca4beb8fa5168.png" alt="">
@@ -106,35 +106,10 @@
             }
         },
         methods:{
-            setFocus () {
-                this.$refs.search.setFocus()
-            },
-            resultClick (item) {
-                window.alert('you click the result item: ' + JSON.stringify(item))
-            },
-            getResult (val) {
-                console.log('on-change', val)
-                this.results = val ? getResult(this.value) : []
-            },
-            onSubmit () {
-                this.$refs.search.setBlur()
-                this.$vux.toast.show({
-                    type: 'text',
-                    position: 'top',
-                    text: 'on submit'
+            setRecvier(){
+                this.$router.push({
+                    path: '/address'
                 })
-            },
-            onFocus () {
-                console.log('on focus')
-            },
-            onCancel () {
-                console.log('on cancel')
-            },
-            onItemClick (index) {
-                console.log('on item click:', index)
-            },
-            change( data ){
-                console.log(data)
             },
         }
     }
@@ -148,67 +123,107 @@
   body{
     background: #F5F5F5;
   }
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-  .shop-box{
+  .pay-header{
     background: #fff;
-    margin-top: 10px;
+    color: #323232;
+    font-size: 15px;
+    .header-con{
+      padding: 9px 14px;
+    }
+    .dashed-line{
+      width: 100%;
+      height: 3px;
+      background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
+    }
+    .fahuo-methods{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      .fahuo-item{
+        display: flex;
+        /*align-items: center;*/
+        justify-content: center;
+        width: 50%;
+      }
+    }
+    .adress{
+      margin: 0 10px;
+      padding: 10px 0;
+      padding-left: 24px;
+      background: url(../../assets/image/location.png) no-repeat left 12px;
+      background-size: 14px 18px;
+
+
+    }
+    .choice-adress{
+      color: @fontColor;
+      font-size: 15px;
+      padding-right: 20px;
+      background: url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;
+    }
+    .has-adress{
+      color: #323232;
+      .adress-info{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
   }
-  .shop-container{
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    .shop-img{
-      width: 70px;
-      height: 70px;
-      overflow: hidden;
-      margin-right: 20px;
-      .shop-detail-image{
+  .pay-shop-box{
+      background: #fff;
+      margin-top: 10px;
+      .shop-container{
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      .shop-img{
         width: 70px;
         height: 70px;
+        overflow: hidden;
+        margin-right: 20px;
+        .shop-detail-image{
+          width: 70px;
+          height: 70px;
+        }
+      }
+      .shop-detail{
+        display: flex;
+        flex: 1;
+        height: 70px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        font-size: 15px;
+        .shop-title{
+          width: 100%;
+          color: #323232;
+        }
+        .shop-nums{
+          width: 100%;
+          margin-top: 10px;
+          font-size: 13px;
+          color: #909090;
+        }
       }
     }
-    .shop-detail{
+      .shop-data{
       display: flex;
-      flex: 1;
-      height: 70px;
-      flex-direction: column;
-      align-items: center;
+      /*margin-top: 7px;*/
+      width: 100%;
       justify-content: space-between;
-      text-align: left;
-      font-size: 15px;
-      .shop-title{
-        width: 100%;
-        color: #323232;
-      }
-      .shop-nums{
-        width: 100%;
-        margin-top: 10px;
-        font-size: 13px;
-        color: #909090;
-      }
-    }
-  }
-  .shop-data{
-    display: flex;
-    /*margin-top: 7px;*/
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    color: #E1B113;
-    .shop-choice-nums{
+      align-items: center;
+      color: #E1B113;
+      .shop-choice-nums{
         color: #909090;
         display: flex;
         justify-content: space-between;
         align-items: center;
+      }
     }
   }
+
   .shopping-cart{
     position: fixed;
     left: 0;
@@ -247,53 +262,7 @@
         font-size: 15px;
     }
   }
-  .header{
-      background: #fff;
-      color: #323232;
-      font-size: 15px;
-      .header-con{
-          padding: 9px 14px;
-      }
-      .dashed-line{
-        width: 100%;
-        height: 3px;
-        background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
-      }
-      .fahuo-methods{
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 16px 0;
-          .fahuo-item{
-              display: flex;
-              /*align-items: center;*/
-              justify-content: center;
-              width: 50%;
-          }
-      }
-      .adress{
-          margin: 0 10px;
-          padding: 10px 0;
-          padding-left: 24px;
-          background: url(../../assets/image/location.png) no-repeat left 12px;
-          background-size: 14px 18px;
 
-
-      }
-      .choice-adress{
-        color: @fontColor;
-        font-size: 15px;
-        padding-right: 20px;
-        background: url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;
-      }
-      .has-adress{
-          color: #323232;
-          .adress-info{
-              display: flex;
-              justify-content: space-between;
-          }
-      }
-  }
   .shop-others{
       margin-top: 10px;
       color: #323232;

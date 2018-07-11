@@ -91,10 +91,11 @@
         <div class="modify-suc" v-if="step == 3">
             <img class="suc-icon" src="../../assets/image/success-icon.png" alt="">
             <p class="suc-tip">恭喜您！修改成功</p>
-            <a class="go-login" href="/login.html">去登陆></a>
+            <router-link class="go-login"
+                         :to="{path:'/login'}">去登陆>
+            </router-link>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -126,7 +127,7 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import "../../assets/css/common.less";
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';

@@ -41,12 +41,10 @@
 </template>
 
 <script>
-    import { Group, XInput,XButton   } from 'vux'
+    import { XInput,cookie   } from 'vux'
     export default {
         components: {
             XInput,
-            Group,
-            XButton
         },
         data () {
             return {
@@ -67,10 +65,13 @@
                 this.$vux.loading.hide()
             },
             login(){
-                this.layer('请输入手机号')
+                //  this.layer('请输入手机号')
                 // 调登录接口
                 this.$http.post('/api').then(({data}) => {
-                    console.log(data)
+                    console.log(data);
+                    cookie.set('token',data.token,{
+                        expires: 30
+                    })
                 })
             }
         },
@@ -80,7 +81,7 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import "../../assets/css/common.less";
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
@@ -125,7 +126,7 @@
   }
 
   .login-btn{
-      width: 340px;
+      width: 90%;
       line-height: 44px;
       text-align: center;
       font-size: 18px;

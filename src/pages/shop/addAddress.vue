@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="list">
-            <div class="item vux-1px-b">
+            <div class="item">
                 <div class="title">
                     收货人
                 </div>
@@ -12,7 +12,7 @@
                     ></x-input>
                 </div>
             </div>
-            <div class="item vux-1px-b">
+            <div class="item vux-1px-tb">
                 <div class="title">
                     联系电话
                 </div>

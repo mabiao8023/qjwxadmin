@@ -8,9 +8,7 @@
         </div>
     </div>
 </template>
-
 <script>
-
     export default {
         components: {
         },
@@ -37,7 +35,7 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/close.less';
@@ -46,17 +44,13 @@
       background: #E3A216;
       font-size: 15px;
   }
-  #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 60px;
-  }
   .main-section{
-      width: 100%;
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #E3A216;
       .btn{
           position: absolute;
           top: 470px;

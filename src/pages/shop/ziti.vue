@@ -12,48 +12,37 @@
                     ></x-input>
                 </div>
             </div>
-            <div class="item vux-1px-b">
+            <div class="item vux-1px-tb">
                 <div class="title">
                     联系电话
                 </div>
                 <div class="input">
-                  <x-input
-                    v-model="tjname"
-                    placeholder="请输入联系电话"
-                  ></x-input>
+                    <x-input
+                      v-model="tjname"
+                      placeholder="请输入联系电话"
+                    ></x-input>
                 </div>
             </div>
         </div>
         <div class="add-adress">
            保存
         </div>
-        <x-address style="display:none;" :raw-value="true" title="" v-model="value" :list="addressData" placeholder="请选择地址" :show.sync="showAddress"></x-address>
     </div>
 </template>
 
 <script>
-    import {   XAddress, Group, ChinaAddressV4Data, XInput, Value2nameFilter as value2name  } from 'vux'
+    import {  XInput  } from 'vux'
     export default {
         components: {
-            XAddress,
-            XInput,
-            Group
+            XInput
         },
-
         data () {
             return {
                 demo1: true,
-                bottomCount: 2,
-                addressData: ChinaAddressV4Data,
-                showAddress: false,
-                tjname: '',
-                value: ['天津市', '市辖区', '和平区']
+                tjname: ''
             }
         },
         computed:{
-          address() {
-            return value2name(this.value, ChinaAddressV4Data)
-          },
         },
         methods:{
 

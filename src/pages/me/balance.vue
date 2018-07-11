@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <div class="zhmx" @click="gotoPage('/balanceDetail.html')">
+    <div class="zhmx" @click="gotoPage('/balanceDetail')">
       <div class="zhmx-title">
           账户明细
       </div>
@@ -45,10 +45,14 @@
               this.$vux.loading.hide()
           },
           gotoPage( link ) {
-              location.href = link;
+              this.$router.push({
+                  path: link
+              })
           },
           submit() {
-              location.href = '/tixiansuc.html';
+              this.$router.push({
+                  path: '/tixiansuc'
+              })
           }
       },
       mounted() {
@@ -57,36 +61,34 @@
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/close.less';
   @import '../../assets/css/reset';
-  body{
-    background: #fff;
-    font-size: 15px;
+  html{
+      height: 100%;
   }
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+  body{
+      background: #fff;
+      height: 100%;
+      font-size: 15px;
   }
   .page-container{
-    text-align: center;
+      text-align: center;
+      background: #fff;
+      height: 100%;
   }
   .logout{
-    width: 90%;
-    margin: 48px auto 0;
-    height: 44px;
-    line-height: 44px;
-    text-align: center;
-    color: #323232;
-    font-size: 17px;
-    background: @mainColor;
-    border-radius: 5px;
+      width: 90%;
+      margin: 48px auto 0;
+      height: 44px;
+      line-height: 44px;
+      text-align: center;
+      color: #323232;
+      font-size: 17px;
+      background: @mainColor;
+      border-radius: 5px;
   }
   .zhmx{
     display: flex;

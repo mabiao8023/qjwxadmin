@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="header">
+        <div class="address-header">
             <div class="title">
                 共<span>3</span>条地址记录
             </div>
@@ -111,7 +111,7 @@
     color: #2c3e50;
     margin-top: 60px;
   }
-  .header{
+  .address-header{
       display: flex;
       justify-content: space-between;
       align-items: center;

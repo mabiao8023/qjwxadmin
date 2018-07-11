@@ -1,24 +1,17 @@
 <template>
     <div class="page-container">
-        <div class="shuaixuan">
+        <div class="shuaixuan vux-1px-b">
               <div class="sx-title sx-item">条件筛选</div>
               <div class="sx-con sx-item" @click="isShowRadio = true">
-                  {{ option1 }}
+                  {{ option1 }} <i class="arrow-icon"></i>
               </div>
               <div class="sx-date sx-item" @click="showDate">
                   {{date.split('-')[0] + '年' + date.split('-')[1] + '月' }}
+                  <i class="arrow-icon"></i>
               </div>
         </div>
         <div v-transfer-dom>
             <popup v-model="isShowRadio">
-                <!-- group already has a top border, so we need to hide header's bottom border-->
-                <!--<popup-header-->
-                  <!--:left-text="$t('cancel')"-->
-                  <!--:right-text="$t('done')"-->
-                  <!--:title="$t('Please select your card')"-->
-                  <!--:show-bottom-border="false"-->
-                  <!--@on-click-left="show1 = false"-->
-                  <!--@on-click-right="show1 = false"></popup-header>-->
                 <group gutter="0" @click.native="isShowRadio = false">
                   <radio :options="options1" v-model="option1"></radio>
                 </group>
@@ -49,7 +42,6 @@
         </infinite-loading>
     </div>
 </template>
-
 <script>
     import {  Popup, TransferDom, Group, Radio   } from 'vux'
     import InfiniteLoading from 'vue-infinite-loading';
@@ -129,15 +121,12 @@
       background: #F5F5F5;
       font-size: 15px;
   }
-  #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 60px;
-  }
   .shuaixuan{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
         display: flex;
         background: #fff;
         line-height: 45px;
@@ -153,8 +142,13 @@
         .sx-con{
             text-align: center;
             color: #646464;
-
-
+        }
+        .arrow-icon{
+            display: inline-block;
+            width: 11px;
+            height: 7px;
+            vertical-align: middle;
+            background: url(../../assets/image/down-arrow.png) no-repeat center center/100% 100%;
         }
         .sx-date{
             text-align: center;
@@ -162,7 +156,7 @@
         }
   }
   .b-list{
-      margin-top: 10px;
+      margin-top: 55px;
       padding: 0 18px;
       background: #fff;
       .b-item{

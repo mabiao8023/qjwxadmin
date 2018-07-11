@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="nav vux-1px-b">
+        <div class="sc-nav">
             <div class="nav-l">
                 共<span>12</span>件商品
             </div>
@@ -23,7 +23,7 @@
                 </span>
             </div>
         </div>
-            <div class="shop-box">
+        <div class="shop-cart-box">
                 <div v-for="i in bottomCount" class="shop-container vux-1px-t">
                     <div class="checked">
                         <check-icon :value.sync="demo1"></check-icon>
@@ -47,12 +47,12 @@
                 </div>
             </div>
         <infinite-loading @infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
-                  <span slot="no-results">
-                      暂无商品
-                  </span>
-          <span slot="no-more">
-                      暂无更多商品
-                  </span>
+            <span slot="no-results">
+                暂无商品
+            </span>
+            <span slot="no-more">
+                暂无更多商品
+            </span>
         </infinite-loading>
       <!-- 去购物车 -->
         <div class="vux-1px-t shopping-cart">
@@ -167,89 +167,113 @@
 </script>
 
 <style lang="less">
-  @import '~vux/src/styles/reset.less';
-  @import '~vux/src/styles/1px.less';
-  @import '~vux/src/styles/close.less';
-  @import '../../assets/css/reset';
-  body{
-    background: #F5F5F5;
-  }
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-  .shop-box{
-    background: #fff;
-    margin-top: 41px;
-  }
-  .shop-container{
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    .shop-img{
-      width: 70px;
-      height: 70px;
-      overflow: hidden;
-      margin-right: 20px;
-      .shop-detail-image{
-        width: 70px;
-        height: 70px;
-      }
+    @import '~vux/src/styles/reset.less';
+    @import '~vux/src/styles/1px.less';
+    @import '~vux/src/styles/close.less';
+    @import '../../assets/css/reset';
+    body{
+        background: #F5F5F5;
+        padding-bottom: 50px;
     }
-    .shop-detail{
-      display: flex;
-      flex: 1;
-      height: 70px;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      text-align: left;
-      font-size: 15px;
-      .shop-title{
-        width: 100%;
-        color: #323232;
-      }
-      .shop-nums{
-        width: 100%;
-        margin-top: 10px;
-        font-size: 13px;
-        color: #909090;
-      }
-    }
-  }
-  .shop-data{
-    display: flex;
-    /*margin-top: 7px;*/
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    color: #E1B113;
-    .shop-choice-nums{
-        color: #909090;
+    /* 购物车导航 */
+    .sc-nav{
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 0 15px;
+        width: 100%;
+        background: #fff;
+        line-height: 41px;
+        font-size: 15px;
+        color: #323232;
+        border-bottom: 1px solid #eaeaea;
+        span{
+          color: #F52C2C;
+          font-size: 15px;
+        }
+        /* 编辑处理 */
+        .options{
+            .options-del{
+                margin-right: 10px;
+                color: #F52C2C;
+            }
+            .options-com{
+                color: @fontColor;
+            }
+        }
     }
-  }
-  .vux-number-selector-plus{
-    padding: 0px 0px!important;
-  }
-  .vux-number-selector-sub{
-    padding: 0px 0px!important;
-  }
-  .vux-number-input{
-    font-size: 14px!important;
-  }
-  svg{
-    width: 15px;
-    height: 15px;
-    margin-bottom: 2px;
-  }
-  .shopping-cart{
+    .shop-cart-box{
+        background: #fff;
+        margin-top: 41px;
+        .shop-container{
+          display: flex;
+          align-items: center;
+          padding: 15px;
+          .shop-img{
+            width: 70px;
+            height: 70px;
+            overflow: hidden;
+            margin-right: 20px;
+            .shop-detail-image{
+              width: 70px;
+              height: 70px;
+            }
+          }
+          .shop-detail{
+            display: flex;
+            flex: 1;
+            height: 70px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            font-size: 15px;
+            .shop-title{
+              width: 100%;
+              color: #323232;
+            }
+            .shop-nums{
+              width: 100%;
+              margin-top: 10px;
+              font-size: 13px;
+              color: #909090;
+            }
+          }
+        }
+        .shop-data{
+          display: flex;
+          /*margin-top: 7px;*/
+          width: 100%;
+          justify-content: space-between;
+          align-items: center;
+          color: #E1B113;
+          .shop-choice-nums{
+            color: #909090;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+        .vux-number-selector-plus{
+          padding: 0px 0px!important;
+        }
+        .vux-number-selector-sub{
+          padding: 0px 0px!important;
+        }
+        .vux-number-input{
+          font-size: 14px!important;
+        }
+        svg{
+          width: 15px;
+          height: 15px;
+          margin-bottom: 2px;
+        }
+    }
+    .shopping-cart{
     position: fixed;
     left: 0;
     right: 0;
@@ -286,36 +310,6 @@
         color: #323232;
         font-size: 15px;
     }
-  }
-  /* 购物车导航 */
-  .nav{
-      display: flex;
-      justify-content: space-between;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 0 15px;
-      width: 100%;
-      background: #fff;
-      line-height: 41px;
-      font-size: 15px;
-      color: #323232;
-      span{
-          color: #F52C2C;
-          font-size: 15px;
-      }
-  }
-  /* 编辑处理 */
-  .options{
-      .options-del{
-          margin-right: 10px;
-          color: #F52C2C;
-      }
-      .options-com{
-          color: @fontColor;
-      }
   }
 
 </style>

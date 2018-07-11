@@ -4,7 +4,7 @@
        background: #fff;
     }
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-family: '微软雅黑','Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
@@ -15,7 +15,9 @@
 <template>
     <div class="com-container">
 		    <!-- 路由匹配到的组件将渲染在这里 -->
-				<router-view></router-view>
+        <transition name="fade">
+				    <router-view></router-view>
+        </transition>
 	  </div>
 </template>
 <script>
