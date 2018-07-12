@@ -136,6 +136,9 @@
         left: 0;
         right: 0;
         z-index: 1000;
+        .tab{
+            margin-top: -2px;
+        }
         .weui-search-bar__label{
             text-align: left!important;
             background: #F5F5F5!important;
@@ -146,7 +149,7 @@
             font-size: 14px;
         }
         .weui-search-bar{
-            padding-bottom: 0!important;
+            padding-bottom: 4px!important;
         }
         .vux-tab-item{
             line-height: 40px!important;

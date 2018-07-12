@@ -83,7 +83,7 @@
             </div>
         </div>
         <!-- 去购物车 -->
-        <div class="vux-1px-t shopping-cart-js">
+        <div class="shopping-cart-js">
             <div class="total-price">
                 <div>
                     合计：<span>￥1234</span>
@@ -92,7 +92,7 @@
                   含运费 | 返利¥20
                 </div>
             </div>
-            <div class="shopping-cart-btn">
+            <div class="shopping-cart-btn" @click="showChoice = true">
                 结算
             </div>
         </div>
@@ -165,7 +165,7 @@
                 bottomCount: 2,
                 isPost: true,
                 isSelf: false,
-                showChoice: true,
+                showChoice: false,
             }
         },
         methods:{
@@ -181,7 +181,9 @@
 
             },
             gotoOffinePay(){
-
+                this.$router.push({
+                    path: '/offinePay'
+                })
             }
         }
     }

@@ -14,6 +14,8 @@ const Address = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/add
 const AddAddress = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/addAddress.vue');	 // 增加地址
 const SelfGet = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/ziti.vue');	 // 字体配置
 const OffinePay = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/offinePay.vue');	 // 线下支付
+const Upload = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/upload.vue');	 // 线下支付
+const UploadSuc = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/uploadsuc.vue');	 // 线下支付
 
 // 个人中心
 const MeIndex = () =>  import(/* webpackChunkName: "part1" */ '../pages/me/me.vue');	      // 个人中心首页
@@ -206,6 +208,18 @@ export default {
               /* 线下支付 */
               path:'/offinePay',
               component: OffinePay,
+              meta: {  }
+          },
+          {
+              /* 上传凭证 */
+              path:'/upload',
+              component: Upload,
+              meta: {  }
+          },
+          {
+              /* 上传凭证成功 */
+              path:'/uploadsuc',
+              component: UploadSuc,
               meta: {  }
           },
       ]

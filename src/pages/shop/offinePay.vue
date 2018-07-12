@@ -18,7 +18,7 @@
           </div>
       </div>
       <div class="offine-options">
-          <div class="upload vux-1px-r">
+          <div class="upload vux-1px-r" @click="gotoUpload">
               上传凭证>
           </div>
           <div class="order-detail">
@@ -27,7 +27,7 @@
       </div>
       <router-link class="back" :to="{path:'/meIndex'}"></router-link>
       <transition name="fade">
-          <div class="desc-pop" v-if="false">
+          <div class="desc-pop" v-if="isShowDesc">
               <div class="desc-pop-box">
                   <div class="title vux-1px-b">
                       线下打款说明
@@ -59,7 +59,7 @@
       </transition>
       <!-- 指定账号弹窗 -->
       <transition name="fade">
-          <div class="desc-pop" v-if="false">
+          <div class="desc-pop" v-if="isShowZh">
               <div class="desc-pop-box">
             <div class="title vux-1px-b">
               指定打款帐号
@@ -112,6 +112,11 @@
       hideLoading(){
         this.$vux.loading.hide()
       },
+      gotoUpload(){
+            this.$router.push({
+                path: '/upload'
+            })
+      }
 
     },
     mounted() {
