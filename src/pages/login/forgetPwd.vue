@@ -7,7 +7,7 @@
                 <div class="step-line step1-line">
                 </div>
                 <div class="step-circle">
-                    1
+                    <span>1</span>
                 </div>
                 <div class="step-titel">
                     输入手机号
@@ -19,7 +19,7 @@
                 <div class="step-line">
                 </div>
                 <div class="step-circle">
-                    2
+                    <span>2</span>
                 </div>
                 <div class="step-titel">
                     输入新密码
@@ -31,7 +31,7 @@
                 <div class="step-line step3-line">
                 </div>
                 <div class="step-circle">
-                    3
+                    <span>3</span>
                 </div>
                 <div class="step-titel">
                     修改成功
@@ -41,21 +41,29 @@
         <div class="input-phone" v-if="step == 1">
             <div class="phone">
                 <x-input
-
-                         v-model="phone"
-                         placeholder="请输入手机号"
+                    required
+                    v-model="phone"
+                    is-type="china-mobile"
+                    type="tel"
+                    ref="phoneInput"
+                    placeholder="请输入手机号"
                 ></x-input>
             </div>
             <div class="code">
                 <div class="input-code">
-                  <x-input
-                           v-model="code"
-                           placeholder="请输入验证码"
-                  ></x-input>
+                    <x-input
+                        required
+                        v-model="code"
+                        ref="codeInput"
+                        placeholder="请输入验证码"
+                    ></x-input>
                 </div>
-                <div class="send-btn vux-1px-l">获取验证码</div>
-                <div> 
-                    <countdown v-model="time" :start="start" @on-finish="finish"></countdown>
+                <div class="send-btn vux-1px-l"
+                     v-if="!isSendCoding"
+                     @click="sendCode"
+                >获取验证码</div>
+                <div class="send-btn already-send vux-1px-l" v-else>
+                    已发送(<countdown v-model="time" :start="isSendCoding" @on-finish="finish"></countdown>)
                 </div>
             </div>
             <div class="next-step" @click="verPhoneStep()">
@@ -66,9 +74,11 @@
         <div class="input-phone" v-if="step == 2">
             <div class="phone">
                   <x-input
-                    v-model="password"
-                    :type="togglePwd ? 'password' : 'text'"
-                    placeholder="请输入密码"
+                      required
+                      v-model="password"
+                      ref="pwdInput"
+                      :type="togglePwd ? 'password' : 'text'"
+                      placeholder="请输入密码"
                   >
                   </x-input>
             </div>
@@ -119,18 +129,40 @@
                 togglePwd: true,
                 step: 1,
                 time: 90,
-                start: true
+                start: true,
+                isSendCoding: false
             }
         },
         methods:{
+            layer( text ){
+                this.$vux.toast.text( text || 'hello', 'middle')
+            },
+            showLoading(){
+                this.$vux.loading.show({
+                  text: '加载中'
+                })
+            },
+            hideLoading(){
+                this.$vux.loading.hide()
+            },
             verPhoneStep(){
-                this.step = 2;
+                if( !this.$refs.phoneInput.valid ){
+                    this.layer('请输入正确的手机号')
+                }else if( !this.$refs.codeInput.valid ){
+
+                }else{
+                    this.step = 2;
+                }
             },
             pwdSubmit(){
                 this.step = 3;
             },
             finish(){
-                  console.log( '倒计时结束')
+                this.isSendCoding = false;
+                this.time = 90;
+            },
+            sendCode(){
+                this.isSendCoding = true;
             }
         }
     }
@@ -156,10 +188,13 @@
           width: 33.33%;
           &.active{
               .step-line{
-                background: @mainColor;
+                  background: @mainColor;
               }
               .step-circle{
-                background: @mainColor;
+                  background: @mainColor;
+              }
+              span{
+                  background: @mainColor;
               }
           }
       }
@@ -175,9 +210,21 @@
           line-height: 30px;
           text-align: center;
           border-radius: 50%;
-          background: #BBBBBB;
+          background: #D8D8D8;
           color: #fff;
           font-size: 16px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          span{
+              display: block;
+              width: 26px;
+              height: 26px;
+              line-height: 26px;
+              text-align: center;
+              background: #bbb;
+              border-radius: 50%;
+          }
       }
       .step-titel{
           margin-top: 8px;
@@ -215,9 +262,14 @@
           background: #F7F7F7;
           border-radius: 3px;
           .send-btn{
-              padding: 0 8px;
+              width: 100px;
+              text-align: center;
+              /*padding: 0 8px;*/
               line-height: 30px;
               color: @fontColor;
+          }
+          .already-send{
+              color: #999;
           }
       }
   }

@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="shop-cart-box">
-                <div v-for="i in bottomCount" class="shop-container vux-1px-t">
+            <div v-for="i in bottomCount" class="shop-container vux-1px-t">
                     <div class="checked">
                         <check-icon :value.sync="demo1"></check-icon>
                     </div>
@@ -39,13 +39,13 @@
                         <div class="shop-data">
                             <div class="shop-price">￥28.80(返利¥2.00)</div>
                             <div class="shop-choice-nums" style="text-align:center;">
-                                <span v-if="!isEdit">×12</span>
-                                <inline-x-number v-else button-style="round" min="0" width="30px"></inline-x-number>
-                            </div>
+                            <span v-if="!isEdit">×12</span>
+                            <inline-x-number v-else button-style="round" :min="0" width="30px"></inline-x-number>
                         </div>
                     </div>
                 </div>
-            </div>
+           </div>
+        </div>
         <infinite-loading @infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
             <span slot="no-results">
                 暂无商品
@@ -57,7 +57,10 @@
       <!-- 去购物车 -->
         <div class="vux-1px-t shopping-cart">
             <div class="all-checked">
-              <check-icon :value.sync="demo1"></check-icon>全选
+              <div>
+                  <check-icon :value.sync="demo1"></check-icon>
+              </div>
+              <div>全选</div>
             </div>
             <div class="total-price">
                 <div class="total-price">
@@ -103,49 +106,8 @@
             }
         },
         methods:{
-            setFocus () {
-                this.$refs.search.setFocus()
-            },
-            resultClick (item) {
-                window.alert('you click the result item: ' + JSON.stringify(item))
-            },
-            getResult (val) {
-                console.log('on-change', val)
-                this.results = val ? getResult(this.value) : []
-            },
-            onSubmit () {
-                this.$refs.search.setBlur()
-                this.$vux.toast.show({
-                    type: 'text',
-                    position: 'top',
-                    text: 'on submit'
-                })
-            },
-            onFocus () {
-                console.log('on focus')
-            },
-            onCancel () {
-                console.log('on cancel')
-            },
             onItemClick (index) {
                 console.log('on item click:', index)
-            },
-            onScrollBottom () {
-                if (this.onFetching) {
-                    // do nothing
-                } else {
-                    this.onFetching = true
-                    setTimeout(() => {
-                        this.bottomCount += 10
-                        this.$nextTick(() => {
-                            this.$refs.scrollerBottom.reset()
-                        })
-                        this.onFetching = false
-                    }, 2000)
-                }
-            },
-            change( data ){
-                console.log(data)
             },
             getGoods ( $state ) {
                 setTimeout(() => {
@@ -305,11 +267,16 @@
       background: #F9CD3B url(../../assets/image/shopcar.png) no-repeat 16px center/18px 18px;
       padding-left: 38.5px;
     }
-    .all-checked{
-        line-height: 45px;
-        color: #323232;
-        font-size: 15px;
-    }
+      .all-checked{
+          display: flex;
+          line-height: 43px;
+          align-items: center;
+          color: #323232;
+          font-size: 15px;
+          padding-left: 10px;
+      }
   }
-
+    .weui-icon-circle,.weui-icon-success{
+      font-size: 20px!important;
+    }
 </style>

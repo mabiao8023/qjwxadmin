@@ -13,6 +13,7 @@ const Pay = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/confirm
 const Address = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/address.vue');	 // 地址页面
 const AddAddress = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/addAddress.vue');	 // 增加地址
 const SelfGet = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/ziti.vue');	 // 字体配置
+const OffinePay = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/offinePay.vue');	 // 线下支付
 
 // 个人中心
 const MeIndex = () =>  import(/* webpackChunkName: "part1" */ '../pages/me/me.vue');	      // 个人中心首页
@@ -199,6 +200,12 @@ export default {
               /* 发货管理 */
               path:'/fahuo',
               component: Fahuo,
+              meta: {  }
+          },
+          {
+              /* 线下支付 */
+              path:'/offinePay',
+              component: OffinePay,
               meta: {  }
           },
       ]

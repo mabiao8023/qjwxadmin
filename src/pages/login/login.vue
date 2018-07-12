@@ -5,30 +5,33 @@
           <p class="h-title">全家微选创客空间管理系统</p>
         </div>
         <div class="login-group">
-           <x-input title="账号"
-                    required
-                    v-model="name"
-                    type="tel"
-                    placeholder="请输入用户名"
-                    class="vux-1px-b"
-                    keyboard="number"
-                    is-type="china-mobile"
-           >
-             <img slot="label"
-                  class="label-icon"
-                  src="../../assets/image/shoujihao.png">
-           </x-input>
-           <x-input title="密码"
-                    required
-                    type="password"
-                    v-model="pwd"
-                    placeholder="请输入密码"
-                    class="vux-1px-b"
-           >
-             <img slot="label"
-                  class="label-icon"
-                  src="../../assets/image/password.png">
-           </x-input>
+            <div>
+                <x-input title="账号"
+                         v-model="name"
+                         type="tel"
+                         placeholder="请输入用户名"
+                         keyboard="number"
+                         class="vux-1px-b"
+                         is-type="china-mobile"
+                >
+                  <img slot="label"
+                       class="label-icon"
+                       src="../../assets/image/shoujihao.png">
+                </x-input>
+            </div>
+            <div>
+                <x-input title="密码"
+                         type="password"
+                         v-model="pwd"
+                         placeholder="请输入密码"
+                         class="vux-1px-b"
+                >
+                      <img slot="label"
+                       class="label-icon"
+                       src="../../assets/image/password.png">
+                </x-input>
+            </div>
+
         </div>
         <div  @click="gotoForgetPwd" class="forget-pwd">
             忘记密码?
@@ -69,15 +72,16 @@
                 // 调登录接口
                 this.$http.post('/api').then(({data}) => {
                     console.log(data);
+                    // 本地存储7天的cookie
                     cookie.set('token',data.token,{
-                        expires: 30
+                        expires: 7
                     })
                 })
             },
             gotoForgetPwd(){
                 this.$router.push({
-                      path: '/forgetPwd' 
-                })  
+                      path: '/forgetPwd'
+                })
             }
         },
         mounted() {
@@ -97,7 +101,6 @@
   }
   .login-group{
       padding: 15px;
-      border-top: 0;
       font-size: 17px;
       color: #909090;
   }

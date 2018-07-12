@@ -16,6 +16,7 @@ import {
   LoadingPlugin,
   ConfirmPlugin,
   DatetimePlugin,
+  WechatPlugin,
   cookie
 } from 'vux'
 
@@ -29,6 +30,14 @@ Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin, {position: 'middle'})
 Vue.use(ConfirmPlugin)
 Vue.use(DatetimePlugin)
+Vue.use(WechatPlugin)
+
+// 配置微信
+
+// Vue.http.get('/api', ({data}) => {
+//   Vue.wechat.config(data.data)
+// })
+
 const router = new VueRouter(routes);
 let token = cookie.get('token') || '77878';
 // 路由遍历是否已经登录，未登录则跳转登录页面
@@ -80,8 +89,8 @@ Vue.http.interceptors.response.use(function(response){
 
 const app = new Vue({
     el: '#app',
-	router,
-	  // store,
+    router,
+      // store,
     template: '<App/>',
     components: { App }
 });

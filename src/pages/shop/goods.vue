@@ -2,13 +2,9 @@
     <div>
         <div class="goods-header">
             <search
-                @result-click="resultClick"
                 @on-change="getResult"
-                :results="results"
                 v-model="search"
                 :auto-fixed="false"
-                @on-focus="onFocus"
-                @on-cancel="onCancel"
                 @on-submit="onSubmit"
                 placeholder="请输入商品名称"
                 ref="search">
@@ -34,7 +30,7 @@
                         </div>
                         <div class="shop-data">
                             <div class="shop-price">￥28.80(返利￥2.00)</div>
-                            <inline-x-number button-style="round" min="0" width="30px"></inline-x-number>
+                            <inline-x-number button-style="round" :min="0" width="30px"></inline-x-number>
                         </div>
                     </div>
                 </div>
@@ -57,11 +53,10 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
-    import { Search, Tab, TabItem, LoadMore, XImg, InlineXNumber, Group,  } from 'vux'
+    import { Search, Tab, TabItem, LoadMore, XImg, InlineXNumber, Group } from 'vux'
     import InfiniteLoading from 'vue-infinite-loading';
     export default {
         components: {
@@ -85,17 +80,8 @@
             }
         },
         methods:{
-            setFocus () {
-                this.$refs.search.setFocus()
-            },
-            resultClick (item) {
-                window.alert('you click the result item: ' + JSON.stringify(item))
-            },
-            getResult (val) {
-                console.log('on-change', val)
-                this.results = val ? getResult(this.value) : []
-            },
             onSubmit () {
+                // 搜索
                 this.$refs.search.setBlur()
                 this.$vux.toast.show({
                     type: 'text',
@@ -103,14 +89,11 @@
                     text: 'on submit'
                 })
             },
-            onFocus () {
-                console.log('on focus')
+            getResult(){
+                // 内容变化是搜索结果
             },
             onCancel () {
                 console.log('on cancel')
-            },
-            onItemClick (index) {
-                console.log('on item click:', index)
             },
             getGoods ( $state ) {
                 setTimeout(() => {
@@ -124,6 +107,9 @@
             },
             change( data ){
                 console.log(data)
+            },
+            onItemClick(){
+
             },
             gotoShopCart(){
                 this.$router.push({
@@ -150,27 +136,23 @@
         left: 0;
         right: 0;
         z-index: 1000;
-        /*background: #fff;*/
-        .tab{
-          margin-top: -2px;
-        }
         .weui-search-bar__label{
-          text-align: left!important;
-          background: #F5F5F5!important;
-          color: #ACACAC!important;
-          font-size: 15px!important;
+            text-align: left!important;
+            background: #F5F5F5!important;
+            color: #ACACAC!important;
+            font-size: 15px!important;
         }
         .weui-search-bar__cancel-btn{
-          font-size: 14px;
+            font-size: 14px;
         }
         .weui-search-bar{
-          padding-bottom: 0!important;
+            padding-bottom: 0!important;
         }
         .vux-tab-item{
-          line-height: 40px!important;
+            line-height: 40px!important;
         }
         .vux-tab{
-          height: 40px!important;
+            height: 40px!important;
         }
     }
     .goods-box2{

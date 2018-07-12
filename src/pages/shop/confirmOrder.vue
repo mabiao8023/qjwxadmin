@@ -8,19 +8,26 @@
             </div>
             <div class="fahuo-methods">
                 <div class="youji fahuo-item">
-                    <check-icon :value.sync="demo1"></check-icon>
-                    <span>邮寄方式</span>
+                    <div>
+                        <check-icon :value.sync="isPost"></check-icon>
+                    </div>
+                    <div>邮寄方式</div>
                 </div>
                 <div class="ziti fahuo-item">
-                    <check-icon :value.sync="demo1"></check-icon>
-                    <span>自提方式</span>
+                    <div>
+                       <check-icon :value.sync="isSelf"></check-icon>
+                    </div>
+                    <div>自提方式</div>
                 </div>
             </div>
             <div class="adress vux-1px-t"  @click="setRecvier">
-                  <div class="choice-adress">
+                  <div v-if="isPost" class="choice-adress">
                       请填写收货信息
                   </div>
-                  <div class="choice-adress has-adress">
+                  <div v-if="isSelf" class="choice-adress">
+                      请填写提货人信息
+                  </div>
+                  <div v-if="false"  class="choice-adress has-adress">
                       <div class="adress-info">
                           <div>
                             收货人：王琪
@@ -76,9 +83,9 @@
             </div>
         </div>
         <!-- 去购物车 -->
-        <div class="vux-1px-t shopping-cart">
+        <div class="vux-1px-t shopping-cart-js">
             <div class="total-price">
-                <div class="total-price">
+                <div>
                     合计：<span>￥1234</span>
                 </div>
                 <div class="no-yunfei">
@@ -89,20 +96,76 @@
                 结算
             </div>
         </div>
+        <!-- 选择支付类型弹窗 -->
+        <div v-transfer-dom>
+            <popup v-model="showChoice"
+                   height="300px"
+                   @on-hide="log('hide')"
+                   @on-show="log('show')">
+                <div class="paypop">
+                    <div class="paypop-header vux-1px-b">
+                        请选择支付方式
+                        <div class="paypop-close" @click="showChoice = false">
+                        </div>
+                    </div>
+                    <div class="pay-price">
+                        需支付<span>￥1434.00</span>
+                    </div>
+                    <div class="online-pay pay-item vux-1px-b"
+                        @click="gotoOnlinePay"
+                    >
+                        <div class=" icon">
+                        </div>
+                        <div class="content">
+                            <div class="title">
+                                线上支付
+                            </div>
+                            <div class="desc">
+                                立即支付给创客空间或总部
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offine-pay pay-item"
+                         @click="gotoOffinePay"
+                    >
+                      <div class="offine-icon icon">
+                      </div>
+                      <div class="content">
+                          <div class="title">
+                              线下支付
+                          </div>
+                          <div class="desc">
+                              自行打款给创客空间或总部
+                          </div>
+                          <div class="desc">
+                              *备注：您可以使用微信、支付宝、银行卡或是现金方式将货款转给空间或总部，并截取或打印凭证上传至此
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </popup>
+        </div>
     </div>
 </template>
 
 <script>
-    import {  XImg, CheckIcon  } from 'vux'
+    import {  XImg, CheckIcon,TransferDom, Popup  } from 'vux'
     export default {
+        directives: {
+            TransferDom
+        },
         components: {
             XImg,
-            CheckIcon
+            CheckIcon,
+            Popup
         },
         data () {
             return {
                 demo1: true,
                 bottomCount: 2,
+                isPost: true,
+                isSelf: false,
+                showChoice: true,
             }
         },
         methods:{
@@ -111,6 +174,15 @@
                     path: '/address'
                 })
             },
+            log( start ){
+                console.log( start )
+            },
+            gotoOnlinePay(){
+
+            },
+            gotoOffinePay(){
+
+            }
         }
     }
 </script>
@@ -124,51 +196,51 @@
     background: #F5F5F5;
   }
   .pay-header{
-    background: #fff;
-    color: #323232;
-    font-size: 15px;
-    .header-con{
-      padding: 9px 14px;
-    }
-    .dashed-line{
-      width: 100%;
-      height: 3px;
-      background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
-    }
-    .fahuo-methods{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
-      .fahuo-item{
-        display: flex;
-        /*align-items: center;*/
-        justify-content: center;
-        width: 50%;
-      }
-    }
-    .adress{
-      margin: 0 10px;
-      padding: 10px 0;
-      padding-left: 24px;
-      background: url(../../assets/image/location.png) no-repeat left 12px;
-      background-size: 14px 18px;
-
-
-    }
-    .choice-adress{
-      color: @fontColor;
-      font-size: 15px;
-      padding-right: 20px;
-      background: url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;
-    }
-    .has-adress{
+      background: #fff;
       color: #323232;
-      .adress-info{
-        display: flex;
-        justify-content: space-between;
+      font-size: 15px;
+      .header-con{
+        padding: 9px 14px;
       }
-    }
+      .dashed-line{
+        width: 100%;
+        height: 3px;
+        background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
+      }
+      .fahuo-methods{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 16px 0;
+          .fahuo-item{
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 50%;
+          }
+      }
+      .adress{
+          margin: 0 10px;
+          padding: 11px 0;
+          padding-left: 24px;
+          background: url(../../assets/image/location.png) no-repeat left 11px;
+          background-size: 14px 18px;
+      }
+      .choice-adress{
+        color: @fontColor;
+        font-size: 15px;
+        padding-right: 20px;
+        line-height: 1.2;
+        background: url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;
+      }
+      .has-adress{
+          color: #646464;
+          .adress-info{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+          }
+      }
   }
   .pay-shop-box{
       background: #fff;
@@ -178,37 +250,37 @@
       align-items: center;
       padding: 15px;
       .shop-img{
-        width: 70px;
-        height: 70px;
-        overflow: hidden;
-        margin-right: 20px;
-        .shop-detail-image{
           width: 70px;
           height: 70px;
-        }
+          overflow: hidden;
+          margin-right: 20px;
+          .shop-detail-image{
+            width: 70px;
+            height: 70px;
+          }
       }
       .shop-detail{
-        display: flex;
-        flex: 1;
-        height: 70px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        text-align: left;
-        font-size: 15px;
-        .shop-title{
-          width: 100%;
-          color: #323232;
-        }
-        .shop-nums{
-          width: 100%;
-          margin-top: 10px;
-          font-size: 13px;
-          color: #909090;
-        }
+          display: flex;
+          flex: 1;
+          height: 70px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          text-align: left;
+          font-size: 15px;
+          .shop-title{
+            width: 100%;
+            color: #323232;
+          }
+          .shop-nums{
+            width: 100%;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #909090;
+          }
       }
     }
-      .shop-data{
+    .shop-data{
       display: flex;
       /*margin-top: 7px;*/
       width: 100%;
@@ -224,7 +296,7 @@
     }
   }
 
-  .shopping-cart{
+  .shopping-cart-js{
     position: fixed;
     left: 0;
     right: 0;
@@ -240,21 +312,20 @@
     .total-price{
       flex: 1;
       color: #323232;
-      /*padding-top: 1px;*/
       padding-left: 15px;
       font-size: 15px;
       text-align: right;
-      padding-right: 4px;
+      padding-right: 8px;
       span{
         color: #F52C2C;
       }
     }
     .shopping-cart-btn{
-      width: 127px;
-      color: #000;
-      line-height: 45px;
-      background: #F9CD3B url(../../assets/image/shopcar.png) no-repeat 16px center/18px 18px;
-      padding-left: 38.5px;
+        width: 127px;
+        color: #000;
+        text-align: center;
+        line-height: 45px;
+        background: #F9CD3B;
     }
     .all-checked{
         line-height: 45px;
@@ -292,5 +363,60 @@
   }
   .weui-icon-circle,.weui-icon-success{
       font-size: 20px!important;
+  }
+  .paypop{
+      background: #fff;
+      height: 100%;
+      .paypop-header{
+          text-align: center;
+          line-height: 41px;
+          color: #323232;
+          font-size: 15px;
+          position: relative;
+          .paypop-close{
+              position: absolute;
+              top: 12px;
+              right: 12px;
+              width: 15px;
+              height: 15px;
+              background: url(../../assets/image/close-icon.png) no-repeat center center/15px 15px;
+          }
+      }
+      .pay-price{
+          font-size: 15px;
+          color: #323232;
+          text-align: center;
+          padding: 4px;
+          span{
+              color: #F52C2C;
+          }
+      }
+      .pay-item{
+          display: flex;
+          padding: 10px 14px;
+          color: #323232;
+          font-size: 15px;
+          .icon{
+              width: 24px;
+              height: 24px;
+              margin-top: 10px;
+              margin-right: 10px;
+              background: url(../../assets/image/online-icon.png) no-repeat center center/24px 24px;
+          }
+          .offine-icon{
+              width: 24px;
+              height: 24px;
+              margin-top: 10px;
+              margin-right: 10px;
+              background: url(../../assets/image/offine-icon.png) no-repeat center center/24px 24px;
+          }
+          .content{
+              flex: 1;
+          }
+          .desc{
+
+              color: #909090;
+          }
+      }
   }
 </style>
