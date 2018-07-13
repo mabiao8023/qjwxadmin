@@ -91,37 +91,36 @@
 <script>
   import { XInput } from 'vux'
   export default {
-    components: {
-      XInput
-    },
-    data () {
-        return {
-            isShowDesc: false,
-            isShowZh: false,
-        }
-    },
-    methods:{
-      layer( text ){
-        this.$vux.toast.text( text || 'hello', 'middle')
+      components: {
+          XInput
       },
-      showLoading(){
-        this.$vux.loading.show({
-          text: '加载中'
-        })
+      data () {
+          return {
+              isShowDesc: false,
+              isShowZh: false,
+          }
       },
-      hideLoading(){
-        this.$vux.loading.hide()
-      },
-      gotoUpload(){
-            this.$router.push({
-                path: '/upload'
+      methods:{
+          layer( text ){
+            this.$vux.toast.text( text || 'hello', 'middle')
+          },
+          showLoading(){
+            this.$vux.loading.show({
+              text: '加载中'
             })
+          },
+          hideLoading(){
+            this.$vux.loading.hide()
+          },
+          gotoUpload(){
+              this.$router.push({
+                  path: '/upload'
+              })
+          }
+      },
+      mounted() {
+
       }
-
-    },
-    mounted() {
-
-    }
   }
 </script>
 

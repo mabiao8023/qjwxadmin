@@ -134,9 +134,9 @@
       TransferDom
     },
     components: {
-      XInput,
-      UploadPhoto,
-      Previewer
+        XInput,
+        UploadPhoto,
+        Previewer
     },
     data () {
         return {

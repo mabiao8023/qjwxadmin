@@ -3,8 +3,8 @@
       <div class="fahuo-nav">
           <tab class="tab" scroll-threshold="5" >
               <tab-item selected @on-item-click="onItemClick">空间待处理</tab-item>
+              <tab-item @on-item-click="onItemClick">历史订单</tab-item>
               <tab-item @on-item-click="onItemClick">总部待处理</tab-item>
-              <tab-item @on-item-click="onItemClick">待提货</tab-item>
           </tab>
       </div>
         <ul class="js-list">
@@ -16,6 +16,21 @@
                     <div class="order-status">
                         已支付
                     </div>
+                </div>
+                <div>
+                <div class="dashed-line">
+
+                </div>
+                <div class="tihuo-info">
+                    <div class="tihuo-container">
+                        <div class="tihuo-title">
+                            提货人：王琪
+                        </div>
+                        <div class="tihuo-phone">
+                            1214732894781
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <div class="goods-list">
                     <div class="goods-item">
@@ -227,6 +242,24 @@
       padding: 8px 12px;
       span{
           color: #323232;
+      }
+  }
+  .dashed-line{
+    width: 100%;
+    height: 3px;
+    background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
+  }
+  .tihuo-info{
+      padding: 15px 10px;
+      padding-left: 31px;
+      color: #646464;
+      font-size: 15px;
+      line-height: 1.5;
+      background: #ffffff url(../../assets/image/location.png) no-repeat 9px 16px;
+      background-size: 14px 18px;
+      .tihuo-container{
+          display: flex;
+          justify-content: space-between;
       }
   }
 </style>

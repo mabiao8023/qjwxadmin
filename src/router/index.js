@@ -16,6 +16,7 @@ const SelfGet = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/zit
 const OffinePay = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/offinePay.vue');	 // 线下支付
 const Upload = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/upload.vue');	 // 线下支付
 const UploadSuc = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/uploadsuc.vue');	 // 线下支付
+const ViewCer = () =>  import(/* webpackChunkName: "part2" */ '../pages/shop/viewcer.vue');	 // 线下支付
 
 // 个人中心
 const MeIndex = () =>  import(/* webpackChunkName: "part1" */ '../pages/me/me.vue');	      // 个人中心首页
@@ -220,6 +221,12 @@ export default {
               /* 上传凭证成功 */
               path:'/uploadsuc',
               component: UploadSuc,
+              meta: {  }
+          },
+          {
+              /* 查看凭证 */
+              path:'/viewcer',
+              component: ViewCer,
               meta: {  }
           },
       ]

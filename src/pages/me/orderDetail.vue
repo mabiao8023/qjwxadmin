@@ -1,25 +1,25 @@
 <template>
     <div class="page-container">
         <div class="header">
-            交易完成
+            <div>交易完成</div>
+            <div class="look">查看凭证></div>
         </div>
         <template v-if="false">
             <div class="wuliu-msg">
-              <div class="title">
-                物流信息：
-              </div>
-              <div class="wuliu-method">
-                申通快递
-              </div>
-              <div class="wuliu-number" id="copyValue" ref="numbers">
-                2234342532452
-              </div>
-              <button type="button" class="copy-btn" id="copy" data-clipboard-text='#copyValueaaaaaa'>
-                复制
-              </button>
+                <div class="title">
+                    物流信息：
+                </div>
+                <div class="wuliu-method">
+                    申通快递
+                </div>
+                <div class="wuliu-number" id="copyValue" ref="numbers">
+                    2234342532452
+                </div>
+                <button type="button" class="copy-btn" id="copy" data-clipboard-text='#copyValueaaaaaa'>
+                    复制
+                </button>
             </div>
             <div class="dashed-line">
-
             </div>
             <div class="shouhuo">
               <div class="sh-info">
@@ -123,7 +123,7 @@
           </div>
         </div>
 
-        <div class="option-btn">
+        <div class="fixed-option-btn">
           <div class="btn">
             查看物流
           </div>
@@ -166,15 +166,15 @@
                 this.$vux.loading.hide()
             },
             copy(){
-              var clipboard = new Clipboard('button');
-              clipboard.on('success', e => {
-//                  e.clearSelection();
-                  this.layer('复制成功');
-              });
-              clipboard.on('error',e => {
-//                  e.clearSelection();
-                  this.layer('复制失败，请手动复制');
-              });
+                var clipboard = new Clipboard('button');
+                clipboard.on('success', e => {
+                    //  e.clearSelection();
+                    this.layer('复制成功');
+                });
+                clipboard.on('error',e => {
+                    //   e.clearSelection();
+                    this.layer('复制失败，请手动复制');
+                });
             }
         },
         mounted() {
@@ -192,20 +192,18 @@
       background: #EEEEEE;
       font-size: 15px;
   }
-  #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 60px;
-  }
   .header{
       width: 100%;
       background: @mainColor;
       color: #fff;
       font-size: 19px;
       padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .look{
+          font-size: 15px;
+      }
   }
   .wuliu-msg{
       display: flex;
@@ -280,27 +278,31 @@
     }
   }
 
-  .option-btn{
-    background: #FFFFFF;
-    padding: 12px 16px;
-    font-size: 0;
-    text-align: right;
-  .btn{
-    display: inline-block;
-    margin-left: 10px;
-    line-height: 30px;
-    text-align: center;
-    color: #323232;
-    font-size: 15px;
-    border-radius: 15px;
-    padding: 0 15px;
-    border: 1px solid #C2C2C2;
-    overflow: hidden;
-      &.active{
-         color: @mainColor;
-         border: 1px solid @mainColor;
-       }
-  }
+  .fixed-option-btn{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      padding: 12px 16px;
+      font-size: 0;
+      text-align: right;
+    .btn{
+      display: inline-block;
+      margin-left: 10px;
+      line-height: 30px;
+      text-align: center;
+      color: #323232;
+      font-size: 15px;
+      border-radius: 15px;
+      padding: 0 15px;
+      border: 1px solid #C2C2C2;
+      overflow: hidden;
+        &.active{
+           color: @mainColor;
+           border: 1px solid @mainColor;
+         }
+    }
 
   }
 

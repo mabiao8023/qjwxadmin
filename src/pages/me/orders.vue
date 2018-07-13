@@ -5,7 +5,6 @@
               <tab-item selected @on-item-click="onItemClick">全部</tab-item>
               <tab-item @on-item-click="onItemClick">待付款</tab-item>
               <tab-item @on-item-click="onItemClick">待发货</tab-item>
-              <tab-item @on-item-click="onItemClick">待提货</tab-item>
               <tab-item @on-item-click="onItemClick">待收货</tab-item>
           </tab>
       </div>
@@ -60,12 +59,12 @@
                     <div class="btn active">
                         取消订单
                     </div>
-                    <!--<div class="btn">-->
-                        <!--删除订单-->
-                    <!--</div>-->
-                    <!--<div class="btn">-->
-                        <!--去支付-->
-                    <!--</div>-->
+                    <div class="btn">
+                        上传凭证
+                    </div>
+                    <div class="btn">
+                        去支付
+                    </div>
                 </div>
             </li>
         </ul>
