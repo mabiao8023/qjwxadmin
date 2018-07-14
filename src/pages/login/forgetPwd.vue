@@ -149,7 +149,7 @@
                 if( !this.$refs.phoneInput.valid ){
                     this.layer('请输入正确的手机号')
                 }else if( !this.$refs.codeInput.valid ){
-
+                    this.layer('请输入验证码')
                 }else{
                     this.step = 2;
                 }

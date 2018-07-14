@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div class="balance-container">
     <div class="zhmx" @click="gotoPage('/balanceDetail')">
       <div class="zhmx-title">
           账户明细
@@ -16,7 +16,7 @@
         1,000.00
     </p>
     <!-- 提现 -->
-    <div class="logout" @click="submit">
+    <div class="tixian-btn" @click="submit">
         提现
     </div>
   </div>
@@ -61,25 +61,24 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/close.less';
   @import '../../assets/css/reset';
-  html{
-      height: 100%;
-  }
   body{
-      background: #fff;
+      background: #ffffff;
       height: 100%;
       font-size: 15px;
   }
-  .page-container{
+  .balance-container{
       text-align: center;
       background: #fff;
       height: 100%;
+      padding-top: 12px;
+      padding-bottom: 200px;
   }
-  .logout{
+  .tixian-btn{
       width: 90%;
       margin: 48px auto 0;
       height: 44px;
@@ -95,7 +94,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px;
-    margin: 12px;
+    margin: 0 12px;
     background: #F7F7F7;
     border-radius: 5px;
   .zhmx-title{

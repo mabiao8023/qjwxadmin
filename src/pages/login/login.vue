@@ -7,11 +7,13 @@
         <div class="login-group">
             <div>
                 <x-input title="账号"
+                         required
                          v-model="name"
                          type="tel"
                          placeholder="请输入用户名"
                          keyboard="number"
                          class="vux-1px-b"
+                         ref="phoneInput"
                          is-type="china-mobile"
                 >
                   <img slot="label"
@@ -21,8 +23,10 @@
             </div>
             <div>
                 <x-input title="密码"
+                         required
                          type="password"
                          v-model="pwd"
+                         ref="pwdInput"
                          placeholder="请输入密码"
                          class="vux-1px-b"
                 >
@@ -68,15 +72,19 @@
                 this.$vux.loading.hide()
             },
             login(){
-                //  this.layer('请输入手机号')
-                // 调登录接口
-                this.$http.post('/api').then(({data}) => {
-                    console.log(data);
-                    // 本地存储7天的cookie
-                    cookie.set('token',data.token,{
-                        expires: 7
-                    })
-                })
+                if( !this.$refs.phoneInput.valid ){
+                  this.layer('请输入正确的手机号')
+                }else if( !this.$refs.pwdInput.valid ){
+                  this.layer('请输入验证码')
+                }else{
+                    this.$http.post('/api').then(({data}) => {
+                        console.log(data);
+                        // 本地存储7天的cookie
+                        cookie.set('token',data.token,{
+                          expires: 7
+                        })
+                     })
+                }
             },
             gotoForgetPwd(){
                 this.$router.push({

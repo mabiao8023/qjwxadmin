@@ -1,6 +1,6 @@
 <template>
-    <div class="page-container">
-        <div class="shuaixuan vux-1px-b">
+    <div class="balance-detail-container">
+        <div class="shuaixuan">
               <div class="sx-title sx-item">条件筛选</div>
               <div class="sx-con sx-item" @click="isShowRadio = true">
                   {{ option1 }} <i class="arrow-icon"></i>
@@ -17,7 +17,7 @@
                 </group>
             </popup>
         </div>
-        <ul class="b-list">
+        <ul class="b-d-list">
             <li class="b-item vux-1px-b" v-for="i in bottomCount">
                 <div class="b-item-left">
                     <div class="title">
@@ -121,6 +121,10 @@
       background: #F5F5F5;
       font-size: 15px;
   }
+  .balance-detail-container{
+      background: #F5F5F5;
+      padding-top: 45px;
+  }
   .shuaixuan{
         position: fixed;
         top: 0;
@@ -132,6 +136,7 @@
         line-height: 45px;
         align-items: center;
         font-size: 15px;
+        border-bottom: 1px solid #eaeaea;
         .sx-item{
             width: 33.33%;
         }
@@ -155,8 +160,8 @@
             color: #646464;
         }
   }
-  .b-list{
-      margin-top: 55px;
+  .b-d-list{
+      margin-top: 10px;
       padding: 0 18px;
       background: #fff;
       .b-item{
@@ -177,11 +182,5 @@
           color: @fontColor;
           font-size: 20px;
       }
-  }
-    /* 隐藏显示 */
-  .popup-radio{
-      width: 0;
-      height: 0;
-      opacity: 0;
   }
 </style>

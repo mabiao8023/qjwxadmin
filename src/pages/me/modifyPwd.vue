@@ -7,8 +7,10 @@
                 </div>
               <div class="setting-con">
                 <x-input
+                  required
+                  ref="oldPwdInput"
                   type="password"
-                  v-model="pwd"
+                  v-model="oldPwd"
                   placeholder="请输入旧密码"
                   ></x-input>
               </div>
@@ -20,8 +22,10 @@
                 </div>
                 <div class="setting-con">
                   <x-input
+                    required
+                    ref="newPwdInput"
                     type="password"
-                    v-model="pwd"
+                    v-model="newPwd"
                     placeholder="请输入新密码"
                   ></x-input>
                 </div>
@@ -32,15 +36,17 @@
               </div>
               <div class="setting-con">
                 <x-input
+                  required
+                  ref="reNewPwdInput"
                   type="password"
-                  v-model="pwd"
-                  placeholder="请输入新密码"
+                  v-model="reNewPwd"
+                  placeholder="请再次输入新密码"
                 ></x-input>
               </div>
             </li>
         </ul>
-      <!-- 退出登录 -->
-      <div class="logout">
+      <!-- 确认修改 -->
+      <div class="logout" @click="surePwd">
           确认修改
       </div>
     </div>
@@ -55,7 +61,9 @@
         },
         data () {
             return {
-
+                oldPwd: '',
+                newPwd: '',
+                reNewPwd: ''
             }
         },
         methods:{
@@ -70,7 +78,17 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
+            surePwd(){
+                if( !this.$refs.oldPwdInput.valid ){
+                    this.layer('请输入原来的密码')
+                }else if( !this.$refs.newPwdInput.valid ){
+                    this.layer('请输入新的密码')
+                }else if( this.newPwd != this.reNewPwd ){
+                    this.layer('请输入一致的新密码')
+                }else{
 
+                }
+            }
         },
         mounted() {
 

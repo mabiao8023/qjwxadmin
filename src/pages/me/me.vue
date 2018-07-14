@@ -1,6 +1,6 @@
 <template>
     <div>
-          <div class="header">
+          <div class="me-header">
               <div class="avatar">
                   <img class="avatar-img" src="../../assets/image/logo.png" alt="">
               </div>
@@ -31,46 +31,41 @@
                   <img src="../../assets/image/dingdan.png" alt="">
                   <p>订单管理</p>
               </router-link>
-              <router-link :to="{path:'/fahuo'}" class="me-item vux-1px-b vux-1px-l">
-                  <img src="../../assets/image/yeji.png" alt="">
-                  <p>我的业绩</p>
-              </router-link>
+              <!--<router-link :to="{path:'/fahuo'}" class="me-item vux-1px-b vux-1px-l">-->
+                  <!--<img src="../../assets/image/yeji.png" alt="">-->
+                  <!--<p>我的业绩</p>-->
+              <!--</router-link>-->
               <router-link :to="{path:'/fahuo'}" class="me-item vux-1px-b vux-1px-l">
                   <img src="../../assets/image/fahuo.png" alt="">
                   <p>发货管理</p>
+              </router-link>
+              <router-link :to="{path:'/chuangke'}" class="me-item vux-1px-b vux-1px-l">
+                  <img src="../../assets/image/shenhe.png" alt="">
+                  <p>创客管理</p>
               </router-link>
               <router-link :to="{path:'/invite' }" class="me-item">
                   <img src="../../assets/image/daili.png" alt="">
                   <p>邀请创客</p>
               </router-link>
-              <router-link :to="{path:'/chuangke'}" class="me-item vux-1px-l">
-                  <img src="../../assets/image/shenhe.png" alt="">
-                  <p>创客管理</p>
-              </router-link>
-              <router-link :to="{}" class="me-item vux-1px-l">
+
+              <router-link :to="{}" class="me-item vux-1px-l vux-1px-r">
                   <img src="../../assets/image/shouquan.png" alt="">
                   <p>授权合同</p>
               </router-link>
-              <router-link :to="{}" class="me-item vux-1px-l">
-                  <img src="../../assets/image/yaoqing.png" alt="">
-                  <p>邀请关系网</p>
-              </router-link>
+              <!--<router-link :to="{}" class="me-item vux-1px-l vux-1px-r">-->
+                  <!--<img src="../../assets/image/yaoqing.png" alt="">-->
+                  <!--<p>邀请关系网</p>-->
+              <!--</router-link>-->
           </div>
     </div>
 </template>
 
 <script>
-    import { Group, XInput,XButton   } from 'vux'
     export default {
         components: {
-            XInput,
-            Group,
-            XButton
         },
         data () {
             return {
-                name: '',
-                pwd: ''
             }
         },
         methods:{
@@ -85,8 +80,10 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
-            gotoPage( link ) {
-                location.href = link;
+            gotoPage( page ){
+                this.$router.push({
+                    path: page
+                })
             }
         },
         mounted() {
@@ -104,15 +101,7 @@
       background: #F5F5F5;
       font-size: 15px;
   }
-  #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 60px;
-  }
-  .header{
+  .me-header{
       width: 100%;
       height: 167px;
       position: relative;
