@@ -13,7 +13,7 @@
         当前余额(元)
     </p>
     <p  class="current-money">
-        1,000.00
+        {{ account.balance }}
     </p>
     <!-- 提现 -->
     <div class="tixian-btn" @click="submit">
@@ -24,21 +24,39 @@
 </template>
 
 <script>
+  import api from '../../assets/js/api'
   export default {
       components: {
       },
       data () {
         return {
-
+          userInfo:{
+            "user_id": "",
+            "username": "",
+            "nickname": "",
+            "mobile": "",
+            "avatar": "",
+            "identity": "",
+            "wx_name": ""
+          },
+          identity:{
+            'store':'创客空间',
+            'director':'创客主管',
+            'member': '创客'
+          },
+          account:{
+            balance: 0,
+            frost: 0
+          }
         }
       },
       methods:{
           layer( text ){
              this.$vux.toast.text( text || 'hello', 'middle')
           },
-          showLoading(){
+          showLoading  ( text ){
               this.$vux.loading.show({
-                text: '加载中'
+                text: text || '加载中'
               })
           },
           hideLoading(){
@@ -51,12 +69,22 @@
           },
           submit() {
               this.$router.push({
-                  path: '/tixiansuc'
+                  path: '/tixian'
+              })
+          },
+          getUserInfo(){
+            this.$http.post( api.getUserInfo )
+              .then( res => {
+                if( res.code == 1 ){
+                  this.userInfo = res.data.userinfo;
+                  this.account = res.data.account;
+                }
               })
           }
       },
       mounted() {
-
+          this.getUserInfo();
+          document.getElementsByTagName('title')[0].textContent = '账户余额';
       }
   }
 </script>

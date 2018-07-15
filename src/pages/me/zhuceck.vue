@@ -5,13 +5,13 @@
         </div>
         <ul class="input-list">
             <li class="input-item vux-1px-b">
-                <div class="title">
-                    推荐人
+                <div class="title num1-title">
+                    所属创客空间
                 </div>
                 <div class="input">
                     <x-input
                       v-model="tjname"
-                      placeholder="请输入推荐人姓名"
+                      placeholder="xx创客空间"
                     ></x-input>
                 </div>
             </li>
@@ -21,7 +21,10 @@
             </div>
             <div class="input">
               <x-input
-                v-model="tjname"
+                v-model="name"
+                required
+                ref="nameInput"
+                is-type="china-name"
                 placeholder="请填写真实姓名"
               ></x-input>
             </div>
@@ -32,7 +35,10 @@
               </div>
               <div class="input">
                 <x-input
-                  v-model="tjname"
+                  required
+                  ref="phoneInput"
+                  is-type="china-mobile"
+                  v-model="phone"
                   placeholder="请填写真实电话(登录账号使用)"
                 ></x-input>
               </div>
@@ -43,15 +49,19 @@
             </div>
             <div class="input">
               <x-input
-                v-model="tjname"
+                required
+                ref="codeInput"
+                v-model="code"
                 placeholder="请输入验证码"
               ></x-input>
             </div>
-            <div class="code" v-if="false">
+            <div class="code"
+                 v-if="!isSendCoding"
+                 @click="sendCode">
                 获取验证码
             </div>
-            <div class="code disable">
-               重发(16s)
+            <div class="code disable" v-else>
+               重发(<countdown v-model="time" :start="isSendCoding" @on-finish="finish"></countdown>)
             </div>
           </li>
           <li class="input-item vux-1px-b">
@@ -60,7 +70,9 @@
             </div>
             <div class="input">
               <x-input
-                v-model="tjname"
+                required
+                ref="pwdInput"
+                v-model="password"
                 placeholder="请输入密码"
               ></x-input>
             </div>
@@ -71,60 +83,65 @@
             </div>
             <div class="input">
               <x-input
-                v-model="tjname"
+                required
+                ref="rePwdInput"
+                v-model="rePassword"
                 placeholder="请再次输入密码"
               ></x-input>
             </div>
           </li>
-          <li class="input-item vux-1px-b">
+          <li class="input-item hetong vux-1px-b">
             <div class="title">
-              *支付宝
+              *上传合同
             </div>
             <div class="input">
-              <x-input
-                v-model="tjname"
-                placeholder="请填写用姓名实名的支付宝账号"
-              ></x-input>
-            </div>
-          </li>
-          <li class="input-item vux-1px-b">
-            <div class="title">
-              *微信号
-            </div>
-            <div class="input">
-              <x-input
-                v-model="tjname"
-                placeholder="请填写真实微信号"
-              ></x-input>
-            </div>
-          </li>
-          <li class="input-item">
-            <div class="title">
-              邮箱
-            </div>
-            <div class="input">
-              <x-input
-                v-model="tjname"
-                placeholder="请填写邮箱"
-              ></x-input>
+              <div class="upload-item" @click="chooseImg">
+
+              </div>
             </div>
           </li>
         </ul>
         <div class="logout">
             提交申请
         </div>
+      <!-- 图片上传组件 -->
+      <UploadPhoto ref="uploadPhoto"
+                   @getImgData="getImgDataUrl"
+                   @progress="uploadProgress"
+                   @uploadResData="uploadResData"
+      ></UploadPhoto>
+      <div v-transfer-dom>
+        <previewer :list="list" ref="previewer" :options="options" @on-index-change="logIndexChange"></previewer>
+      </div>
+
     </div>
 </template>
 
 <script>
-    import {  XInput } from 'vux'
+    import {  XInput, Countdown,Previewer,TransferDom } from 'vux'
+    import api from '../../assets/js/api'
+    import UploadPhoto from '../../components/uploadPhoto.vue'
     export default {
+        directives: {
+          TransferDom
+        },
         components: {
-            XInput
+            XInput,
+            Countdown,
+            UploadPhoto,
+            Previewer
         },
         data () {
             return {
-                tjname: ''
+                tjname: '',
+                name: '',
+                phone: '',
+                code: '',
+                password: '',
+                rePwdInput: '',
+                time: 90,
+                start: true,
+                isSendCoding: false
             }
         },
         methods:{
@@ -139,6 +156,53 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
+            finish(){
+                this.isSendCoding = false;
+                this.time = 90;
+            },
+            sendCode(){
+                if( !this.$refs.phoneInput.valid ){
+                    this.layer('请输入正确的手机号码')
+                }else{
+                    this.$http.post(api.getCode,{
+                        event: 'register',
+                        mobile: this.phone
+                    }).then( res => {
+                        this.isSendCoding = true;
+                    })
+                }
+            },
+            chooseImg(){
+              this.$refs['uploadPhoto'].$el.click();
+            },
+            // 父组件监听子组件上传图片返回的base64的数据，用于本地显示图片
+            getImgDataUrl( value ){
+              //  value -> 图片base64的数
+              //  console.log(value);
+            },
+            uploadProgress(value){
+              // value -> 图片上传的进度百分比，会实时更新，用于进度条显示
+              // console.log(value);
+            },
+            uploadResData(value){
+              if(value.type == 'success'){
+                let img = new Image();
+                let that = this;
+                img.src = value.image_url;
+                // 加载完成后在进行发消息
+                img.onload = function(){
+                  //  提示上传成功
+                }
+              }else{
+                // 上传失败
+              }
+            },
+            show (index) {
+              this.$refs.previewer.show(index)
+            },
+            deletePhoto (index){
+              this.list.splice(index,1);
+            }
         },
         mounted() {
 
@@ -181,6 +245,9 @@
               width: 70px;
               color: #323232;
           }
+          .num1-title{
+            width: 90px;
+          }
           .input{
               flex: 1;
           }
@@ -198,6 +265,13 @@
               color: #fff;
           }
       }
+      .hetong{
+          display: block;
+          padding: 10px 0;
+          .title{
+              padding-bottom: 10px;
+          }
+      }
   }
   .logout{
       width: 90%;
@@ -209,5 +283,25 @@
       font-size: 17px;
       background: @mainColor;
       border-radius: 22px;
+  }
+  .upload-item{
+        position: relative;
+        width: 74px;
+        height: 74px;
+        margin-right: 10px;
+        /*border-radius: 10px;*/
+      background: url(../../assets/image/add-photo.png) no-repeat center center/100% 100%;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+      .delete-photo{
+        position: absolute;
+        top: -7px;
+        right: -7px;
+        width: 15px;
+        height: 15px;
+        background: url(../../assets/image/photo-delete.png) no-repeat center center/100% 100%;
+      }
   }
 </style>

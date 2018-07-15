@@ -2,11 +2,11 @@
     <div>
           <div class="me-header">
               <div class="avatar">
-                  <img class="avatar-img" src="../../assets/image/logo.png" alt="">
+                  <img class="avatar-img" :src="userInfo.avatar" alt="">
               </div>
-              <p class="nickname">李银河</p>
+              <p class="nickname">{{userInfo.username}}</p>
               <div class="job-title">
-                  创客主管
+                {{identity[userInfo.identity]}}
               </div>
               <router-link :to="{path: '/setting'}" class="setting"></router-link>
           </div>
@@ -14,11 +14,11 @@
           <div class="me-money">
                 <div class="yuen" @click="gotoPage('/balance')">
                     <p class="money-title">余额(元)</p>
-                    <p class="money-num">4970.00</p>
+                    <p class="money-num">{{ account.balance }}</p>
                 </div>
                 <div class="jiesuan" @click="gotoPage('/settle')">
                     <p class="money-title">待结算(元)</p>
-                    <p class="money-num">4970.00</p>
+                    <p class="money-num">{{ account.frost }}</p>
                 </div>
           </div>
           <!-- 九宫格 -->
@@ -61,11 +61,30 @@
 </template>
 
 <script>
-    export default {
+  import api from '../../assets/js/api'
+  export default {
         components: {
         },
         data () {
             return {
+                userInfo:{
+                    "user_id": "",
+                    "username": "",
+                    "nickname": "",
+                    "mobile": "",
+                    "avatar": "",
+                    "identity": "",
+                    "wx_name": ""
+                },
+                identity:{
+                  'store':'创客空间',
+                  'director':'创客主管',
+                  'member': '创客'
+                },
+                account:{
+                    balance: 0,
+                    frost: 0
+                }
             }
         },
         methods:{
@@ -84,10 +103,20 @@
                 this.$router.push({
                     path: page
                 })
+            },
+            getUserInfo(){
+                this.$http.post( api.getUserInfo )
+                    .then( res => {
+                        if( res.code == 1 ){
+                            this.userInfo = res.data.userinfo;
+                            this.account = res.data.account;
+                        }
+                    })
             }
         },
         mounted() {
-
+            this.getUserInfo();
+            document.getElementsByTagName('title')[0].textContent = '个人中心';
         }
     }
 </script>

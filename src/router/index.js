@@ -24,6 +24,7 @@ const Balance = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/balan
 const BalanceDetail = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/balanceDetail.vue');	  // 账户明细
 const Chuangke = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/chuangke.vue');	  // 创客管理
 const Settle = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/jiesuan.vue');	  // 结算
+const SettleDetail = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/jiesuanDetail.vue');	  // 结算
 const ModifyPwd = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/modifyPwd.vue');	  // 修改密码
 const OrderDetail = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/orderDetail.vue');	  // 订单详情
 const Orders = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/orders.vue');	  // 订单列表
@@ -128,6 +129,12 @@ export default {
               /* 结算 */
               path:'/settle',
               component: Settle,
+              meta: {  }
+          },
+          {
+              /* 结算 */
+              path:'/settleDetail',
+              component: SettleDetail,
               meta: {  }
           },
           {

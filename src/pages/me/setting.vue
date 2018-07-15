@@ -6,7 +6,7 @@
                     已绑定手机
                 </div>
                 <div class="setting-con">
-                    13435454646
+                  {{ userInfo.mobile }}
                 </div>
             </li>
             <li class="setting-item vux-1px-t">
@@ -14,7 +14,7 @@
                   账号等级
                 </div>
                 <div class="setting-con">
-                  创客主管
+                  {{ identity[userInfo.identity] }}
                 </div>
             </li>
         </ul>
@@ -47,7 +47,7 @@
         </li>
       </ul>
       <!-- 退出登录 -->
-      <div class="logout">
+      <div class="logout" @click="logout">
            退出登陆
       </div>
     </div>
@@ -55,22 +55,41 @@
 </template>
 
 <script>
-    export default {
+  import api from '../../assets/js/api'
+  import { cookie } from 'vux'
+  export default {
         components: {
 
         },
         data () {
             return {
-
+              userInfo:{
+                "user_id": "",
+                "username": "",
+                "nickname": "",
+                "mobile": "",
+                "avatar": "",
+                "identity": "",
+                "wx_name": ""
+              },
+              identity:{
+                'store':'创客空间',
+                'director':'创客主管',
+                'member': '创客'
+              },
+              account:{
+                balance: 0,
+                frost: 0
+              }
             }
         },
         methods:{
             layer( text ){
                 this.$vux.toast.text( text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading( text ){
                 this.$vux.loading.show({
-                  text: '加载中'
+                  text: text || '加载中'
                 })
             },
             hideLoading(){
@@ -80,10 +99,27 @@
                 this.$router.push({
                     path: link
                 })
+            },
+            getUserInfo(){
+              this.$http.post( api.getUserInfo )
+                .then( res => {
+                if( res.code == 1 ){
+                  this.userInfo = res.data.userinfo;
+                  this.account = res.data.account;
+                }
+              })
+            },
+            logout(){
+//              this.layer('修改成功，重新登录')
+                cookie.remove('token')
+                this.$router.push({
+                  path: '/login'
+                })
             }
         },
         mounted() {
-
+          this.getUserInfo();
+          document.getElementsByTagName('title')[0].textContent = '设置';
         }
     }
 </script>

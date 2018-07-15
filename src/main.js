@@ -60,7 +60,7 @@ router.beforeEach((to, from, next) => {
 //添加一个请求拦截器
 Vue.http.interceptors.request.use(function(config){
     console.dir(config)
-    let userToken = cookie.get('token') || '1231321231';
+    let userToken = cookie.get('token') || '';
     config.timeout = 2000;
     config.transformRequest = [function(data = {},headers){
         //依自己的需求对请求数据进行处理
@@ -80,9 +80,31 @@ Vue.http.interceptors.request.use(function(config){
 Vue.http.interceptors.response.use(function(response){
     //  对返回的数据进行一些处理
     //  对code码进行统一处理
-    return response;
+    let data  = response.data;
+    if( data.code == 0 ){
+        Vue.$vux.toast.text( data.msg, 'middle')
+    }else if( data.code == 401 ){
+        Vue.$vux.toast.text( '未登录', 'middle')
+        location.href = '/login'
+    }else if( data.code == 403 ){
+        Vue.$vux.toast.text( '未授权', 'middle')
+        //  跳转授权
+    }
+    return data;
 },function(error){
     //对返回的错误进行一些处理
+    let status  = error.response.status;
+    if( status == 0 ){
+      Vue.$vux.toast.text( data.msg, 'middle')
+    }else if( status == 401 ){
+      Vue.$vux.toast.text( '未登录', 'middle')
+      location.href = '/login'
+    }else if( status == 403 ){
+      Vue.$vux.toast.text( '未授权', 'middle')
+      //  跳转授权
+    }else{
+      Vue.$vux.toast.text( '请求接口报错', 'middle')
+    }
     return Promise.reject(error);
 });
 

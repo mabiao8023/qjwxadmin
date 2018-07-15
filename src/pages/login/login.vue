@@ -8,7 +8,7 @@
             <div>
                 <x-input title="账号"
                          required
-                         v-model="name"
+                         v-model="account"
                          type="tel"
                          placeholder="请输入用户名"
                          keyboard="number"
@@ -25,7 +25,7 @@
                 <x-input title="密码"
                          required
                          type="password"
-                         v-model="pwd"
+                         v-model="password"
                          ref="pwdInput"
                          placeholder="请输入密码"
                          class="vux-1px-b"
@@ -48,24 +48,26 @@
 </template>
 
 <script>
-    import { XInput } from 'vux'
+    import { XInput,cookie } from 'vux'
+    import api from '../../assets/js/api'
     export default {
         components: {
             XInput,
         },
         data () {
             return {
-                name: '',
-                pwd: ''
+                /* 18520654081 qwe123 */
+                account: '',
+                password: ''
             }
         },
         methods:{
             layer( text ){
                 this.$vux.toast.text( text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading(text){
                 this.$vux.loading.show({
-                  text: '加载中'
+                  text: text || '加载中'
                 })
             },
             hideLoading(){
@@ -75,15 +77,29 @@
                 if( !this.$refs.phoneInput.valid ){
                   this.layer('请输入正确的手机号')
                 }else if( !this.$refs.pwdInput.valid ){
-                  this.layer('请输入验证码')
+                  this.layer('请输入密码')
                 }else{
-                    this.$http.post('/api').then(({data}) => {
-                        console.log(data);
-                        // 本地存储7天的cookie
-                        cookie.set('token',data.token,{
-                          expires: 7
-                        })
-                     })
+                    this.showLoading('登录中')
+                    this.$http.post( api.login,{
+                        account: this.account,
+                        password: this.password
+                    } ).then( res => {
+                        this.hideLoading();
+                        if( res.code == 1 ){
+                            if( res.data.userinfo.token ){
+                                // 本地存储7天的cookie
+                                cookie.set('token',res.data.userinfo.token ,{
+                                  expires: 7
+                                });
+                                // 进入个人中心
+                                this.$router.push({
+                                  path: '/meIndex'
+                                })
+                            }
+                        }
+                     }).catch( e => {
+                        this.hideLoading();
+                    } )
                 }
             },
             gotoForgetPwd(){
@@ -93,7 +109,8 @@
             }
         },
         mounted() {
-
+            //  设置标题
+            document.getElementsByTagName('title')[0].textContent = '登录';
         }
     }
 </script>

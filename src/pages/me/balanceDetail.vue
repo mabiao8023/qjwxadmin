@@ -6,29 +6,32 @@
                   {{ option1 }} <i class="arrow-icon"></i>
               </div>
               <div class="sx-date sx-item" @click="showDate">
-                  {{date.split('-')[0] + '年' + date.split('-')[1] + '月' }}
+                  {{ year + '年' + month + '月' }}
                   <i class="arrow-icon"></i>
               </div>
         </div>
         <div v-transfer-dom>
             <popup v-model="isShowRadio">
-                <group gutter="0" @click.native="isShowRadio = false">
+                <group gutter="0" @click.native="getListByType">
                   <radio :options="options1" v-model="option1"></radio>
                 </group>
             </popup>
         </div>
         <ul class="b-d-list">
-            <li class="b-item vux-1px-b" v-for="i in bottomCount">
+            <li class="b-item vux-1px-b" v-for="(item,index) in accountLog">
                 <div class="b-item-left">
                     <div class="title">
-                        返利收入
+                        {{ item.remark }}
                     </div>
                     <div class="time">
-                         2018-7-31 12:53
+                         {{ item.addtime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss') }}
                     </div>
                 </div>
-                <div class="b-data">
-                      + 70.00
+                <div class="b-data" v-if="item.income">
+                      + {{ item.income }}
+                </div>
+                <div class="b-data" v-else>
+                     - {{ item.expend }}
                 </div>
             </li>
         </ul>
@@ -43,8 +46,9 @@
     </div>
 </template>
 <script>
-    import {  Popup, TransferDom, Group, Radio   } from 'vux'
-    import InfiniteLoading from 'vue-infinite-loading';
+    import {  Popup, TransferDom, Group, Radio, dateFormat   } from 'vux'
+    import InfiniteLoading from 'vue-infinite-loading'
+    import api from '../../assets/js/api'
 
     export default {
         components: {
@@ -53,17 +57,32 @@
           Radio,
           InfiniteLoading
         },
-      directives: {
-        TransferDom
-      },
+        filters: {
+          dateFormat
+        },
+        directives: {
+          TransferDom
+        },
         data () {
             return {
-              date:'2017-05',
-              options1: ['全部','未开始','已结算'],
+              options1: [
+                  '全部',
+                  '返利',
+                  '支出'],
               option1:'全部',
               bottomCount: 0,
-              isShowRadio: false
+              isShowRadio: false,
+              year: new Date().getFullYear(),
+              month: new Date().getMonth() + 1,
+              accountLog: [],
+              page: 1,
             }
+        },
+        compouted:{
+          type(){
+              return this.option1 == '全部' ? 'all' :
+                            this.option1 == '返利' ? 'income' : 'expend';
+          }
         },
         methods:{
             layer( text ){
@@ -80,10 +99,12 @@
             showDate(){
               const _this = this
               this.$vux.datetime.show({
-                value: this.date, // 其他参数同 props
+                value: this.year + '-' + this.month, // 其他参数同 props
                 format: 'YYYY-MM',
                 confirmText:'确认',
                 cancelText:'取消',
+                minYear: '2018',
+                maxYear: new Date().getFullYear(),
                 onHide () {
                   const _this = this
                 },
@@ -91,23 +112,46 @@
                   const _this = this
                 },
                 onConfirm(val){
-                   _this.date = val
+                  _this.year = parseInt(val.split('-')[0]);
+                  _this.month = parseInt(val.split('-')[1]);
+                  _this.accountLog = [];
+                  _this.page = 1;
+                  _this.$nextTick(() => {
+                    _this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+                  });
                 }
               })
             },
+            getListByType(){
+                this.isShowRadio = false
+                this.accountLog = [];
+                this.page = 1;
+                this.$nextTick(() => {
+                  this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+                });
+            },
             getList ( $state ) {
-              setTimeout(() => {
-                this.bottomCount += 10
-                if( this.bottomCount < 50 ){
-                    $state.loaded();
-                } else{
+                this.$http.post( api.accountLog,{
+                    type: this.type,
+                    year: this.year,
+                    month: this.month
+                }).then( res => {
+                    if( res.code == 1 ){
+                        if( res.data.length ){
+                            this.page++;
+                            this.accountLog = this.accountLog.concat( res.data )
+                            $state.loaded();
+                        }else{
+                            $state.complete();
+                        }
+                    }
+                } ).catch( e => {
                     $state.complete();
-                }
-              }, 1000)
+                } )
             },
         },
         mounted() {
-
+            document.getElementsByTagName('title')[0].textContent = '账户明细';
         }
     }
 </script>

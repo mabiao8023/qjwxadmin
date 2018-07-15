@@ -72,7 +72,6 @@
         data () {
             return {
                 search: '',
-                results: [],
                 onFetching: false,
                 bottomCount: 0,
                 changeValue: 1,

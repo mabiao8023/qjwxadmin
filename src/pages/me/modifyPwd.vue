@@ -54,7 +54,8 @@
 </template>
 
 <script>
-    import { XInput   } from 'vux'
+    import { XInput, cookie  } from 'vux'
+    import api from '../../assets/js/api'
     export default {
         components: {
           XInput
@@ -70,9 +71,9 @@
             layer( text ){
                 this.$vux.toast.text( text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading( text ){
                 this.$vux.loading.show({
-                  text: '加载中'
+                  text:  text || '加载中'
                 })
             },
             hideLoading(){
@@ -86,12 +87,28 @@
                 }else if( this.newPwd != this.reNewPwd ){
                     this.layer('请输入一致的新密码')
                 }else{
-
+                    this.showLoading('修改中')
+                    this.$http.post( api.modifyPwd,{
+                      oldpassword: this.oldPwd,
+                      newpassword: this.newPwd,
+                      reNewPwd: this.reNewPwd
+                    } ).then( res => {
+                        this.hideLoading();
+                        if( res.code == 1 ){
+                            this.layer('修改成功，重新登录')
+                            cookie.remove('token')
+                            this.$router.push({
+                                path: '/login'
+                            })
+                        }
+                    } ).catch( e => {
+                        this.hideLoading()
+                    } )
                 }
             }
         },
         mounted() {
-
+            document.getElementsByTagName('title')[0].textContent = '修改密码';
         }
     }
 </script>

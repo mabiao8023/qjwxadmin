@@ -113,6 +113,7 @@
 
 <script>
     import { Group, XInput, Countdown  } from 'vux'
+    import api from '../../assets/js/api'
     export default {
         components: {
             XInput,
@@ -137,9 +138,9 @@
             layer( text ){
                 this.$vux.toast.text( text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading( text ){
                 this.$vux.loading.show({
-                  text: '加载中'
+                  text: text || '加载中'
                 })
             },
             hideLoading(){
@@ -151,19 +152,59 @@
                 }else if( !this.$refs.codeInput.valid ){
                     this.layer('请输入验证码')
                 }else{
-                    this.step = 2;
+                    this.showLoading('验证中')
+                    this.$http.post(api.checkCode,{
+                        event: 'resetpwd',
+                        mobile: this.phone,
+                        captcha: this.code
+                    }).then( res => {
+                        this.hideLoading();
+                        if( res.code == 1 ){
+                            this.step = 2;
+                        }
+                    } ).catch( e => {
+                        this.hideLoading();
+                  } )
                 }
             },
             pwdSubmit(){
-                this.step = 3;
+                if( !this.$refs.pwdInput.valid ){
+                     this.layer('请输入密码')
+                }else{
+                    this.showLoading('修改中')
+                    this.$http.post(api.resetpwd,{
+                        type: 'mobile',
+                        mobile: this.phone,
+                        newpassword: this.password,
+                        captcha: this.code
+                    }).then( res => {
+                        if( res.code == 1 ){
+                            this.step = 3;
+                        }
+                    } )
+                }
             },
             finish(){
                 this.isSendCoding = false;
                 this.time = 90;
             },
             sendCode(){
-                this.isSendCoding = true;
+                if( !this.$refs.phoneInput.valid ){
+                    this.layer('请输入正确的手机号')
+                }else{
+                    this.$http.post(api.getCode,{
+                        event: 'resetpwd',
+                        mobile: this.phone
+                    }).then( res => {
+                        if( res.code == 1 ){
+                            this.isSendCoding = true;
+                         }
+                    })
+                }
             }
+        },
+        mounted(){
+            document.getElementsByTagName('title')[0].textContent = '忘记密码';
         }
     }
 </script>
@@ -262,10 +303,10 @@
           background: #F7F7F7;
           border-radius: 3px;
           .send-btn{
-              width: 100px;
+              width: 110px;
               text-align: center;
               /*padding: 0 8px;*/
-              line-height: 30px;
+              line-height: 26px;
               color: @fontColor;
           }
           .already-send{

@@ -7,20 +7,23 @@
           <div class="zhmx-title">
                 账户
           </div>
-          <div  class="zhmx-arrow">
-                LanseXueZhe
+          <div class="wx-name">
+                {{ userInfo.wx_name }}
           </div>
+          <!--<div  class="zhmx-arrow">-->
+
+          <!--</div>-->
       </div>
       <div class="input-money vux-1px-b">
           <x-input
             label-width="30px"
             title="￥"
             v-model="money"
-            placeholder="最多可提取1000.00"
+            :placeholder="'最多可提取' + account.balance "
           ></x-input>
       </div>
       <!-- 提现 -->
-      <div class="logout">
+      <div class="logout" @click="submitCash">
           提交
       </div>
     </div>
@@ -29,12 +32,32 @@
 
 <script>
   import { XInput   } from 'vux'
-    export default {
+  import api from '../../assets/js/api'
+
+  export default {
         components: {
            XInput
         },
         data () {
             return {
+              userInfo:{
+                "user_id": "",
+                "username": "",
+                "nickname": "",
+                "mobile": "",
+                "avatar": "",
+                "identity": "",
+                "wx_name": ""
+              },
+              identity:{
+                'store':'创客空间',
+                'director':'创客主管',
+                'member': '创客'
+              },
+              account:{
+                balance: 1000,
+                frost: 1000
+              },
               money: ''
             }
         },
@@ -50,10 +73,36 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
-
+            getUserInfo(){
+              this.$http.post( api.getUserInfo )
+                .then( res => {
+                  if( res.code == 1 ){
+                    this.userInfo = res.data.userinfo || {};
+                    this.account = res.data.account || {};
+                  }
+                })
+            },
+            submitCash(){
+                if( this.money <= 0 || this.money > this.account.balance ){
+                    this.layer('请输入正确的提现金额')
+                }else{
+                    this.showLoading('提现中')
+                    this.$http.post( api.getCash,{
+                        money: this.money
+                    } ).then( res => {
+                        this.hideLoading();
+                        this.$router.push({
+                            path: '/tixiansuc'
+                        })
+                    } ).catch( e => {
+                        this.hideLoading();
+                    } )
+                }
+            }
         },
         mounted() {
-
+            this.getUserInfo();
+            document.getElementsByTagName('title')[0].textContent = '提现';
         }
     }
 </script>

@@ -5,25 +5,25 @@
                 待结算（元）
             </div>
             <div class="h-money">
-                1000.00
+                {{ frost }}
             </div>
         </div>
         <ul class="js-list">
-            <li class="js-item" v-for="i in bottomCount">
+            <li class="js-item" v-for="(item,index) in frostLog">
                 <div class="js-item-part1">
                     <div class="left">
-                        ¥1500.00
+                        {{ item.money }}
                     </div>
                     <div class="right">
-                        审核冻结中
+                        {{ item.status == 0 ? '审核冻结中' : item.status == 1 ?  '审核通过' : '审核失败' }}
                     </div>
                 </div>
                 <div class="js-item-part2">
                     <div class="left">
-                        返利时间：2017.06.10
+                        返利时间：{{ item.addtime | dateFormat('YYYY-MM-DD')  }}
                     </div>
                     <div>
-                        预计解冻时间：2017.07.01
+                        预计解冻时间：{{ item.thawingTime | dateFormat('YYYY-MM-DD')  }}
                     </div>
                 </div>
             </li>
@@ -41,14 +41,20 @@
 
 <script>
     import InfiniteLoading from 'vue-infinite-loading';
-
+    import api from '../../assets/js/api'
+    import {  dateFormat   } from 'vux'
     export default {
         components: {
           InfiniteLoading
         },
+        filters: {
+          dateFormat
+        },
         data () {
             return {
-                bottomCount: 0,
+              page: 1,
+              frost: 0,
+              frostLog: []
             }
         },
         methods:{
@@ -64,18 +70,25 @@
                 this.$vux.loading.hide()
             },
             getList ( $state ) {
-              setTimeout(() => {
-                this.bottomCount += 10
-                if( this.bottomCount < 50 ){
-                  $state.loaded();
-                } else{
-                  $state.complete();
-                }
-              }, 1000)
+                this.$http.post(api.accountFrostLog)
+                  .then( res => {
+                    if( res.code == 1 ){
+                        this.frost = res.data.frost
+                        if( res.data.frostLog.length ){
+                            this.page++
+                            this.frostLog = this.frostLog.concat(res.data.frostLog)
+                            $state.loaded()
+                        }else{
+                          $state.complete()
+                        }
+                    }
+                } ).catch( e => {
+                  $state.complete()
+                })
             },
         },
         mounted() {
-
+          document.getElementsByTagName('title')[0].textContent = '待结算';
         }
     }
 </script>
