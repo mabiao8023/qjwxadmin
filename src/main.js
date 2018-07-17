@@ -83,14 +83,18 @@ Vue.http.interceptors.response.use(function(response){
     let data  = response.data;
     if( data.code == 0 ){
         Vue.$vux.toast.text( data.msg, 'middle')
+        return Promise.reject( data.msg );
     }else if( data.code == 401 ){
         Vue.$vux.toast.text( '未登录', 'middle')
         location.href = '/login'
+        return Promise.reject( data.msg );
     }else if( data.code == 403 ){
         Vue.$vux.toast.text( '未授权', 'middle')
+        return Promise.reject( data.msg );
         //  跳转授权
+    }else{
+        return data;
     }
-    return data;
 },function(error){
     //对返回的错误进行一些处理
     let status  = error.response.status;

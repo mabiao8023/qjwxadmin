@@ -80,6 +80,19 @@
                 type: 'all',
                 types: ['all','discount','count'],
                 page: 1,
+                data: [],
+                all: {
+                    page: 1,
+                    data: []
+                },
+                discount: {
+                    page: 1,
+                    data: []
+                },
+                count: {
+                    page: 1,
+                    data: []
+                }
             }
         },
         methods:{
@@ -97,18 +110,15 @@
                 //  获取商品列表
                 this.$http.post( api.getGoods,{
                     type: this.type,
-                    page: this.page,
+                    page: this[this.type].page,
                 } ).then( res => {
-                    if( res.code == 1 ){
-                        if( res.data.length ){
-                            this.all = res.data.all;
-                            this.discount = res.data.discount;
-                            this.count = res.data.count;
-                            this.shoppingTrolley = res.data.shoppingTrolley;
-                            $state.loaded();
-                        }else{
-                            $state.complete();
-                        }
+                    if( res.data[this.type].length ){
+                        this[this.type].data = res.data[this.type];
+                        this[this.type].page++;
+                        this.shoppingTrolley = res.data.shoppingTrolley;
+                        $state.loaded();
+                    }else{
+                        $state.complete();
                     }
                 } )
 
@@ -133,6 +143,9 @@
                       path: '/shopCart'
                 })
             }
+        },
+        mounted(){
+
         }
     }
 </script>
