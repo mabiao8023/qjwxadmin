@@ -58,6 +58,7 @@
 <script>
     import { Search, Tab, TabItem, LoadMore, XImg, InlineXNumber, Group } from 'vux'
     import InfiniteLoading from 'vue-infinite-loading';
+    import api from '../../assets/js/api'
     export default {
         components: {
             Search,
@@ -75,26 +76,42 @@
                 onFetching: false,
                 bottomCount: 0,
                 changeValue: 1,
-                value: 1
+                value: 1,
+                type: 'all',
+                types: ['all','discount','count'],
+                page: 1,
             }
         },
         methods:{
             onSubmit () {
                 // 搜索
                 this.$refs.search.setBlur()
-                this.$vux.toast.show({
-                    type: 'text',
-                    position: 'top',
-                    text: 'on submit'
-                })
             },
             getResult(){
-                // 内容变化是搜索结果
+
             },
             onCancel () {
                 console.log('on cancel')
             },
             getGoods ( $state ) {
+                //  获取商品列表
+                this.$http.post( api.getGoods,{
+                    type: this.type,
+                    page: this.page,
+                } ).then( res => {
+                    if( res.code == 1 ){
+                        if( res.data.length ){
+                            this.all = res.data.all;
+                            this.discount = res.data.discount;
+                            this.count = res.data.count;
+                            this.shoppingTrolley = res.data.shoppingTrolley;
+                            $state.loaded();
+                        }else{
+                            $state.complete();
+                        }
+                    }
+                } )
+
                 setTimeout(() => {
                     this.bottomCount += 10
                     if( this.bottomCount < 50 ){
@@ -107,8 +124,9 @@
             change( data ){
                 console.log(data)
             },
-            onItemClick(){
-
+            onItemClick( index ){
+                console.log(index)
+                this.type = this.types[index]
             },
             gotoShopCart(){
                 this.$router.push({
