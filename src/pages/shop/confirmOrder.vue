@@ -168,6 +168,14 @@
                 showChoice: false,
             }
         },
+        watch:{
+            isSelf( value ){
+                this.isPost = !value
+            },
+            isPost( value ){
+                this.isSelf = !value
+            }
+        },
         methods:{
             setRecvier(){
                 this.$router.push({

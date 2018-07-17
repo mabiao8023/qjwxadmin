@@ -11,7 +11,9 @@ export default {
   getAccount: '/api/Account/getAccount',    // 账号余额
   getCash: '/api/Account/cash',             // 提现现金
   accountLog:'/api/Account/accountLog',     // 账户明细
-  accountFrostLog: '/api/Account/accountFrostLog', // 待结算
+  accountFrostLog: '/api/Account/accountFrostLog',  // 待结算
   accountLogDetail: '/api/Account/accountLogDetail',// 待结算详情
-  getGoods: '/api/Good/index',              // 获取商品
+  getGoods: '/api/Good/index',                      // 获取商品
+  shoppingTrolley: '/api/Good/shoppingTrolley',     // 购物车内容
+  shoppingTrolleyEdit: '/api/Good/shoppingTrolleyEdit', // 编辑购物车
 }

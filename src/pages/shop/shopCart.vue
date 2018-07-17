@@ -2,7 +2,7 @@
     <div>
         <div class="sc-nav">
             <div class="nav-l">
-                共<span>12</span>件商品
+                共<span>{{total.totalNumber}}</span>件商品
             </div>
             <div class="nav-r"
                  v-if="!isEdit"
@@ -13,34 +13,35 @@
             <div class="options"
                  v-else
             >
-                <span class="options-del">
+                <span class="options-del" @click="deleteGoods">
                     删除
                 </span>
                 <span class="options-com"
-                      @click="isEdit = false"
+                      @click="editGoods"
                 >
                     完成
                 </span>
             </div>
         </div>
         <div class="shop-cart-box">
-            <div v-for="i in bottomCount" class="shop-container vux-1px-t">
+            <div v-for="(item,index) in goods" class="shop-container vux-1px-t">
                     <div class="checked">
-                        <check-icon :value.sync="demo1"></check-icon>
+                        <check-icon :value.sync="item.checked"></check-icon>
                     </div>
                     <div class="shop-img">
-                        <x-img class="shop-detail-image" src="http://weikongimg.oss-cn-shenzhen.aliyuncs.com/uploads/20180516/a325eaa661da68f423eca4beb8fa5168.png" alt="">
+                        <x-img class="shop-detail-image"
+                               :src="item.good_photo" alt="">
                         </x-img>
                     </div>
                     <div class="shop-detail">
                         <div class="shop-title">
-                            沐浴露旺旺
+                            {{item.good_name}}
                         </div>
                         <div class="shop-data">
-                            <div class="shop-price">￥28.80(返利¥2.00)</div>
+                            <div class="shop-price">￥{{item.good_price}}(返利¥{{item.rebate}})</div>
                             <div class="shop-choice-nums" style="text-align:center;">
-                            <span v-if="!isEdit">×12</span>
-                            <inline-x-number v-else button-style="round" :min="0" width="30px"></inline-x-number>
+                            <span v-if="!isEdit">×{{item.amount}}</span>
+                            <inline-x-number v-else button-style="round" v-model="item.amount" :min="0" width="30px"></inline-x-number>
                         </div>
                     </div>
                 </div>
@@ -55,75 +56,175 @@
             </span>
         </infinite-loading>
       <!-- 去购物车 -->
-        <div class="vux-1px-t shopping-cart">
-            <div class="all-checked">
+        <div class="shopping-cart-edit">
+            <div class="all-checked" @click="allChecked">
               <div>
                   <check-icon :value.sync="demo1"></check-icon>
               </div>
               <div>全选</div>
             </div>
             <div class="total-price">
-                <div class="total-price">
-                    合计：<span>￥1234</span>
+                <div class="total">
+                    合计：<span>￥{{total.totalMoney}}</span>
                 </div>
                 <div class="no-yunfei">
-                  不含运费 | 返利¥20
+                    不含运费 | 返利¥{{total.totalReMoney}}
                 </div>
             </div>
             <div class="shopping-cart-btn" @click="submitOrder">
-              提交订单
+                提交订单
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import {  Tab, TabItem, Scroller, LoadMore, XImg,  InlineXNumber, Group, Tabbar, TabbarItem, CheckIcon    } from 'vux'
+    import {  XImg,  InlineXNumber, CheckIcon    } from 'vux'
     import InfiniteLoading from 'vue-infinite-loading';
+    import api from '../../assets/js/api'
     export default {
         components: {
-            Tab,
-            TabItem,
-            Scroller,
-            LoadMore,
             XImg,
-            Group,
             InlineXNumber,
-            Tabbar,
-            TabbarItem,
             CheckIcon,
             InfiniteLoading
         },
         data () {
             return {
-                results: [],
-                onFetching: false,
                 bottomCount: 0,
                 changeValue: 1,
                 value: 1,
                 demo1: true,
                 isEdit: false,          // 是否处于编辑状态
+                goods: [{
+                    "good_name": "杜蕾斯",
+                    "stock": 10,
+                    "good_price": 188,
+                    "rebate": 5,
+                    "id": "1",
+                    "checked": true,
+                    "amount": 12,
+                    "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
+                }],
+                count: 0,
+                page: 1,
             }
         },
+        computed: {
+            total(){
+              let allMoney = 0,
+                allReMoney = 0,
+                allNumber = 0;
+              this.goods.forEach(val => {
+                if (val.amount > 0 && val.checked) {
+                  allMoney += val.good_price * val.amount;
+                  allReMoney += val.rebate * val.amount;
+                  allNumber += val.amount;
+                }
+              })
+              return {
+                totalMoney: allMoney || 0,
+                totalNumber: (allNumber + this.count) || 0,
+                totalReMoney: allReMoney || 0
+              };
+            },
+            checkedGood(){
+                let deleteArr = [],
+                    editArr = [];
+                this.goods.forEach( val => {
+                    if( val.checked ){
+                        deleteArr.push({
+                            good_id: val.good_id
+                        });
+                        editArr.push({
+                            good_id: val.good_id,
+                            amount: val.amount
+                        });
+                    }
+                });
+                return {
+                    deleteArr,
+                    editArr
+                }
+            }
+        },
+        watch:{
+           demo1(curval){
+              this.goods.forEach( val => {
+                 val.checked =  curval
+              });
+           }
+        },
         methods:{
-            onItemClick (index) {
-                console.log('on item click:', index)
+            layer( text ){
+              this.$vux.toast.text( text || 'hello', 'middle')
+            },
+            showLoading(text){
+              this.$vux.loading.show({
+                text: text || '加载中'
+              })
+            },
+            hideLoading(){
+              this.$vux.loading.hide()
             },
             getGoods ( $state ) {
-                setTimeout(() => {
-                    this.bottomCount += 10
-                    if( this.bottomCount < 50 ){
-                        $state.loaded();
-                    } else{
-                        $state.complete();
-                    }
-                }, 2000)
+                this.$http.post(api.shoppingTrolley)
+                      .then( res => {
+                            this.count = res.count
+                            if( res.list.length ){
+                                res.list.forEach( val => {
+                                    val.checked = true
+                                })
+                                this.page++
+                                this.goods = this.goods.concat(res.list)
+                                 $state.loaded();
+                            }else{
+                                $state.complete();
+                            }
+                      }).catch( e => {
+                          $state.complete();
+                      })
             },
             submitOrder(){
                 this.$router.push({
                     path: '/pay'
                 })
-            }
+            },
+            deleteGoods(){
+                this.showLoading('删除中')
+                this.$http.post(api.shoppingTrolleyEdit,{
+                    type: 'delete',
+                    good: this.checkedGood.deleteArr
+                }).then( res => {
+
+                    this.hideLoading();
+                    this.layer('删除成功')
+                } ).catch( e => {
+                    this.hideLoading();
+                } )
+            },
+            editGoods(){
+                this.showLoading('提交中')
+                this.$http.post(api.shoppingTrolleyEdit,{
+                  type: 'modify',
+                  good: this.checkedGood.editArr
+                }).then( res => {
+                  this.isEdit = false;
+                  this.hideLoading();
+                  this.layer('编辑成功')
+                } ).catch( e => {
+                  this.hideLoading();
+                } )
+            },
+            allChecked(){
+                this.goods.forEach( val => {
+                    if( demo1 ){
+                      val.checked = true;
+                    }else{
+                      val.checked = false;
+                    }
+                } )
+            },
         }
     }
 </script>
@@ -235,7 +336,7 @@
           margin-bottom: 2px;
         }
     }
-    .shopping-cart{
+    .shopping-cart-edit{
     position: fixed;
     left: 0;
     right: 0;
