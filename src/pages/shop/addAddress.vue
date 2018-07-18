@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="list">
+        <div class="add-address-list">
             <div class="item">
                 <div class="title">
                     收货人
@@ -88,33 +88,28 @@
   body{
     background: #F5F5F5;
   }
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-  .item{
-    display: flex;
-    justify-content: space-between;
-    background: #fff;
-    font-size: 15px;
-    padding: 0 12px;
-    .title{
-      width: 68px;
-      color: #646464;
-      line-height: 49px;
-    }
-    .input{
-      flex: 1;
-      color: #323232;
-    }
-    .diqu{
-      line-height: 49px;
-      padding:  0 15px;
-      background: url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;
+  .add-address-list{
+      .item{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      font-size: 15px;
+      padding: 0 12px;
+      .title{
+        width: 68px;
+        color: #646464;
+        line-height: 49px;
+      }
+      .input{
+        flex: 1;
+        color: #323232;
+      }
+      .diqu{
+        line-height: 49px;
+        padding:  0 15px;
+        background: url(../../assets/image/more-arrow.png) no-repeat right center/8px 13px;
+      }
     }
   }
   .add-adress{

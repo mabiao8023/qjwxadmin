@@ -7,15 +7,19 @@
             <div class="dashed-line">
             </div>
             <div class="fahuo-methods">
-                <div class="youji fahuo-item">
-                    <div>
-                        <check-icon :value.sync="isPost"></check-icon>
+                <div class="youji fahuo-item"
+                    @click="isPost = true"
+                >
+                    <div class="checked-icon"
+                         :class="{'selected': isPost }">
                     </div>
                     <div>邮寄方式</div>
                 </div>
-                <div class="ziti fahuo-item">
-                    <div>
-                       <check-icon :value.sync="isSelf"></check-icon>
+                <div class="ziti fahuo-item"
+                     @click="isPost = false"
+                >
+                    <div class="checked-icon"
+                         :class="{'selected': !isPost }">
                     </div>
                     <div>自提方式</div>
                 </div>
@@ -24,7 +28,7 @@
                   <div v-if="isPost" class="choice-adress">
                       请填写收货信息
                   </div>
-                  <div v-if="isSelf" class="choice-adress">
+                  <div v-else class="choice-adress">
                       请填写提货人信息
                   </div>
                   <div v-if="false"  class="choice-adress has-adress">
@@ -164,16 +168,7 @@
                 demo1: true,
                 bottomCount: 2,
                 isPost: true,
-                isSelf: false,
                 showChoice: false,
-            }
-        },
-        watch:{
-            isSelf( value ){
-                this.isPost = !value
-            },
-            isPost( value ){
-                this.isSelf = !value
             }
         },
         methods:{
@@ -227,6 +222,17 @@
               align-items: center;
               justify-content: center;
               width: 50%;
+              .checked-icon{
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  border: 1px solid #B9B9B9;
+                  margin-right: 5px;
+                  &.selected{
+                      border: 0;
+                      background: url(../../assets/image/selected-yellow.png) no-repeat center center/20px 20px;
+                  }
+              }
           }
       }
       .adress{

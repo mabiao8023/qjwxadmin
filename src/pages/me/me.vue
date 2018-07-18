@@ -48,14 +48,10 @@
                   <p>邀请创客</p>
               </router-link>
 
-              <router-link :to="{}" class="me-item vux-1px-l vux-1px-r">
+              <router-link :to="{}" class="me-item vux-1px-l">
                   <img src="../../assets/image/shouquan.png" alt="">
                   <p>授权合同</p>
               </router-link>
-              <!--<router-link :to="{}" class="me-item vux-1px-l vux-1px-r">-->
-                  <!--<img src="../../assets/image/yaoqing.png" alt="">-->
-                  <!--<p>邀请关系网</p>-->
-              <!--</router-link>-->
           </div>
     </div>
 </template>
@@ -211,6 +207,7 @@
           text-align: center;
           padding: 15px 0;
       }
+
       img{
           width: 27px;
           height: 27px;
