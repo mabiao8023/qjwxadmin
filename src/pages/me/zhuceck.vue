@@ -101,7 +101,7 @@
             </div>
           </li>
         </ul>
-        <div class="logout">
+        <div class="logout" @click="submit">
             提交申请
         </div>
       <!-- 图片上传组件 -->
@@ -113,7 +113,6 @@
       <div v-transfer-dom>
         <previewer :list="list" ref="previewer" :options="options" @on-index-change="logIndexChange"></previewer>
       </div>
-
     </div>
 </template>
 
@@ -121,6 +120,7 @@
     import {  XInput, Countdown,Previewer,TransferDom } from 'vux'
     import api from '../../assets/js/api'
     import UploadPhoto from '../../components/uploadPhoto.vue'
+    import { getParams } from '../../assets/js/util'
     export default {
         directives: {
           TransferDom
@@ -138,10 +138,12 @@
                 phone: '',
                 code: '',
                 password: '',
-                rePwdInput: '',
+                rePassword: '',
                 time: 90,
                 start: true,
-                isSendCoding: false
+                isSendCoding: false,
+                list: [],
+                id: getParams()['id'] || ''
             }
         },
         methods:{
@@ -173,7 +175,7 @@
                 }
             },
             chooseImg(){
-              this.$refs['uploadPhoto'].$el.click();
+                this.$refs['uploadPhoto'].$el.click();
             },
             // 父组件监听子组件上传图片返回的base64的数据，用于本地显示图片
             getImgDataUrl( value ){
@@ -202,10 +204,28 @@
             },
             deletePhoto (index){
               this.list.splice(index,1);
+            },
+            submit(){
+                if( !this.$refs.nameInput.valid ){
+                    this.layer('请填写真实姓名')
+                }else if( !this.$refs.phoneInput.valid ){
+                    this.layer('请填写正确的手机号')
+                }else if( !this.$refs.codeInput.valid ){
+                    this.layer('请填写验证码')
+                }else if( !this.$refs.pwdInput.valid ){
+                    this.layer('请填写密码')
+                }else if( !this.$refs.rePwdInput.valid ){
+                   this.layer('请确认密码')
+                }else if( this.list.length <= 0 ){
+                   this.layer('请上传合同')
+                }else{
+                    this.showLoading('提交中')
+                }
             }
         },
         mounted() {
-
+            //  设置标题
+            document.getElementsByTagName('title')[0].textContent = '注册';
         }
     }
 </script>

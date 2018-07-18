@@ -2,7 +2,7 @@
     <div class="page-container">
         <div class="main-section">
             <img src="../../assets/image/yqbg.png">
-            <div class="btn">
+            <div class="btn" @click="gotoInputInfo">
                 <img src="../../assets/image/btn-yaoqing.png" alt="">
             </div>
         </div>
@@ -17,20 +17,15 @@
             }
         },
         methods:{
-            layer( text ){
-                this.$vux.toast.text( text || 'hello', 'middle')
-            },
-            showLoading(){
-                this.$vux.loading.show({
-                  text: '加载中'
+            gotoInputInfo(){
+                this.$router.push({
+                    path: '/reschuangke'
                 })
-            },
-            hideLoading(){
-                this.$vux.loading.hide()
-            },
+            }
         },
         mounted() {
-
+          //  设置标题
+          document.getElementsByTagName('title')[0].textContent = '邀请';
         }
     }
 </script>

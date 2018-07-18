@@ -118,7 +118,8 @@
             },
         },
         mounted() {
-
+          //  设置标题
+          document.getElementsByTagName('title')[0].textContent = '订单管理';
         }
     }
 </script>

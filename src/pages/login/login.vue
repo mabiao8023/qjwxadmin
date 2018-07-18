@@ -89,7 +89,7 @@
                             if( res.data.userinfo.token ){
                                 // 本地存储7天的cookie
                                 cookie.set('token',res.data.userinfo.token ,{
-                                  expires: 7
+                                    expires: 7
                                 });
                                 // 进入个人中心
                                 this.$router.push({
@@ -103,7 +103,7 @@
                 }
             },
             gotoForgetPwd(){
-                this.$router.push({
+                this.$router.replace({
                       path: '/forgetPwd'
                 })
             }

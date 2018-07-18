@@ -39,9 +39,10 @@ Vue.use(WechatPlugin)
 // })
 
 const router = new VueRouter(routes);
-let token = cookie.get('token') || '77878';
+
 // 路由遍历是否已经登录，未登录则跳转登录页面
 router.beforeEach((to, from, next) => {
+    let token = cookie.get('token') || '';
     // ...
     if( to.meta.noNeedLogin || to.path == '/login'){
         next();
@@ -59,7 +60,6 @@ router.beforeEach((to, from, next) => {
 // 初始化axio请求参数
 //添加一个请求拦截器
 Vue.http.interceptors.request.use(function(config){
-    console.dir(config)
     let userToken = cookie.get('token') || '';
     config.timeout = 2000;
     config.transformRequest = [function(data = {},headers){

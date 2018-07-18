@@ -43,13 +43,13 @@
                   </div>
               </div>
               <div class="option-btn">
-                  <div class="btn" @click='showConfirm'>
+                  <div class="btn" @click='showRefuseConfirm'>
                       拒绝申请
                   </div>
                   <div class="btn active">
                       通过申请
                   </div>
-                  <div class="btn active">
+                  <div class="btn active" @click='cancelConfirm'>
                       取消资格
                   </div>
               </div>
@@ -78,6 +78,20 @@
         data () {
             return {
                 bottomCount: 0,
+                type: 'a1',
+                types: ['a1','a2','a3'],
+                a1:{
+                    page: 1,
+                    data: []
+                },
+                a2:{
+                    page: 1,
+                    data: []
+                },
+                a3:{
+                    page: 1,
+                    data: []
+                }
             }
         },
         methods:{
@@ -93,6 +107,26 @@
                 this.$vux.loading.hide()
             },
             getList ( $state ) {
+              //  获取商品列表
+  //              this.$http.post( api.getGoods,{
+  //                type: this.type,
+  //                page: this[this.type].page,
+  //                name: this.search
+  //              } ).then( res => {
+  //                if( res.data[this.type].length ){
+  //                res.data[this.type].forEach( val => {
+  //                  val.number = 0
+  //              } )
+  //                this[this.type].data = this[this.type].data.concat(res.data[this.type]);
+  //                this[this.type].page++;
+  //                this.shoppingTrolley = res.data.shoppingTrolley;
+  //                $state.loaded();
+  //              }else{
+  //                $state.complete();
+  //              }
+  //            } ).catch( e => {
+  //                $state.complete();
+  //            } )
               setTimeout(() => {
                 this.bottomCount += 10
                 if( this.bottomCount < 50 ){
@@ -102,12 +136,31 @@
                 }
               }, 1000)
             },
-            showConfirm(){
+            showRefuseConfirm(){
                 this.$vux.confirm.show({
                     // 组件除show外的属性
                     showInput: true,
                     title: '请填写拒绝原因,反馈给申请人',
                     placeholder:'限15字以内',
+                    inputAttrs: {
+                        type: 'textarea'
+                    },
+                    onCancel () {
+                      console.log(this) // 非当前 vm
+                      console.log(_this) // 当前 vm
+                    },
+                    onConfirm () {}
+                })
+            },
+            cancelConfirm(){
+                this.$vux.confirm.show({
+                    // 组件除show外的属性
+                    showInput: true,
+                    title: '是否确认取消其代理资格？',
+                    placeholder:'（选填）可在此填写取消资格原因',
+                    inputAttrs: {
+                      type: 'textarea'
+                    },
                     onCancel () {
                       console.log(this) // 非当前 vm
                       console.log(_this) // 当前 vm
@@ -159,9 +212,19 @@
           justify-content: space-between;
           border-top: 1px solid transparent;
           margin-bottom: 6px;
-          padding-left: 5px;
-          border-left: 3px solid #4674E8;
-          line-height: 1.2;
+          padding-left: 10px;
+          position: relative;
+          &::after{
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 0;
+              width: 3px;
+              height: 15px;
+              transform: translate(0,-50%);
+              background: #4674E8;
+
+           }
         .sq-info{
           color: #323232;
           font-size: 15px;

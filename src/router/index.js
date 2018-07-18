@@ -60,10 +60,10 @@ export default {
               meta: { scrollNum: 1 }
           },
           {
-              /* 登陆页面 */
+              /* 忘记密码 */
               path:'/forgetPwd',
               component: ForgetPwd,
-              meta: {  }
+              meta: { noNeedLogin: true }
           },
           {
               /* 内购商城 */

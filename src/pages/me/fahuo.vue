@@ -132,7 +132,8 @@
             },
         },
         mounted() {
-
+          //  设置标题
+          document.getElementsByTagName('title')[0].textContent = '发货管理';
         }
     }
 </script>

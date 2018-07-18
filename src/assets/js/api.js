@@ -16,4 +16,5 @@ export default {
   getGoods: '/api/Good/index',                      // 获取商品
   shoppingTrolley: '/api/Good/shoppingTrolley',     // 购物车内容
   shoppingTrolleyEdit: '/api/Good/shoppingTrolleyEdit', // 编辑购物车
+  shoppingTrolleyAdd: '/api/Good/shoppingTrolleyAdd', // 添加进购物车
 }

@@ -112,6 +112,8 @@
                     }]
                 },
                 shoppingTrolley: 0,
+                // 添加进购物车
+
             }
         },
         computed:{
@@ -127,12 +129,17 @@
                     countReMoney = 0,
                     allNumber = 0,
                     discountNumber = 0,
-                    countNumber =0;
+                    countNumber = 0,
+                    checkedGoods = [];
                     this.all.data.forEach( val => {
                         if( val.number > 0 ){
                             allMoney += val.good_price * val.number;
                             allReMoney += val.rebate * val.number;
                             allNumber += val.number;
+                            checkedGoods.push({
+                                good_id: val.id,
+                                amount: val.number
+                            })
                         }
                     } )
                     this.discount.data.forEach( val => {
@@ -140,6 +147,10 @@
                            discountMoney += val.good_price * val.number
                            discountReMoney += val.rebate * val.number
                            discountNumber += val.number;
+                           checkedGoods.push({
+                              good_id: val.id,
+                              amount: val.number
+                           })
                         }
                     } )
                     this.count.data.forEach( val => {
@@ -147,6 +158,10 @@
                           countMoney += val.good_price * val.number
                           countReMoney += val.rebate * val.number
                           countNumber += val.number;
+                          checkedGoods.push({
+                            good_id: val.id,
+                            amount: val.number
+                          })
                         }
                     } )
                 return {
@@ -160,6 +175,17 @@
             }
         },
         methods:{
+            layer( text ){
+                this.$vux.toast.text( text || 'hello', 'middle')
+            },
+            showLoading(text){
+                this.$vux.loading.show({
+                  text: text || '加载中'
+                })
+            },
+            hideLoading(){
+                this.$vux.loading.hide()
+            },
             onSubmit () {
                 // 搜索
                 this.$refs.search.setBlur()
@@ -186,11 +212,11 @@
                     page: this[this.type].page,
                     name: this.search
                 } ).then( res => {
-                    if( res.data[this.type].length ){
-                        res.data[this.type].forEach( val => {
+                    if( res.data.length ){
+                        res.data.forEach( val => {
                             val.number = 0
                         } )
-                        this[this.type].data = this[this.type].data.concat(res.data[this.type]);
+                        this[this.type].data = this[this.type].data.concat(res.data);
                         this[this.type].page++;
                         this.shoppingTrolley = res.data.shoppingTrolley;
                         $state.loaded();
@@ -211,13 +237,50 @@
                 } )
             },
             gotoShopCart(){
-                this.$router.push({
-                      path: '/shopCart'
-                })
+                  let checkedGoods = [];
+                  this.all.data.forEach( val => {
+                      if( val.number > 0 ){
+                          checkedGoods.push({
+                            good_id: val.id,
+                            amount: val.number
+                          })
+                      }
+                  } )
+                  this.discount.data.forEach( val => {
+                      if( val.number > 0 ){
+                          checkedGoods.push({
+                            good_id: val.id,
+                            amount: val.number
+                          })
+                      }
+                  } )
+                  this.count.data.forEach( val => {
+                      if( val.number > 0 ){
+                          checkedGoods.push({
+                            good_id: val.id,
+                            amount: val.number
+                          })
+                      }
+                  } )
+                  if( checkedGoods.length <= 0 ){
+                     return this.layer('请选择商品')
+                  }
+                  this.showLoading('正在添加')
+                  this.$http.post( api.shoppingTrolleyAdd,{
+                      good: checkedGoods
+                  } ).then( res => {
+                      this.hideLoading()
+                      this.$router.push({
+                        path: '/shopCart'
+                      })
+                  }).catch( e => {
+                      this.hideLoading()
+                  })
             }
         },
         mounted(){
-
+          //  设置标题
+          document.getElementsByTagName('title')[0].textContent = '内购商城';
         }
     }
 </script>
