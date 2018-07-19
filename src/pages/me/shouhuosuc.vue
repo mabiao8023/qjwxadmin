@@ -1,19 +1,15 @@
 <template>
-    <div class="page-container">
+    <div class="shouhuosuc-container">
         <img class="success-icon" src="../../assets/image/success-icon.png" alt="">
-        <p class="success-tip">交易成功</p>
-        <p class="success-desc">交易成功，又到一波返利在来的路上～</p>
-        <a class="goto" href="/me.html">查看订单详情></a>
-        <a class="back" href="/me.html"></a>
+        <p class="success-tip">确认收货</p>
+        <p class="success-desc">提现申请已提交，我们将进行1-3个工作日进行审核 届时打入您的微信账户</p>
+        <router-link class="back" :to="{path:'/meIndex'}"></router-link>
     </div>
-
 </template>
 
 <script>
-    import {XInput} from 'vux'
     export default {
         components: {
-            XInput
         },
         data () {
             return {}
@@ -44,10 +40,14 @@
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
 
-    .page-container {
+    .shouhuosuc-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
         text-align: center;
-    }
-
     .success-icon {
         width: 65px;
         height: 65px;
@@ -65,6 +65,9 @@
         color: #909090;
         font-size: 14px;
     }
+    }
+
+
 
     .back {
         position: fixed;
@@ -73,11 +76,5 @@
         width: 40px;
         height: 40px;
         background: url(../../assets/image/back-home.png) no-repeat center center/100% 100%;
-    }
-
-    .goto {
-        color: @fontColor;
-        font-size: 15px;
-        margin-top: 22px;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="page-container">
+    <div class="chuangke-container">
         <div class="nav">
             <tab class="tab" scroll-threshold="5">
                 <tab-item selected @on-item-click="onItemClick">待审核</tab-item>
@@ -192,7 +192,7 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-
+    .chuangke-container{
     .nav {
         position: fixed;
         top: 0;
@@ -210,68 +210,68 @@
         background: #fff;
         padding: 0 15px;
         padding-top: 6px;
-        .js-item-part1 {
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid transparent;
-            margin-bottom: 6px;
-            padding-left: 10px;
-            position: relative;
-            &::after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: 0;
-                width: 3px;
-                height: 15px;
-                transform: translate(0, -50%);
-                background: #4674E8;
+    .js-item-part1 {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid transparent;
+        margin-bottom: 6px;
+        padding-left: 10px;
+        position: relative;
+    &::after {
+         content: '';
+         position: absolute;
+         top: 50%;
+         left: 0;
+         width: 3px;
+         height: 15px;
+         transform: translate(0, -50%);
+         background: #4674E8;
 
-            }
-            .sq-info {
-                color: #323232;
-                font-size: 15px;
-            }
-            .sq-status {
-                color: @mainColor;
-                font-size: 15px;
-            }
-        }
-        .js-item-part2 {
-            color: #646464;
-            font-size: 14px;
-            /*line-height: 2;*/
-            padding: 7px 0;
-        }
-        .js-item-part3 {
-            display: flex;
-            justify-content: space-between;
-            div {
-                width: 50%;
-            }
-        }
+     }
+    .sq-info {
+        color: #323232;
+        font-size: 15px;
+    }
+    .sq-status {
+        color: @mainColor;
+        font-size: 15px;
+    }
+    }
+    .js-item-part2 {
+        color: #646464;
+        font-size: 14px;
+        /*line-height: 2;*/
+        padding: 7px 0;
+    }
+    .js-item-part3 {
+        display: flex;
+        justify-content: space-between;
+    div {
+        width: 50%;
+    }
+    }
     }
 
     .option-btn {
         padding: 12px 0;
         font-size: 0;
         text-align: right;
-        .btn {
-            display: inline-block;
-            margin-left: 10px;
-            line-height: 30px;
-            text-align: center;
-            color: #323232;
-            font-size: 15px;
-            border-radius: 15px;
-            padding: 0 15px;
-            border: 1px solid #C2C2C2;
-            overflow: hidden;
-            &.active {
-                color: @mainColor;
-                border: 1px solid @mainColor;
-            }
-        }
+    .btn {
+        display: inline-block;
+        margin-left: 10px;
+        line-height: 30px;
+        text-align: center;
+        color: #323232;
+        font-size: 15px;
+        border-radius: 15px;
+        padding: 0 15px;
+        border: 1px solid #C2C2C2;
+        overflow: hidden;
+    &.active {
+         color: @mainColor;
+         border: 1px solid @mainColor;
+     }
+    }
 
     }
 
@@ -280,8 +280,10 @@
         font-size: 13px;
         color: #909090;
         padding: 8px 12px;
-        span {
-            color: #323232;
-        }
+    span {
+        color: #323232;
     }
+    }
+    }
+
 </style>

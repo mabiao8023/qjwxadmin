@@ -1,5 +1,5 @@
 <template>
-    <div class="page-container">
+    <div class="tixian-container">
         <div class="p-title">
             提现至: 微信账户
 
@@ -80,14 +80,12 @@
             getUserInfo(){
                 this.$http.post(api.getUserInfo)
                     .then(res => {
-                        if (res.code == 1) {
-                            this.userInfo = res.data.userinfo || {};
-                            this.account = res.data.account || {};
-                        }
+                        this.userInfo = res.data.userinfo || {};
+                        this.account = res.data.account || {};
                     })
             },
             submitCash(){
-                if (this.money <= 0 || this.money > this.account.balance) {
+                if (this.money <= 0 || parseFloat(this.money) > parseFloat(this.account.balance)) {
                     this.layer('请输入正确的提现金额')
                 } else {
                     this.showLoading('提现中')
@@ -100,6 +98,9 @@
                         })
                     }).catch(e => {
                         this.hideLoading();
+                    })
+                    this.$router.push({
+                        path: '/tixiansuc'
                     })
                 }
             }
@@ -117,7 +118,13 @@
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
 
-    .page-container {
+    .tixian-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
         text-align: center;
     }
 
@@ -161,6 +168,7 @@
     .input-money {
         font-size: 20px;
         margin: 12px;
+        color: #323232;
         .weui-cell {
             padding: 10px;
         }

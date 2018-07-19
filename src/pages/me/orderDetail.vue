@@ -1,26 +1,22 @@
 <template>
-    <div class="page-container">
+    <div class="order-detail-container">
         <div class="header">
             <div>交易完成</div>
-            <div class="look">查看凭证></div>
+            <div class="look" @click="gotoViewCer">查看凭证></div>
         </div>
         <template v-if="false">
             <div class="wuliu-msg">
                 <div class="title">
                     物流信息：
-
                 </div>
                 <div class="wuliu-method">
                     申通快递
-
                 </div>
                 <div class="wuliu-number" id="copyValue" ref="numbers">
-                    2234342532452
-
+                    {{wuliu}}
                 </div>
-                <button type="button" class="copy-btn" id="copy" data-clipboard-text='#copyValueaaaaaa'>
+                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='wuliu'>
                     复制
-
                 </button>
             </div>
             <div class="dashed-line">
@@ -42,7 +38,7 @@
                 </div>
             </div>
         </template>
-        <template>
+        <template v-if="true">
             <div class="shouhuo">
                 <div class="tihuo-ads">
                     <div class="sh-ad-title">
@@ -56,12 +52,11 @@
                 </div>
                 <div class="sh-info">
                     <div class="name">
-                        收货人：王琪
+                        电话：1232473849
 
                     </div>
                     <div class="phone">
-                        1232473849
-
+                        周一至周五 9:00-18:00
                     </div>
                 </div>
             </div>
@@ -148,7 +143,7 @@
                 查看物流
 
             </div>
-            <div class="btn">
+            <div class="btn" @click="sureShouhuo">
                 确认收货
 
             </div>
@@ -171,7 +166,9 @@
     export default {
         components: {},
         data () {
-            return {}
+            return {
+                wuliu:'1231231231'
+            }
         },
         methods: {
             layer(text){
@@ -195,6 +192,16 @@
                     //   e.clearSelection();
                     this.layer('复制失败，请手动复制');
                 });
+            },
+            gotoViewCer(){
+                this.$router.push({
+                    path: `/viewcer?id=`
+                })
+            },
+            sureShouhuo(){
+                this.$router.push({
+                    path: '/received'
+                })
             }
         },
         mounted() {
@@ -210,28 +217,29 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-
-    .header {
-        width: 100%;
-        background: @mainColor;
-        color: #fff;
-        font-size: 19px;
-        padding: 18px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .order-detail-container{
+        .header {
+            width: 100%;
+            background: @mainColor;
+            color: #fff;
+            font-size: 19px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         .look {
             font-size: 15px;
+            color: #FCFF00;
         }
-    }
+        }
 
-    .wuliu-msg {
-        display: flex;
-        justify-content: space-between;
-        background: #fff;
-        padding: 12px;
-        color: #646464;
-        font-size: 15px;
+        .wuliu-msg {
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            padding: 12px;
+            color: #646464;
+            font-size: 15px;
         .title {
             padding-left: 28px;
             background: url(../../assets/image/wuliu.png) no-repeat left center/18px 18px;
@@ -248,21 +256,21 @@
             background: #fff;
             box-shadow: 0;
         }
-    }
+        }
 
-    .dashed-line {
-        width: 100%;
-        height: 3px;
-        background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
-    }
+        .dashed-line {
+            width: 100%;
+            height: 3px;
+            background: url(../../assets/image/hengtiao.png) no-repeat center center/100% 100%;
+        }
 
-    .goods-container {
-        background: #fff;
-        padding: 10px 0 0;
-        margin-top: 10px;
-    }
+        .goods-container {
+            background: #fff;
+            padding: 10px 0 0;
+            margin-top: 10px;
+        }
 
-    .goods-list {
+        .goods-list {
         .goods-item {
             display: flex;
             align-items: center;
@@ -270,9 +278,9 @@
             padding: 5px 10px;
             background: #F6F6F6;
             margin-top: 5px;
-            &:first-child {
-                margin-top: 0;
-            }
+        &:first-child {
+             margin-top: 0;
+         }
         }
         .img {
             width: 70px;
@@ -299,17 +307,17 @@
             color: #909090;
             font-size: 12px;
         }
-    }
+        }
 
-    .fixed-option-btn {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #FFFFFF;
-        padding: 12px 16px;
-        font-size: 0;
-        text-align: right;
+        .fixed-option-btn {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            padding: 12px 16px;
+            font-size: 0;
+            text-align: right;
         .btn {
             display: inline-block;
             margin-left: 10px;
@@ -321,54 +329,60 @@
             padding: 0 15px;
             border: 1px solid #C2C2C2;
             overflow: hidden;
-            &.active {
-                color: @mainColor;
-                border: 1px solid @mainColor;
-            }
+        &.active {
+             color: @mainColor;
+             border: 1px solid @mainColor;
+         }
         }
 
-    }
+        }
 
-    .total {
-        background: #FFFFFF;
-        text-align: right;
-        font-size: 13px;
-        color: #909090;
-        padding: 8px 12px;
+        .total {
+            background: #FFFFFF;
+            text-align: right;
+            font-size: 13px;
+            color: #909090;
+            padding: 8px 12px;
         span {
             color: #323232;
         }
-    }
-
-    .progress-time {
-        background: #FFFFFF;
-        padding: 10px 15px;
-        margin: 10px 0;
-        color: #909090;
-        font-size: 13px;
-        line-height: 2;
-    }
-
-    .shouhuo, .tihuo-info {
-        padding: 15px 10px;
-        padding-left: 31px;
-        color: #646464;
-        font-size: 15px;
-        line-height: 1.5;
-        background: #ffffff url(../../assets/image/location.png) no-repeat 9px 16px;
-        background-size: 14px 18px;
-        .sh-info, .tihuo-ads {
-            display: flex;
-            justify-content: space-between;
         }
-    }
 
-    .tihuo-info {
-        background: #ffffff url(../../assets/image/tihuo.png) no-repeat 9px 16px;
-        background-size: 16px 15px;
+        .progress-time {
+            background: #FFFFFF;
+            padding: 10px 15px;
+            margin: 10px 0;
+            color: #909090;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .shouhuo, .tihuo-info {
+            padding: 10px;
+            padding-left: 31px;
+            color: #646464;
+            font-size: 15px;
+            line-height: 2;
+            background: #ffffff url(../../assets/image/location.png) no-repeat 9px 16px;
+            background-size: 14px 18px;
+            .sh-info, .tihuo-ads {
+                display: flex;
+                justify-content: space-between;
+                .sh-ad-con{
+                    flex: 1;
+                    text-align: left;
+                }
+            }
+        }
+
+        .tihuo-info {
+            background: #ffffff url(../../assets/image/tihuo.png) no-repeat 9px center;
+            background-size: 16px 15px;
         .tihuo-container {
             display: flex;
             justify-content: space-between;
         }
+        }
     }
+
 </style>

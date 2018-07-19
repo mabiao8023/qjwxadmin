@@ -2,6 +2,7 @@
  * Created by mabiao on 2018/7/15/015.
  */
 export default {
+  //  接口路径
   login: '/api/User/login',                 // 用户登录
   getCode: '/api/Sms/send',                 // 获取手机号验证码
   checkCode: '/api/Sms/check',              // 验证手机号验证码

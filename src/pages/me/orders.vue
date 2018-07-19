@@ -1,6 +1,6 @@
 <template>
-    <div class="page-container">
-        <div class="nav">
+    <div class="orders-container">
+        <div class="orders-nav">
             <tab class="tab" scroll-threshold="5">
                 <tab-item selected @on-item-click="onItemClick">全部</tab-item>
                 <tab-item @on-item-click="onItemClick">待付款</tab-item>
@@ -9,7 +9,10 @@
             </tab>
         </div>
         <ul class="js-list">
-            <li class="js-item" v-for="i in bottomCount">
+            <li class="js-item"
+                v-for="i in bottomCount"
+                @click="gotoOrderDetail"
+            >
                 <div class="order-header">
                     <div class="order-num">
                         订单号：2018062312345678
@@ -125,6 +128,11 @@
                     }
                 }, 1000)
             },
+            gotoOrderDetail(id){
+                 this.$router.push({
+                     path: `/orderDetail?order_id=${id}`
+                 })
+            }
         },
         mounted() {
             //  设置标题
@@ -138,80 +146,80 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
+    .orders-container{
+        .orders-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
 
-    .nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 10;
-    }
+        .js-list {
+            padding-top: 44px;
+        }
 
-    .js-list {
-        padding-top: 44px;
-    }
-
-    .js-item {
-        margin-top: 10px;
-        background: #fff;
+        .js-item {
+            margin-top: 10px;
+            background: #fff;
         .order-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 8px 15px;
-            .order-num {
-                color: #646464;
-                font-size: 15px;
-            }
-            .order-status {
-                font-size: 15px;
-                color: @mainColor;
-            }
+        .order-num {
+            color: #646464;
+            font-size: 15px;
+        }
+        .order-status {
+            font-size: 15px;
+            color: @mainColor;
+        }
         }
         .goods-list {
-            .goods-item {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 5px 10px;
-                background: #F6F6F6;
-                margin-top: 5px;
-                &:first-child {
-                    margin-top: 0;
-                }
-            }
-            .img {
-                width: 70px;
-                height: 70px;
-            }
-            .name {
-                flex: 1;
-                height: 70px;
-                text-align: left;
-                color: #323232;
-                font-size: 15px;
-                padding: 0 10px;
-            }
-            .data {
-                text-align: right;
-                padding-left: 10px;
-                color: #323232;
-                font-size: 15px;
-            }
-            .fanli {
-                color: #646464;
-            }
-            .numbers {
-                color: #909090;
-                font-size: 12px;
-            }
+        .goods-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 10px;
+            background: #F6F6F6;
+            margin-top: 5px;
+        &:first-child {
+             margin-top: 0;
+         }
         }
-    }
+        .img {
+            width: 70px;
+            height: 70px;
+        }
+        .name {
+            flex: 1;
+            height: 70px;
+            text-align: left;
+            color: #323232;
+            font-size: 15px;
+            padding: 0 10px;
+        }
+        .data {
+            text-align: right;
+            padding-left: 10px;
+            color: #323232;
+            font-size: 15px;
+        }
+        .fanli {
+            color: #646464;
+        }
+        .numbers {
+            color: #909090;
+            font-size: 12px;
+        }
+        }
+        }
 
-    .option-btn {
-        padding: 12px 16px;
-        font-size: 0;
-        text-align: right;
+        .option-btn {
+            padding: 12px 16px;
+            font-size: 0;
+            text-align: right;
         .btn {
             display: inline-block;
             margin-left: 10px;
@@ -223,21 +231,23 @@
             padding: 0 15px;
             border: 1px solid #C2C2C2;
             overflow: hidden;
-            &.active {
-                color: @mainColor;
-                border: 1px solid @mainColor;
-            }
+        &.active {
+             color: @mainColor;
+             border: 1px solid @mainColor;
+         }
         }
 
-    }
+        }
 
-    .total {
-        text-align: right;
-        font-size: 13px;
-        color: #909090;
-        padding: 8px 12px;
+        .total {
+            text-align: right;
+            font-size: 13px;
+            color: #909090;
+            padding: 8px 12px;
         span {
             color: #323232;
         }
+        }
     }
+
 </style>

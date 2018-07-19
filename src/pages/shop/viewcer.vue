@@ -91,7 +91,7 @@
             }
         },
         mounted() {
-
+            document.getElementsByTagName('title')[0].textContent = '订单凭证';
         }
     }
 </script>

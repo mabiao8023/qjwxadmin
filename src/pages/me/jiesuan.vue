@@ -1,6 +1,6 @@
 <template>
-    <div class="page-container">
-        <div class="header">
+    <div class="jiesuan-container">
+        <div class="js-header">
             <div class="h-title">
                 待结算（元）
 
@@ -11,7 +11,10 @@
             </div>
         </div>
         <ul class="js-list">
-            <li class="js-item" v-for="(item,index) in frostLog">
+            <li class="js-item"
+                v-for="(item,index) in frostLog"
+                @click="gotoSettleDetail(item.nid)"
+            >
                 <div class="js-item-part1">
                     <div class="left">
                         {{ item.money }}
@@ -60,7 +63,15 @@
             return {
                 page: 1,
                 frost: 0,
-                frostLog: []
+                frostLog: [
+                    {
+                        "money": 1,
+                        "addtime": 1,
+                        "thawingTime": 1,
+                        "status": 1,
+                        "nid": "11"
+                    }
+                ]
             }
         },
         methods: {
@@ -92,6 +103,11 @@
                     $state.complete()
                 })
             },
+            gotoSettleDetail(id){
+                this.$router.push({
+                    path: `/settleDetail?nid=${id}`
+                })
+            }
         },
         mounted() {
             document.getElementsByTagName('title')[0].textContent = '待结算';
@@ -104,13 +120,13 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-
-    .header {
-        width: 100%;
-        height: 120px;
-        background: @mainColor;
-        color: #fff;
-        padding: 16px 24px;
+    .jiesuan-container{
+        .js-header {
+            width: 100%;
+            height: 120px;
+            background: @mainColor;
+            color: #fff;
+            padding: 16px 24px;
         .h-title {
             font-size: 15px;
         }
@@ -118,33 +134,35 @@
             text-align: center;
             font-size: 40px;
         }
+        }
+
+        .js-item {
+            margin-top: 10px;
+            padding: 0 15px;
+            background: #fff;
+            .js-item-part1 {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+                .left {
+                    color: #323232;
+                    font-size: 20px;
+                }
+                .right {
+                    color: @fontColor;
+                    font-size: 15px;
+                }
+            }
+            .js-item-part2 {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 8px;
+                color: #909090;
+                font-size: 14px;
+            }
+        }
     }
 
-    .js-item {
-        margin-top: 10px;
-        padding: 0 15px;
-        background: #fff;
-        .js-item-part1 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            .left {
-                color: #323232;
-                font-size: 20px;
-            }
-            .right {
-                color: @fontColor;
-                font-size: 15px;
-            }
-        }
-        .js-item-part2 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 8px;
-            color: #909090;
-            font-size: 14px;
-        }
-    }
 </style>

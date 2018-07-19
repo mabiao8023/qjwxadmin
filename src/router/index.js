@@ -37,6 +37,10 @@ const PostSuc = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/youji
 const ResCK = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/zhuceck.vue');	  // 注册创客
 const SelfGetSuc = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/zitisuc.vue');	  // 自提成功
 const Fahuo = () =>  import(/* webpackChunkName: "part3" */ '../pages/me/fahuo.vue');	  // 发货管理
+const NotFoundComponent = () => import(/* webpackChunkName: "part3" */ '../components/nodata.vue');	  // 发货管理
+// 微信
+const WeChatPay = () => import(/* webpackChunkName: "part4" */ '../pages/wechat/pay.vue');	  // 微信支付
+const WeChatAuth = () => import(/* webpackChunkName: "part4" */ '../pages/wechat/auth.vue');	  // 微信支付
 
 export default {
       mode: 'history',
@@ -236,5 +240,18 @@ export default {
               component: ViewCer,
               meta: {  }
           },
+          {
+              /* 查看凭证 */
+              path:'/weChatPay',
+              component: WeChatPay,
+              meta: {  }
+          },
+          {
+              /* 查看凭证 */
+              path:'/weChatAuth',
+              component: WeChatAuth,
+              meta: {  }
+          },
+          { path: '*', component: NotFoundComponent }
       ]
 }

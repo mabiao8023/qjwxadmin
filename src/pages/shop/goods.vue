@@ -39,9 +39,10 @@
                 </div>
             </div>
         </div>
+        <Nodata v-if="!goods.length"></Nodata>
         <infinite-loading @infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
                 <span slot="no-results">
-                    暂无商品
+
                 </span>
             <span slot="no-more">
                     暂无更多商品
@@ -62,7 +63,8 @@
 
 <script>
     import {Search, Tab, TabItem, XImg, InlineXNumber,} from 'vux'
-    import InfiniteLoading from 'vue-infinite-loading';
+    import InfiniteLoading from 'vue-infinite-loading'
+    import Nodata from '../../components/nodata.vue'
     import api from '../../assets/js/api'
     export default {
         components: {
@@ -71,7 +73,8 @@
             TabItem,
             XImg,
             InlineXNumber,
-            InfiniteLoading
+            InfiniteLoading,
+            Nodata
         },
         data () {
             return {
@@ -84,14 +87,16 @@
                 types: ['all', 'discount', 'count'],
                 all: {
                     page: 1,
-                    data: [{
-                        "good_name": "杜蕾斯",
-                        "stock": 10,
-                        "good_price": 88,
-                        "rebate": 2,
-                        "id": "1",
-                        "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-                    }]
+                    data: [
+                        {
+                            "good_name": "杜蕾斯",
+                            "stock": 10,
+                            "good_price": 88,
+                            "rebate": 2,
+                            "id": "1",
+                            "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
+                        }
+                    ]
                 },
                 discount: {
                     page: 1,

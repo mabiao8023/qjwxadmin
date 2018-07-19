@@ -1,5 +1,5 @@
 <template>
-    <div class="page-container">
+    <div class="fahuo-container">
         <div class="fahuo-nav">
             <tab class="tab" scroll-threshold="5">
                 <tab-item selected @on-item-click="onItemClick">空间待处理</tab-item>
@@ -152,7 +152,7 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-
+    .fahuo-container{
     .fahuo-nav {
         position: fixed;
         top: 0;
@@ -168,80 +168,80 @@
     .js-item {
         margin-top: 10px;
         background: #fff;
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 15px;
-            .order-num {
-                color: #646464;
-                font-size: 15px;
-            }
-            .order-status {
-                font-size: 15px;
-                color: @mainColor;
-            }
-        }
-        .goods-list {
-            .goods-item {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 5px 10px;
-                background: #F6F6F6;
-                margin-top: 5px;
-                &:first-child {
-                    margin-top: 0;
-                }
-            }
-            .img {
-                width: 70px;
-                height: 70px;
-            }
-            .name {
-                flex: 1;
-                height: 70px;
-                text-align: left;
-                color: #323232;
-                font-size: 15px;
-                padding: 0 10px;
-            }
-            .data {
-                text-align: right;
-                padding-left: 10px;
-                color: #323232;
-                font-size: 15px;
-            }
-            .fanli {
-                color: #646464;
-            }
-            .numbers {
-                color: #909090;
-                font-size: 12px;
-            }
-        }
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 15px;
+    .order-num {
+        color: #646464;
+        font-size: 15px;
+    }
+    .order-status {
+        font-size: 15px;
+        color: @mainColor;
+    }
+    }
+    .goods-list {
+    .goods-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 10px;
+        background: #F6F6F6;
+        margin-top: 5px;
+    &:first-child {
+         margin-top: 0;
+     }
+    }
+    .img {
+        width: 70px;
+        height: 70px;
+    }
+    .name {
+        flex: 1;
+        height: 70px;
+        text-align: left;
+        color: #323232;
+        font-size: 15px;
+        padding: 0 10px;
+    }
+    .data {
+        text-align: right;
+        padding-left: 10px;
+        color: #323232;
+        font-size: 15px;
+    }
+    .fanli {
+        color: #646464;
+    }
+    .numbers {
+        color: #909090;
+        font-size: 12px;
+    }
+    }
     }
 
     .option-btn {
         padding: 12px 16px;
         font-size: 0;
         text-align: right;
-        .btn {
-            display: inline-block;
-            margin-left: 10px;
-            line-height: 30px;
-            text-align: center;
-            color: #323232;
-            font-size: 15px;
-            border-radius: 15px;
-            padding: 0 15px;
-            border: 1px solid #C2C2C2;
-            overflow: hidden;
-            &.active {
-                color: @mainColor;
-                border: 1px solid @mainColor;
-            }
-        }
+    .btn {
+        display: inline-block;
+        margin-left: 10px;
+        line-height: 30px;
+        text-align: center;
+        color: #323232;
+        font-size: 15px;
+        border-radius: 15px;
+        padding: 0 15px;
+        border: 1px solid #C2C2C2;
+        overflow: hidden;
+    &.active {
+         color: @mainColor;
+         border: 1px solid @mainColor;
+     }
+    }
 
     }
 
@@ -250,9 +250,9 @@
         font-size: 13px;
         color: #909090;
         padding: 8px 12px;
-        span {
-            color: #323232;
-        }
+    span {
+        color: #323232;
+    }
     }
 
     .dashed-line {
@@ -269,9 +269,11 @@
         line-height: 1.5;
         background: #ffffff url(../../assets/image/location.png) no-repeat 9px 16px;
         background-size: 14px 18px;
-        .tihuo-container {
-            display: flex;
-            justify-content: space-between;
-        }
+    .tihuo-container {
+        display: flex;
+        justify-content: space-between;
     }
+    }
+    }
+
 </style>
