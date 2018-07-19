@@ -16,5 +16,10 @@ export default {
   getGoods: '/api/Good/index',                      // 获取商品
   shoppingTrolley: '/api/Good/shoppingTrolley',     // 购物车内容
   shoppingTrolleyEdit: '/api/Good/shoppingTrolleyEdit', // 编辑购物车
-  shoppingTrolleyAdd: '/api/Good/shoppingTrolleyAdd', // 添加进购物车
+  shoppingTrolleyAdd: '/api/Good/shoppingTrolleyAdd',   // 添加进购物车
+  addOrder: '/api/Good/addOrder',                       // 确认订单
+  addressManage: '/api/address/index',                  // 地址管理
+  addressEditConfirm: '/api/address/editConfirm',       // 地址编辑确认
+  addressGet: '/api/address/edit',                     // 编辑收地址页面数据获取
+
 }

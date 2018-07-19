@@ -132,7 +132,7 @@ export default {
               meta: {  }
           },
           {
-              /* 结算 */
+              /* 结算详情 */
               path:'/settleDetail',
               component: SettleDetail,
               meta: {  }
