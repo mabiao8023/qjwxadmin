@@ -4,9 +4,11 @@
             <div class="title">
                 入账金额
 
+
             </div>
             <div class="amount">
                 {{detail.money}}
+
 
             </div>
         </div>
@@ -29,6 +31,7 @@
             </div>
             <div class="goto-order">
                 查看订单>
+
 
             </div>
         </div>
@@ -92,7 +95,8 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-    .js-detail-container{
+
+    .js-detail-container {
         position: absolute;
         top: 15px;
         bottom: 0;

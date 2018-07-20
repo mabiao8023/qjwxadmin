@@ -4,6 +4,7 @@
             <div class="zhmx-title">
                 账户明细
 
+
             </div>
             <div class="zhmx-arrow">
 
@@ -19,6 +20,7 @@
         <!-- 提现 -->
         <div class="tixian-btn" @click="submit">
             提现
+
 
         </div>
     </div>

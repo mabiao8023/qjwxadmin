@@ -8,6 +8,7 @@
             <div class="job-title">
                 {{identity[userInfo.identity]}}
 
+
             </div>
             <router-link :to="{path: '/setting'}" class="setting"></router-link>
         </div>
@@ -49,7 +50,7 @@
                 <p>邀请创客</p>
             </router-link>
 
-            <router-link :to="{}" class="me-item vux-1px-l">
+            <router-link :to="{}" class="me-item vux-1px-l vux-1px-r">
                 <img src="../../assets/image/shouquan.png" alt="">
                 <p>授权合同</p>
             </router-link>
@@ -122,6 +123,7 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
+
     .me-header {
         width: 100%;
         height: 167px;

@@ -59,7 +59,6 @@
 
     }
 
-
     .back {
         position: fixed;
         bottom: 60px;

@@ -10,13 +10,16 @@
             <div class="title">
                 请务必阅读以下打款提示信息
 
+
             </div>
             <div class="dakuan vux-1px-b" @click="isShowDesc = true">
                 *线下打款说明
 
+
             </div>
             <div class="bind-dakuan" @click="isShowZh = true">
                 *指定打款账号
+
 
             </div>
         </div>
@@ -24,9 +27,11 @@
             <div class="upload vux-1px-r" @click="gotoUpload">
                 上传凭证>
 
+
             </div>
             <div class="order-detail" @click="gotoOrderDetail">
                 查看订单详情>
+
 
             </div>
         </div>
@@ -37,18 +42,22 @@
                     <div class="title vux-1px-b">
                         线下打款说明
 
+
                     </div>
                     <div class="sub-desc vux-1px-b">
                         请认真阅读以下线下打款说明和指定打款帐号， 若因打款金额不对造成问题，由自己负责，谨记！
+
 
                     </div>
                     <div class="sm-content vux-1px-b">
                         <div class="sub-title">
                             注意点
 
+
                         </div>
                         <div class="sub-content">
                             线下打款的含义是您自己通过除了本平台直接付款以外的其他打款操作将钱打至总部或创客空间账户，打款完成请保存打款截图，并上传凭证至此。
+
 
                         </div>
                     </div>
@@ -56,11 +65,13 @@
                         <div class="sub-title">
                             流程
 
+
                         </div>
                         <div class="sub-content">
                             1.将订单需要支付的钱打到总部或创客空间指定的账户中，同时将您的打款凭证截图保留。<br/>
                             2.打款成功后，将您的打款凭证上传提交。 <br/>
                             3.总部或创客空间在审核并确认您的打款申请后，将会第一时间进行发货，或您自己前去提货，请及时留意该订单的状态变化。
+
 
                         </div>
                     </div>
@@ -75,15 +86,18 @@
                     <div class="title vux-1px-b">
                         指定打款帐号
 
+
                     </div>
                     <div class="sub-desc vux-1px-b">
                         以下为总部指定财务账户，请选择一种打款方式
+
 
                     </div>
                     <div class="sm-content vux-1px-b">
                         <div class="sub-content">
                             支付宝账户：123456@111.com<br/>
                             支付宝户名：xxx
+
 
                         </div>
                     </div>
@@ -92,6 +106,7 @@
                             开户行：中国银行xxxx支行 <br/>
                             账号：1234578995555<br/>
                             户名：xxx
+
 
                         </div>
                     </div>

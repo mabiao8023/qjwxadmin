@@ -5,6 +5,7 @@
                 <div class="title">
                     收货人
 
+
                 </div>
                 <div class="input">
                     <x-input
@@ -18,6 +19,7 @@
             <div class="item vux-1px-tb">
                 <div class="title">
                     联系电话
+
 
                 </div>
                 <div class="input">
@@ -34,15 +36,18 @@
                 <div class="title">
                     所在地区
 
+
                 </div>
                 <div class="input diqu" @click="showAddress = true">
                     {{ address }}
+
 
                 </div>
             </div>
             <div class="item">
                 <div class="title">
                     详细地址
+
 
                 </div>
                 <div class="input">
@@ -57,6 +62,7 @@
         </div>
         <div class="add-adress" @click="editAddress">
             保存
+
 
         </div>
         <x-address style="display:none;" :raw-value="true" title="" v-model="value" :list="addressData"

@@ -26,18 +26,22 @@
                     <div class="title">
                         {{ item.remark }}
 
+
                     </div>
                     <div class="time">
                         {{ item.addtime * 1000 | dateFormat('YYYY-MM-DD HH:mm:ss') }}
+
 
                     </div>
                 </div>
                 <div class="b-data" v-if="item.income">
                     + {{ item.income }}
 
+
                 </div>
                 <div class="b-data" v-else>
                     - {{ item.expend }}
+
 
                 </div>
             </li>
@@ -152,12 +156,12 @@
                     month: this.month
                 }).then(res => {
                     if (res.data.length) {
-                            this.page++;
-                            this.accountLog = this.accountLog.concat(res.data)
-                            $state.loaded();
-                        } else {
-                            $state.complete();
-                        }
+                        this.page++;
+                        this.accountLog = this.accountLog.concat(res.data)
+                        $state.loaded();
+                    } else {
+                        $state.complete();
+                    }
                 }).catch(e => {
                     $state.complete();
                 })

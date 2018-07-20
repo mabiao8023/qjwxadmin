@@ -11,6 +11,7 @@
                 </div>
                 <div class="step-titel">
                     输入手机号
+
                 </div>
             </div>
             <div class="step2 step"
@@ -23,6 +24,7 @@
                 </div>
                 <div class="step-titel">
                     输入新密码
+
                 </div>
             </div>
             <div class="step3 step"
@@ -35,6 +37,7 @@
                 </div>
                 <div class="step-titel">
                     修改成功
+
 
 
                 </div>
@@ -65,18 +68,22 @@
                      @click="sendCode"
                 >获取验证码
 
+
                 </div>
                 <div class="send-btn already-send vux-1px-l" v-else>
                     已发送(
 
+
                     <countdown v-model="time" :start="isSendCoding" @on-finish="finish"></countdown>
                     )
+
 
 
                 </div>
             </div>
             <div class="next-step" @click="verPhoneStep()">
                 下一步
+
 
 
             </div>
@@ -95,6 +102,7 @@
             </div>
             <div class="next-step" @click="pwdSubmit()">
                 确认修改
+
 
 
             </div>
@@ -119,6 +127,7 @@
             <p class="suc-tip">恭喜您！修改成功</p>
             <router-link class="go-login"
                          :to="{path:'/login'}">去登陆>
+
 
 
             </router-link>
@@ -229,7 +238,8 @@
     @import '~vux/src/styles/reset.less';
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
-    .forgetPwd-container{
+
+    .forgetPwd-container {
         position: absolute;
         top: 0;
         bottom: 0;
@@ -237,6 +247,7 @@
         right: 0;
         background: #fff;
     }
+
     /* 进度提示条 */
     .progress {
         display: flex;

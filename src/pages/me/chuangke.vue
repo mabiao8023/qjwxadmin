@@ -13,9 +13,11 @@
                     <div class="sq-info">
                         申请人：黄明明 13600136000
 
+
                     </div>
                     <div class="sq-status">
                         待审核
+
 
                     </div>
                 </div>
@@ -23,9 +25,11 @@
                     <div>
                         申请等级：创客
 
+
                     </div>
                     <div>
                         提交时间：2017/06/06 13:4
+
 
                     </div>
                 </div>
@@ -35,11 +39,13 @@
                         总购买金额：¥15000<br/>
                         总赚取佣金：¥500
 
+
                     </div>
                     <div>
                         本月订单数：5<br/>
                         本月购买金额：¥15000<br/>
                         本月赚取佣金：¥500
+
 
                     </div>
                 </div>
@@ -47,19 +53,23 @@
                     <div>
                         拒绝原因：不符合申请资格
 
+
                     </div>
                 </div>
                 <div class="option-btn">
                     <div class="btn" @click='showRefuseConfirm'>
                         拒绝申请
 
+
                     </div>
                     <div class="btn active">
                         通过申请
 
+
                     </div>
                     <div class="btn active" @click='cancelConfirm'>
                         取消资格
+
 
                     </div>
                 </div>
@@ -192,98 +202,99 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-    .chuangke-container{
-    .nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 10;
-    }
 
-    .js-list {
-        padding-top: 44px;
-    }
+    .chuangke-container {
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
 
-    .js-item {
-        margin-top: 10px;
-        background: #fff;
-        padding: 0 15px;
-        padding-top: 6px;
-    .js-item-part1 {
-        display: flex;
-        justify-content: space-between;
-        border-top: 1px solid transparent;
-        margin-bottom: 6px;
-        padding-left: 10px;
-        position: relative;
-    &::after {
-         content: '';
-         position: absolute;
-         top: 50%;
-         left: 0;
-         width: 3px;
-         height: 15px;
-         transform: translate(0, -50%);
-         background: #4674E8;
+        .js-list {
+            padding-top: 44px;
+        }
 
-     }
-    .sq-info {
-        color: #323232;
-        font-size: 15px;
-    }
-    .sq-status {
-        color: @mainColor;
-        font-size: 15px;
-    }
-    }
-    .js-item-part2 {
-        color: #646464;
-        font-size: 14px;
-        /*line-height: 2;*/
-        padding: 7px 0;
-    }
-    .js-item-part3 {
-        display: flex;
-        justify-content: space-between;
-    div {
-        width: 50%;
-    }
-    }
-    }
+        .js-item {
+            margin-top: 10px;
+            background: #fff;
+            padding: 0 15px;
+            padding-top: 6px;
+            .js-item-part1 {
+                display: flex;
+                justify-content: space-between;
+                border-top: 1px solid transparent;
+                margin-bottom: 6px;
+                padding-left: 10px;
+                position: relative;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 3px;
+                    height: 15px;
+                    transform: translate(0, -50%);
+                    background: #4674E8;
 
-    .option-btn {
-        padding: 12px 0;
-        font-size: 0;
-        text-align: right;
-    .btn {
-        display: inline-block;
-        margin-left: 10px;
-        line-height: 30px;
-        text-align: center;
-        color: #323232;
-        font-size: 15px;
-        border-radius: 15px;
-        padding: 0 15px;
-        border: 1px solid #C2C2C2;
-        overflow: hidden;
-    &.active {
-         color: @mainColor;
-         border: 1px solid @mainColor;
-     }
-    }
+                }
+                .sq-info {
+                    color: #323232;
+                    font-size: 15px;
+                }
+                .sq-status {
+                    color: @mainColor;
+                    font-size: 15px;
+                }
+            }
+            .js-item-part2 {
+                color: #646464;
+                font-size: 14px;
+                /*line-height: 2;*/
+                padding: 7px 0;
+            }
+            .js-item-part3 {
+                display: flex;
+                justify-content: space-between;
+                div {
+                    width: 50%;
+                }
+            }
+        }
 
-    }
+        .option-btn {
+            padding: 12px 0;
+            font-size: 0;
+            text-align: right;
+            .btn {
+                display: inline-block;
+                margin-left: 10px;
+                line-height: 30px;
+                text-align: center;
+                color: #323232;
+                font-size: 15px;
+                border-radius: 15px;
+                padding: 0 15px;
+                border: 1px solid #C2C2C2;
+                overflow: hidden;
+                &.active {
+                    color: @mainColor;
+                    border: 1px solid @mainColor;
+                }
+            }
 
-    .total {
-        text-align: right;
-        font-size: 13px;
-        color: #909090;
-        padding: 8px 12px;
-    span {
-        color: #323232;
-    }
-    }
+        }
+
+        .total {
+            text-align: right;
+            font-size: 13px;
+            color: #909090;
+            padding: 8px 12px;
+            span {
+                color: #323232;
+            }
+        }
     }
 
 </style>

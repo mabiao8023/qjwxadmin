@@ -4,6 +4,7 @@
             <div class="header-con">
                 请选择配送方式，并仔细核对订单信息
 
+
             </div>
             <div class="dashed-line">
             </div>
@@ -30,9 +31,11 @@
                     <div v-if="isPost" class="choice-adress">
                         请填写收货信息
 
+
                     </div>
                     <div v-else class="choice-adress">
                         请填写提货人信息
+
 
                     </div>
                 </template>
@@ -42,14 +45,17 @@
                         <div>
                             收货人：王琪
 
+
                         </div>
                         <div>
                             12323434354
+
 
                         </div>
                     </div>
                     <div class="has-adress" v-if="isPost">
                         收货地址：广东省广州市天河区建中路66号
+
 
                     </div>
                 </div>
@@ -67,6 +73,7 @@
                     <div class="shop-title">
                         沐浴露旺旺
 
+
                     </div>
                     <div class="shop-data">
                         <div class="shop-price">￥28.80(返利¥2.00)</div>
@@ -82,9 +89,11 @@
                 <div class="title">
                     配送费
 
+
                 </div>
                 <div class="feiyong">
                     ￥10.00
+
 
                 </div>
             </div>
@@ -92,9 +101,11 @@
                 <div class="title">
                     优惠券
 
+
                 </div>
                 <div class="feiyong">
                     -￥10.00
+
 
                 </div>
                 <div class="more-arrow">
@@ -111,10 +122,12 @@
                 <div class="no-yunfei">
                     含运费 | 返利¥20
 
+
                 </div>
             </div>
             <div class="shopping-cart-btn" @click="showChoice = true">
                 结算
+
 
             </div>
         </div>
@@ -127,6 +140,7 @@
                 <div class="paypop">
                     <div class="paypop-header vux-1px-b">
                         请选择支付方式
+
 
                         <div class="paypop-close" @click="showChoice = false">
                         </div>
@@ -143,9 +157,11 @@
                             <div class="title">
                                 线上支付
 
+
                             </div>
                             <div class="desc">
                                 立即支付给创客空间或总部
+
 
                             </div>
                         </div>
@@ -159,13 +175,16 @@
                             <div class="title">
                                 线下支付
 
+
                             </div>
                             <div class="desc">
                                 自行打款给创客空间或总部
 
+
                             </div>
                             <div class="desc">
                                 *备注：您可以使用微信、支付宝、银行卡或是现金方式将货款转给空间或总部，并截取或打印凭证上传至此
+
 
                             </div>
                         </div>
@@ -236,6 +255,7 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
+
     .pay-header {
         background: #fff;
         color: #323232;

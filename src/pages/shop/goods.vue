@@ -26,9 +26,11 @@
                     <div class="shop-title">
                         {{ item.good_name }}
 
+
                     </div>
                     <div class="shop-nums">
                         库存：{{item.stock}}
+
 
                     </div>
                     <div class="shop-data">
@@ -55,6 +57,7 @@
             </div>
             <div class="shopping-cart-btn" @click="gotoShopCart">
                 进货车({{total.totalNumber}})
+
 
             </div>
         </div>
@@ -88,37 +91,41 @@
                 all: {
                     page: 1,
                     data: [
-                        {
-                            "good_name": "杜蕾斯",
-                            "stock": 10,
-                            "good_price": 88,
-                            "rebate": 2,
-                            "id": "1",
-                            "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-                        }
+//                        {
+//                            "good_name": "杜蕾斯",
+//                            "stock": 10,
+//                            "good_price": 88,
+//                            "rebate": 2,
+//                            "id": "1",
+//                            "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
+//                        }
                     ]
                 },
                 discount: {
                     page: 1,
-                    data: [{
-                        "good_name": "杜蕾斯",
-                        "stock": 10,
-                        "good_price": 288,
-                        "rebate": 12,
-                        "id": "1",
-                        "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-                    }]
+                    data: [
+//                        {
+//                        "good_name": "杜蕾斯",
+//                        "stock": 10,
+//                        "good_price": 288,
+//                        "rebate": 12,
+//                        "id": "1",
+//                        "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
+//                    }
+                    ]
                 },
                 count: {
                     page: 1,
-                    data: [{
-                        "good_name": "杜蕾斯",
-                        "stock": 10,
-                        "good_price": 188,
-                        "rebate": 5,
-                        "id": "1",
-                        "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-                    }]
+                    data: [
+//                        {
+//                        "good_name": "杜蕾斯",
+//                        "stock": 10,
+//                        "good_price": 188,
+//                        "rebate": 5,
+//                        "id": "1",
+//                        "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
+//                    }
+                    ]
                 },
                 shoppingTrolley: 0,
                 // 添加进购物车
@@ -284,6 +291,9 @@
                     })
                 }).catch(e => {
                     this.hideLoading()
+                })
+                this.$router.push({
+                    path: '/shopCart'
                 })
             }
         },

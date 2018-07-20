@@ -39,9 +39,11 @@
         </div>
         <div @click="gotoForgetPwd" class="forget-pwd">
             忘记密码?
+
         </div>
         <div class="login-btn" @click="login">
             登录
+
         </div>
     </div>
 </template>
@@ -120,10 +122,10 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     /*body{*/
-        /*height: 100%;*/
-        /*background: #fff;*/
+    /*height: 100%;*/
+    /*background: #fff;*/
     /*}*/
-    .login-container{
+    .login-container {
         position: absolute;
         top: 0;
         bottom: 0;
@@ -131,6 +133,7 @@
         right: 0;
         background: #fff;
     }
+
     .login-group {
         padding: 15px;
         font-size: 17px;

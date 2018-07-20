@@ -9,15 +9,16 @@ import App from './app.vue';
 import VueRouter from 'vue-router';
 import routes from './router/index.js';
 import Qs from 'qs'
+import {weChatAuth} from './assets/js/util'
 import {
-  AlertPlugin,
-  ToastPlugin,
-  AjaxPlugin,
-  LoadingPlugin,
-  ConfirmPlugin,
-  DatetimePlugin,
-  WechatPlugin,
-  cookie
+    AlertPlugin,
+    ToastPlugin,
+    AjaxPlugin,
+    LoadingPlugin,
+    ConfirmPlugin,
+    DatetimePlugin,
+    WechatPlugin,
+    cookie
 } from 'vux'
 
 const FastClick = require('fastclick')
@@ -44,13 +45,13 @@ const router = new VueRouter(routes);
 router.beforeEach((to, from, next) => {
     let token = cookie.get('token') || '';
     // ...
-    if( to.meta.noNeedLogin || to.path == '/login'){
+    if (to.meta.noNeedLogin || to.path == '/login') {
         next();
-    }else{
-        if( token ){
+    } else {
+        if (token) {
             // 已登录
             next();
-        }else{
+        } else {
             // 未登录,跳转登录页面
             next('/login')
         }
@@ -59,10 +60,10 @@ router.beforeEach((to, from, next) => {
 
 // 初始化axio请求参数
 //添加一个请求拦截器
-Vue.http.interceptors.request.use(function(config){
+Vue.http.interceptors.request.use(function (config) {
     let userToken = cookie.get('token') || '';
     config.timeout = 2000;
-    config.transformRequest = [function(data = {},headers){
+    config.transformRequest = [function (data = {}, headers) {
         //依自己的需求对请求数据进行处理
         data.token = userToken;
         data.js_code = new Date().getTime();
@@ -71,54 +72,54 @@ Vue.http.interceptors.request.use(function(config){
     }];
     //在请求发送之前做一些事
     return config;
-},function( error ){
+}, function (error) {
     //当出现请求错误是做一些事
     return Promise.reject(error);
 });
 
 //添加一个返回拦截器
-Vue.http.interceptors.response.use(function(response){
+Vue.http.interceptors.response.use(function (response) {
     //  对返回的数据进行一些处理
     //  对code码进行统一处理
-    let data  = response.data;
-    if( data.code == 0 ){
-        Vue.$vux.toast.text( data.msg, 'middle')
-        return Promise.reject( data.msg );
-    }else if( data.code == 401 ){
-        Vue.$vux.toast.text( '未登录', 'middle')
+    let data = response.data;
+    if (data.code == 0) {
+        Vue.$vux.toast.text(data.msg, 'middle')
+        return Promise.reject(data.msg);
+    } else if (data.code == 401) {
+        Vue.$vux.toast.text('未登录', 'middle')
         location.href = '/login'
-        return Promise.reject( data.msg );
-    }else if( data.code == 403 ){
-        Vue.$vux.toast.text( '未授权', 'middle')
-        return Promise.reject( data.msg );
+        return Promise.reject(data.msg);
+    } else if (data.code == 403) {
+        Vue.$vux.toast.text('未授权', 'middle')
+        // 跳转授权
+        // location.href = weChatAuth()
+        return Promise.reject(data.msg)
         //  跳转授权
-    }else{
+    } else {
         return data;
     }
-},function(error){
+}, function (error) {
     //对返回的错误进行一些处理
-    let status  = error.response.status;
-    if( status == 0 ){
-      Vue.$vux.toast.text( data.msg, 'middle')
-    }else if( status == 401 ){
-      Vue.$vux.toast.text( '未登录', 'middle')
-      location.href = '/login'
-    }else if( status == 403 ){
-      Vue.$vux.toast.text( '未授权', 'middle')
-      //  跳转授权
-    }else{
-      Vue.$vux.toast.text( '请求接口报错', 'middle')
+    let status = error.response.status;
+    if (status == 0) {
+        Vue.$vux.toast.text(data.msg, 'middle')
+    } else if (status == 401) {
+        Vue.$vux.toast.text('未登录', 'middle')
+        location.href = '/login'
+    } else if (status == 403) {
+        Vue.$vux.toast.text('未授权', 'middle')
+        // 跳转授权
+        // location.href = weChatAuth()
+    } else {
+        Vue.$vux.toast.text('请求接口报错', 'middle')
     }
     return Promise.reject(error);
 });
 
-
 const app = new Vue({
     el: '#app',
     router,
-      // store,
+    // store,
     template: '<App/>',
-    components: { App }
+    components: {App}
 });
-
-

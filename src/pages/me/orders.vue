@@ -17,9 +17,11 @@
                     <div class="order-num">
                         订单号：2018062312345678
 
+
                     </div>
                     <div class="order-status">
                         已支付
+
 
                     </div>
                 </div>
@@ -30,6 +32,7 @@
                         </div>
                         <div class="name">
                             产品名称产品名称
+
 
                         </div>
                         <div class="data">
@@ -44,6 +47,7 @@
                         </div>
                         <div class="name">
                             产品名称产品名称
+
 
                         </div>
                         <div class="data">
@@ -60,21 +64,26 @@
                     <div class="btn">
                         查看物流
 
+
                     </div>
                     <div class="btn">
                         确认收货
+
 
                     </div>
                     <div class="btn active">
                         取消订单
 
+
                     </div>
                     <div class="btn">
                         上传凭证
 
+
                     </div>
                     <div class="btn">
                         去支付
+
 
                     </div>
                 </div>
@@ -129,9 +138,9 @@
                 }, 1000)
             },
             gotoOrderDetail(id){
-                 this.$router.push({
-                     path: `/orderDetail?order_id=${id}`
-                 })
+                this.$router.push({
+                    path: `/orderDetail?order_id=${id}`
+                })
             }
         },
         mounted() {
@@ -146,7 +155,8 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-    .orders-container{
+
+    .orders-container {
         .orders-nav {
             position: fixed;
             top: 0;
@@ -162,80 +172,80 @@
         .js-item {
             margin-top: 10px;
             background: #fff;
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 15px;
-        .order-num {
-            color: #646464;
-            font-size: 15px;
-        }
-        .order-status {
-            font-size: 15px;
-            color: @mainColor;
-        }
-        }
-        .goods-list {
-        .goods-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px 10px;
-            background: #F6F6F6;
-            margin-top: 5px;
-        &:first-child {
-             margin-top: 0;
-         }
-        }
-        .img {
-            width: 70px;
-            height: 70px;
-        }
-        .name {
-            flex: 1;
-            height: 70px;
-            text-align: left;
-            color: #323232;
-            font-size: 15px;
-            padding: 0 10px;
-        }
-        .data {
-            text-align: right;
-            padding-left: 10px;
-            color: #323232;
-            font-size: 15px;
-        }
-        .fanli {
-            color: #646464;
-        }
-        .numbers {
-            color: #909090;
-            font-size: 12px;
-        }
-        }
+            .order-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 15px;
+                .order-num {
+                    color: #646464;
+                    font-size: 15px;
+                }
+                .order-status {
+                    font-size: 15px;
+                    color: @mainColor;
+                }
+            }
+            .goods-list {
+                .goods-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 5px 10px;
+                    background: #F6F6F6;
+                    margin-top: 5px;
+                    &:first-child {
+                        margin-top: 0;
+                    }
+                }
+                .img {
+                    width: 70px;
+                    height: 70px;
+                }
+                .name {
+                    flex: 1;
+                    height: 70px;
+                    text-align: left;
+                    color: #323232;
+                    font-size: 15px;
+                    padding: 0 10px;
+                }
+                .data {
+                    text-align: right;
+                    padding-left: 10px;
+                    color: #323232;
+                    font-size: 15px;
+                }
+                .fanli {
+                    color: #646464;
+                }
+                .numbers {
+                    color: #909090;
+                    font-size: 12px;
+                }
+            }
         }
 
         .option-btn {
             padding: 12px 16px;
             font-size: 0;
             text-align: right;
-        .btn {
-            display: inline-block;
-            margin-left: 10px;
-            line-height: 30px;
-            text-align: center;
-            color: #323232;
-            font-size: 15px;
-            border-radius: 15px;
-            padding: 0 15px;
-            border: 1px solid #C2C2C2;
-            overflow: hidden;
-        &.active {
-             color: @mainColor;
-             border: 1px solid @mainColor;
-         }
-        }
+            .btn {
+                display: inline-block;
+                margin-left: 10px;
+                line-height: 30px;
+                text-align: center;
+                color: #323232;
+                font-size: 15px;
+                border-radius: 15px;
+                padding: 0 15px;
+                border: 1px solid #C2C2C2;
+                overflow: hidden;
+                &.active {
+                    color: @mainColor;
+                    border: 1px solid @mainColor;
+                }
+            }
 
         }
 
@@ -244,9 +254,9 @@
             font-size: 13px;
             color: #909090;
             padding: 8px 12px;
-        span {
-            color: #323232;
-        }
+            span {
+                color: #323232;
+            }
         }
     }
 

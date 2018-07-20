@@ -8,9 +8,11 @@
                 <div class="title">
                     提货地址：
 
+
                 </div>
                 <div class="content">
                     广州市天河区建中路77号五度大厦 东塔1201室
+
 
                 </div>
             </div>
@@ -18,9 +20,11 @@
                 <div class="title">
                     联系电话：
 
+
                 </div>
                 <div class="content">
                     020-123456789
+
 
                 </div>
             </div>
@@ -29,9 +33,11 @@
                     提货时间：
 
 
+
                 </div>
                 <div class="content">
                     周一至周五 9:00-18:00
+
 
 
                 </div>
@@ -90,8 +96,6 @@
             font-size: 14px;
         }
     }
-
-
 
     .back {
         position: fixed;

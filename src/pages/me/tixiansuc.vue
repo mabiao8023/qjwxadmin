@@ -9,8 +9,7 @@
 
 <script>
     export default {
-        components: {
-        },
+        components: {},
         data () {
             return {}
         },
@@ -66,8 +65,6 @@
             font-size: 14px;
         }
     }
-
-
 
     .back {
         position: fixed;

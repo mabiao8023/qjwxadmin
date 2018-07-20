@@ -3,14 +3,17 @@
         <div class="p-title">
             提现至: 微信账户
 
+
         </div>
         <div class="zhmx">
             <div class="zhmx-title">
                 账户
 
+
             </div>
             <div class="wx-name">
                 {{ userInfo.wx_name }}
+
 
             </div>
             <!--<div  class="zhmx-arrow">-->
@@ -28,6 +31,7 @@
         <!-- 提现 -->
         <div class="logout" @click="submitCash">
             提交
+
 
         </div>
     </div>

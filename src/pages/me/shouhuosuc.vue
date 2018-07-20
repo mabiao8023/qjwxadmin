@@ -9,8 +9,7 @@
 
 <script>
     export default {
-        components: {
-        },
+        components: {},
         data () {
             return {}
         },
@@ -48,26 +47,24 @@
         right: 0;
         background: #fff;
         text-align: center;
-    .success-icon {
-        width: 65px;
-        height: 65px;
-        margin: 90px auto 35px;
-    }
+        .success-icon {
+            width: 65px;
+            height: 65px;
+            margin: 90px auto 35px;
+        }
 
-    .success-tip {
-        color: #323232;
-        font-size: 20px;
-        font-weight: bold;
-    }
+        .success-tip {
+            color: #323232;
+            font-size: 20px;
+            font-weight: bold;
+        }
 
-    .success-desc {
-        padding: 12px 30px;
-        color: #909090;
-        font-size: 14px;
+        .success-desc {
+            padding: 12px 30px;
+            color: #909090;
+            font-size: 14px;
+        }
     }
-    }
-
-
 
     .back {
         position: fixed;

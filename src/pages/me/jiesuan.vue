@@ -4,9 +4,11 @@
             <div class="h-title">
                 待结算（元）
 
+
             </div>
             <div class="h-money">
                 {{ frost }}
+
 
             </div>
         </div>
@@ -19,9 +21,11 @@
                     <div class="left">
                         {{ item.money }}
 
+
                     </div>
                     <div class="right">
                         {{ item.status == 0 ? '审核冻结中' : item.status == 1 ? '审核通过' : '审核失败' }}
+
 
                     </div>
                 </div>
@@ -29,9 +33,11 @@
                     <div class="left">
                         返利时间：{{ item.addtime | dateFormat('YYYY-MM-DD') }}
 
+
                     </div>
                     <div>
                         预计解冻时间：{{ item.thawingTime | dateFormat('YYYY-MM-DD') }}
+
 
                     </div>
                 </div>
@@ -120,20 +126,21 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-    .jiesuan-container{
+
+    .jiesuan-container {
         .js-header {
             width: 100%;
             height: 120px;
             background: @mainColor;
             color: #fff;
             padding: 16px 24px;
-        .h-title {
-            font-size: 15px;
-        }
-        .h-money {
-            text-align: center;
-            font-size: 40px;
-        }
+            .h-title {
+                font-size: 15px;
+            }
+            .h-money {
+                text-align: center;
+                font-size: 40px;
+            }
         }
 
         .js-item {

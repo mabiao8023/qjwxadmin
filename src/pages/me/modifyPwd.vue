@@ -5,6 +5,7 @@
                 <div class="setting-title">
                     旧密码
 
+
                 </div>
                 <div class="setting-con">
                     <x-input
@@ -21,6 +22,7 @@
                 <div class="setting-title">
                     新密码
 
+
                 </div>
                 <div class="setting-con">
                     <x-input
@@ -35,6 +37,7 @@
             <li class="setting-item vux-1px-t">
                 <div class="setting-title">
                     确认新密码
+
 
                 </div>
                 <div class="setting-con">
@@ -51,6 +54,7 @@
         <!-- 确认修改 -->
         <div class="logout" @click="surePwd">
             确认修改
+
 
         </div>
     </div>

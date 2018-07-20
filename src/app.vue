@@ -1,9 +1,11 @@
 <style lang="less" rel="stylesheet/less">
     @import "./assets/css/reset";
+
     body {
         background: #F5F5F5;
         font-size: 15px;
     }
+
     #app {
         font-family: '微软雅黑', 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

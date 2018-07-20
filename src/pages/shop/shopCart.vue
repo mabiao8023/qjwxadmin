@@ -4,12 +4,14 @@
             <div class="nav-l">
                 共<span>{{total.totalNumber}}</span>件商品
 
+
             </div>
             <div class="nav-r"
                  v-if="!isEdit"
                  @click="isEdit = true"
             >
                 编辑
+
 
             </div>
             <div class="options"
@@ -38,6 +40,7 @@
                 <div class="shop-detail">
                     <div class="shop-title">
                         {{item.good_name}}
+
 
                     </div>
                     <div class="shop-data">
@@ -74,10 +77,12 @@
                 <div class="no-yunfei">
                     不含运费 | 返利¥{{total.totalReMoney}}
 
+
                 </div>
             </div>
             <div class="shopping-cart-btn" @click="submitOrder">
                 提交订单
+
 
             </div>
         </div>
@@ -191,20 +196,7 @@
                     $state.complete();
                 })
             },
-            submitOrder(){
-                let editArr = [];
-                this.goods.forEach(val => {
-                    if (val.checked) {
-                        editArr.push({
-                            good_id: val.good_id,
-                            amount: val.amount
-                        });
-                    }
-                });
-                this.$router.push({
-                    path: '/pay'
-                })
-            },
+
             deleteGoods(){
                 let deleteArr = []
                 this.goods.forEach(val => {
@@ -254,6 +246,31 @@
                     } else {
                         val.checked = false;
                     }
+                })
+            },
+            submitOrder(){
+                let addGoodsArr = [];
+                this.goods.forEach(val => {
+                    if (val.checked) {
+                        addGoodsArr.push({
+                            good_id: val.good_id,
+                            amount: val.amount
+                        });
+                    }
+                });
+                this.showLoading('加载中')
+                this.$http.post(api.addOrder,{
+                    good: addGoodsArr
+                }).then(res => {
+                    this.hideLoading()
+                    this.$router.push({
+                        path: `/pay?order_id=${res.ordersn}`
+                    })
+                }).catch(e => {
+                    this.hideLoading()
+                })
+                this.$router.push({
+                    path: `/pay?order_id=13123`
                 })
             },
         },

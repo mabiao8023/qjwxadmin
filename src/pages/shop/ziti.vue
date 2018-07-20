@@ -5,6 +5,7 @@
                 <div class="title">
                     收货人
 
+
                 </div>
                 <div class="input">
                     <x-input
@@ -18,6 +19,7 @@
             <div class="item vux-1px-tb">
                 <div class="title">
                     联系电话
+
 
                 </div>
                 <div class="input">
@@ -33,6 +35,7 @@
         </div>
         <div class="add-adress" @click="saveInformaton">
             保存
+
 
         </div>
     </div>

@@ -3,11 +3,13 @@
         <div class="header">
             欢迎注册成为我司创客，请您务必认真填写以下信息
 
+
         </div>
         <ul class="input-list">
             <li class="input-item vux-1px-b">
                 <div class="title num1-title">
                     所属创客空间
+
 
                 </div>
                 <div class="input">
@@ -20,6 +22,7 @@
             <li class="input-item vux-1px-b">
                 <div class="title">
                     *真实信息
+
 
                 </div>
                 <div class="input">
@@ -36,6 +39,7 @@
                 <div class="title">
                     *电话
 
+
                 </div>
                 <div class="input">
                     <x-input
@@ -51,6 +55,7 @@
                 <div class="title">
                     *验证码
 
+
                 </div>
                 <div class="input">
                     <x-input
@@ -65,17 +70,21 @@
                      @click="sendCode">
                     获取验证码
 
+
                 </div>
                 <div class="code disable" v-else>
                     重发(
+
                     <countdown v-model="time" :start="isSendCoding" @on-finish="finish"></countdown>
                     )
+
 
                 </div>
             </li>
             <li class="input-item vux-1px-b">
                 <div class="title">
                     *密码
+
 
                 </div>
                 <div class="input">
@@ -91,6 +100,7 @@
                 <div class="title">
                     *确认密码
 
+
                 </div>
                 <div class="input">
                     <x-input
@@ -105,6 +115,7 @@
                 <div class="title">
                     *上传合同
 
+
                 </div>
                 <div class="input">
                     <div class="upload-item" @click="chooseImg">
@@ -115,6 +126,7 @@
         </ul>
         <div class="logout" @click="submit">
             提交申请
+
 
         </div>
         <!-- 图片上传组件 -->

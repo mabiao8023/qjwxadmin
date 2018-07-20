@@ -5,9 +5,11 @@
                 <div class="title">
                     打款金额：
 
+
                 </div>
                 <div class="amount">
                     ￥1234
+
 
                 </div>
             </div>
@@ -15,9 +17,11 @@
                 <div class="title">
                     打款备注：
 
+
                 </div>
                 <div class="desc">
                     圣诞节哈收到回复对方哈哈发货附近发掘到
+
 
                 </div>
             </div>
@@ -25,6 +29,7 @@
         <div class="viewcer-part2">
             <div class="title">
                 打款凭证（共3张）
+
 
             </div>
             <div class="img-preview">

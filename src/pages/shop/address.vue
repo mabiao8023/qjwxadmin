@@ -4,13 +4,16 @@
             <div class="title">
                 共<span>{{list.length}}</span>条地址记录
 
+
             </div>
             <div class="edit" v-if="!isEdit" @click="isEdit = true">
                 编辑
 
+
             </div>
             <div class="edit complete" v-else>
                 完成
+
 
             </div>
         </div>
@@ -23,14 +26,17 @@
                     <div class="name">
                         {{ item.name }}
 
+
                     </div>
                     <div class="phone">
                         {{ item.phone }}
+
 
                     </div>
                 </div>
                 <div class="adress">
                     <span v-if="item.type == 'default'">[默认地址]</span>{{item.address}}
+
 
                 </div>
                 <div class="edit-address vux-1px-t" v-if="isEdit">
@@ -47,9 +53,11 @@
                         <div class="edit" @click="gotoEditAddress(item.address_id)">
                             编辑
 
+
                         </div>
                         <div class="delete" @click="deleteAddress">
                             删除
+
 
                         </div>
                     </div>
@@ -59,6 +67,7 @@
         <Nodata v-if="list.length <= 0"></Nodata>
         <div class="add-adress" @click="gotoAddAddress">
             添加新地址
+
 
         </div>
     </div>

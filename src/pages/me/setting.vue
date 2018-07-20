@@ -5,9 +5,11 @@
                 <div class="setting-title">
                     已绑定手机
 
+
                 </div>
                 <div class="setting-con">
                     {{ userInfo.mobile }}
+
 
                 </div>
             </li>
@@ -15,9 +17,11 @@
                 <div class="setting-title">
                     账号等级
 
+
                 </div>
                 <div class="setting-con">
                     {{ identity[userInfo.identity] }}
+
 
                 </div>
             </li>
@@ -27,6 +31,7 @@
                 <div class="setting-title">
                     账号余额管理
 
+
                 </div>
                 <div class="setting-arrow">
 
@@ -35,6 +40,7 @@
             <li class="setting-item vux-1px-t" @click="gotoPage('/modifyPwd')">
                 <div class="setting-title">
                     修改登录密码
+
 
                 </div>
                 <div class="setting-arrow">
@@ -47,9 +53,11 @@
                 <div class="setting-title">
                     版本
 
+
                 </div>
                 <div class="setting-con">
                     v1.0
+
 
                 </div>
             </li>
@@ -57,6 +65,7 @@
         <!-- 退出登录 -->
         <div class="logout" @click="logout">
             退出登陆
+
 
         </div>
     </div>
