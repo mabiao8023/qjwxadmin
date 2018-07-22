@@ -60,7 +60,7 @@
                     </div>
                     <img :src="item.src" @click="show(index)" alt="">
                 </div>
-                <div class="upload-item" @click="chooseImg">
+                <div class="upload-item" @click.stop.prevent="chooseImg">
 
                 </div>
             </div>
@@ -205,6 +205,8 @@
                 this.$vux.loading.hide()
             },
             chooseImg(){
+                /* 解决fastClick的延迟的bug */
+                this.$refs['uploadPhoto'].$el.click();
                 this.$refs['uploadPhoto'].$el.click();
             },
             // 父组件监听子组件上传图片返回的base64的数据，用于本地显示图片

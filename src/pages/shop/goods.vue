@@ -328,10 +328,25 @@
             background: #F5F5F5 !important;
             color: #ACACAC !important;
             font-size: 15px !important;
-            padding-left: 10px;
+            padding-left: 6px;
+        }
+        .weui-search-bar__form{
+            border-radius: 4px;
+        }
+        .weui-icon-search,.weui-icon-clear{
+            line-height: 37px!important;
+        }
+        .weui-search-bar__input{
+            line-height: 37px!important;
+            height: 37px!important;
+            padding: 0!important;
         }
         .weui-search-bar__cancel-btn {
-            font-size: 14px;
+            font-size: 15px;
+            line-height: 37px
+        }
+        .weui-search-bar__label span{
+            font-size: 15px;
         }
         .weui-search-bar {
             padding-bottom: 4px !important;

@@ -87,7 +87,7 @@ Vue.http.interceptors.response.use(function (response) {
         return Promise.reject(data.msg);
     } else if (data.code == 401) {
         Vue.$vux.toast.text('未登录', 'middle')
-        location.href = '/login'
+        // location.href = '/login'
         return Promise.reject(data.msg);
     } else if (data.code == 403) {
         Vue.$vux.toast.text('未授权', 'middle')
@@ -105,7 +105,7 @@ Vue.http.interceptors.response.use(function (response) {
         Vue.$vux.toast.text(data.msg, 'middle')
     } else if (status == 401) {
         Vue.$vux.toast.text('未登录', 'middle')
-        location.href = '/login'
+        // location.href = '/login'
     } else if (status == 403) {
         Vue.$vux.toast.text('未授权', 'middle')
         // 跳转授权
