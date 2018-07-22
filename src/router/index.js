@@ -242,13 +242,13 @@ export default {
             meta: {}
         },
         {
-            /* 查看凭证 */
+            /* 微信支付 */
             path: '/weChatPay',
             component: WeChatPay,
             meta: {}
         },
         {
-            /* 查看凭证 */
+            /* 微信授权 */
             path: '/weChatAuth',
             component: WeChatAuth,
             meta: {}

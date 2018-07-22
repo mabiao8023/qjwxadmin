@@ -1,26 +1,22 @@
 <template>
     <div class="order-detail-container">
         <div class="header">
-            <div>交易完成</div>
+            <div>{{detail.condition}}</div>
             <div class="look" @click="gotoViewCer">查看凭证></div>
         </div>
         <template v-if="false">
             <div class="wuliu-msg">
                 <div class="title">
                     物流信息：
-
                 </div>
                 <div class="wuliu-method">
-                    申通快递
-
+                    {{detail.logistics.company}}
                 </div>
                 <div class="wuliu-number" id="copyValue" ref="numbers">
-                    {{wuliu}}
-
+                    {{detail.logistics.number}}
                 </div>
-                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='wuliu'>
+                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics.number'>
                     复制
-
                 </button>
             </div>
             <div class="dashed-line">
@@ -28,20 +24,14 @@
             <div class="shouhuo">
                 <div class="sh-info">
                     <div class="name">
-                        收货人：王琪
-
-
+                        收货人：{{detail.username}}
                     </div>
                     <div class="phone">
-                        1232473849
-
-
+                       {{detail.phone}}
                     </div>
                 </div>
                 <div class="sh-adress">
-                    收货地址：广东省广州市天河区建中路66号
-
-
+                    收货地址：{{detail.province + detail.city + detail.district + detail.address}}
                 </div>
             </div>
         </template>
@@ -50,24 +40,17 @@
                 <div class="tihuo-ads">
                     <div class="sh-ad-title">
                         提货地址：
-
-
                     </div>
                     <div class="sh-ad-con">
-                        广东省广州市天河区建中路66号
-
-
+                        {{detail.makerAddress.province + detail.makerAddress.city + detail.makerAddress.district + detail.makerAddress.address }}
                     </div>
                 </div>
                 <div class="sh-info">
                     <div class="name">
-                        电话：1232473849
-
-
+                        电话：{{detail.makerAddress.phone}}
                     </div>
                     <div class="phone">
                         周一至周五 9:00-18:00
-
                     </div>
                 </div>
             </div>
@@ -78,101 +61,64 @@
 
                 <div class="tihuo-container">
                     <div class="tihuo-title">
-                        提货人：王琪
-
-
+                        提货人：{{detail.username}}
                     </div>
                     <div class="tihuo-phone">
-                        1214732894781
-
-
+                        {{detail.phone}}
                     </div>
                 </div>
-
             </div>
         </template>
 
         <div class="goods-container">
             <div class="goods-list">
-                <div class="goods-item">
+                <div class="goods-item"
+                    v-for="(item,index) in detail.good"
+                >
                     <div class="img">
-                        <img src="../../assets/image/logo.png" alt="">
+                        <img :src="item.good_photo" alt="">
                     </div>
                     <div class="name">
-                        产品名称产品名称
-
-
+                        {{item.good_name}}
                     </div>
                     <div class="data">
-                        <p class="price">￥88</p>
-                        <p class="fanli">返利￥2.00</p>
-                        <p class="numbers">×12</p>
-                    </div>
-                </div>
-                <div class="goods-item">
-                    <div class="img">
-                        <img src="../../assets/image/logo.png" alt="">
-                    </div>
-                    <div class="name">
-                        产品名称产品名称
-
-
-                    </div>
-                    <div class="data">
-                        <p class="price">￥88</p>
-                        <p class="fanli">返利￥2.00</p>
-                        <p class="numbers">×12</p>
+                        <p class="price">￥{{item.good_price}}</p>
+                        <p class="fanli">返利￥{{item.rebate}}</p>
+                        <p class="numbers">×{{item.amount}}</p>
                     </div>
                 </div>
             </div>
             <div class="total vux-1px-b">
-                共13件 合计：<span>¥1230</span>（含运费¥0.00） <span>已返利￥26</span>
+                共{{detail.amount}}件 合计：<span>¥{{detail.total}}</span>（含运费¥{{detail.freight}}） <span>已返利￥{{detail.rebate}}</span>
             </div>
         </div>
 
         <div class="progress-time">
             <div class="progress-item">
-                订单号：2018062312345678
-
-
+                订单号：{{detail.ordersn}}
             </div>
             <div class="progress-item">
-                订单号：20180623123456789
-
-
+                创建时间：{{detail.addTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item">
-                支付时间：2018-06-23 12:23:50
-
-
+                支付时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item">
-                发货时间：2018-06-25 12:23:23
-
-
+                发货时间：{{detail.deliveryTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item">
-                完成时间：2018-06-31 12:23:23
-
-
+                完成时间：{{detail.finishTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
         </div>
-
         <div class="fixed-option-btn">
             <div class="btn">
                 查看物流
-
-
             </div>
             <div class="btn" @click="sureShouhuo">
                 确认收货
-
-
             </div>
             <div class="btn active">
                 取消订单
-
-
             </div>
             <!--<div class="btn">-->
             <!--删除订单-->
@@ -185,12 +131,64 @@
 </template>
 
 <script>
+    import {dateFormat} from 'vux'
     import '../../assets/js/clipboard'
+    import api from '../../assets/js/api'
+    import {getParams} from '../../assets/js/util'
     export default {
         components: {},
+        filters: {
+            dateFormat
+        },
         data () {
             return {
-                wuliu: '1231231231'
+                wuliu: '1231231231',
+                orderId: getParams()['oreder_id'] || '',
+                detail: {
+                    "id": 1,
+                    "ordersn": "1232324343",
+                    "total": "99999",
+                    "amount": 88,
+                    "freight": "123123",
+                    "rebate": "11",
+                    "delivery": 0,
+                    "province": "广东省",
+                    "city": "广州市",
+                    "district": "天河区",
+                    "address": "瑞东花园",
+                    "username": "马彪",
+                    "phone": 1231232,
+                    "addTime": 1,
+                    "payType": 0,
+                    "payTime": 13412343243,
+                    "deliveryTime": 13412343243,
+                    "finishTime": 13412343243,
+                    "good": [
+                        {
+                            "good_name": "测试商品",
+                            "good_price": "88",
+                            "good_photo": null,
+                            "rebate": "2",
+                            "amount": 1
+                        }
+                    ],
+                    "condition": "待付款",
+                    "logistics": [
+                        {
+                            "company": "圆通",
+                            "number": "1232132343243234"
+                        }
+                    ],
+                    "makerAddress": [
+                        {
+                            "phone": 12332432,
+                            "province": "广东省",
+                            "city": "广州市",
+                            "district": "黄浦区",
+                            "address": "瑞东花园"
+                        }
+                    ]
+                }
             }
         },
         methods: {

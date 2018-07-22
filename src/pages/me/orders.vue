@@ -10,88 +10,74 @@
         </div>
         <ul class="js-list">
             <li class="js-item"
-                v-for="i in bottomCount"
-                @click="gotoOrderDetail"
+                v-for="(item,index) in orders[type].data"
+                @click="gotoOrderDetail(item.ordersn)"
             >
                 <div class="order-header">
                     <div class="order-num">
-                        订单号：2018062312345678
-
-
+                        订单号：{{item.ordersn}}
                     </div>
                     <div class="order-status">
-                        已支付
-
-
+                       {{item.condition}}
                     </div>
                 </div>
                 <div class="goods-list">
-                    <div class="goods-item">
+                    <div class="goods-item"
+                        v-for="(val,index) in item.good"
+                    >
                         <div class="img">
-                            <img src="../../assets/image/logo.png" alt="">
+                            <img :src="val.good_photo" alt="">
                         </div>
                         <div class="name">
-                            产品名称产品名称
-
-
+                           {{val.good_name}}
                         </div>
                         <div class="data">
-                            <p class="price">￥88</p>
-                            <p class="fanli">返利￥2.00</p>
-                            <p class="numbers">×12</p>
-                        </div>
-                    </div>
-                    <div class="goods-item">
-                        <div class="img">
-                            <img src="../../assets/image/logo.png" alt="">
-                        </div>
-                        <div class="name">
-                            产品名称产品名称
-
-
-                        </div>
-                        <div class="data">
-                            <p class="price">￥88</p>
-                            <p class="fanli">返利￥2.00</p>
-                            <p class="numbers">×12</p>
+                            <p class="price">￥{{val.good_price}}</p>
+                            <p class="fanli">返利￥{{val.rebate}}</p>
+                            <p class="numbers">×{{val.amount}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="total vux-1px-b">
-                    共13件 合计：<span>¥1230</span>（含运费¥0.00） <span>已返利￥26</span>
+                    共{{item.amount}}件 合计：<span>{{item.total}}</span>（含运费¥{{item.freight}}） <span>已返利￥{{item.rebate}}</span>
                 </div>
                 <div class="option-btn">
-                    <div class="btn">
+                    <div class="btn"
+                         v-if="item.condition == '待审核凭证' || item.condition == '待发货' || item.condition == '待自提' || item.condition ==  '已发货'"
+                    >
+                        申请退款
+                    </div>
+                    <div class="btn"
+                         v-if="item.condition == '已完成' || item.condition ==  '已发货'">
                         查看物流
-
-
                     </div>
-                    <div class="btn">
+                    <div class="btn active"
+                         v-if="item.condition == '已完成' || item.condition == '已退款' || item.condition == '已取消'"
+                    >
+                        删除订单
+                    </div>
+                    <div class="btn active" v-if="item.condition == '待自提' || item.condition == '已发货' ">
                         确认收货
-
-
                     </div>
-                    <div class="btn active">
-                        取消订单
-
-
-                    </div>
-                    <div class="btn">
+                    <div class="btn active"
+                         v-if="item.condition == '待上传凭证' ">
                         上传凭证
-
-
                     </div>
-                    <div class="btn">
+                    <div class="btn"
+                         v-if="item.condition == '待上传凭证' || item.condition == '待付款' ">
+                        取消订单
+                    </div>
+                    <div class="btn active"
+                         v-if="item.condition == '待付款'">
                         去支付
-
-
                     </div>
                 </div>
             </li>
         </ul>
+        <Nodata v-if="!orders[type].data.length"></Nodata>
         <infinite-loading @infinite="getList" :distance="100" spinner="circles" ref="infiniteLoading">
           <span slot="no-results">
-              暂无数据
+              <!--暂无数据-->
           </span>
             <span slot="no-more">
               暂无更多数据
@@ -103,16 +89,62 @@
 <script>
     import InfiniteLoading from 'vue-infinite-loading';
     import {Tab, TabItem,} from 'vux'
+    import api from '../../assets/js/api'
+    import Nodata from '../../components/nodata.vue'
 
     export default {
         components: {
             Tab,
             TabItem,
-            InfiniteLoading
+            InfiniteLoading,
+            Nodata
         },
         data () {
             return {
                 bottomCount: 0,
+                type: 0,
+                orders: [
+                    {
+                        /* 全部订单 */
+                        page: 1,
+                        data: [
+                            {
+                                "id": 1,
+                                "ordersn": "qwrewrwe",
+                                "amount": 1,
+                                "total": "1123",
+                                "rebate": "123",
+                                "freight": "223",
+                                "condition": '待付款',
+                                "good": [
+                                    {
+                                        "good_name": "测试测试",
+                                        "good_price": "666",
+                                        "good_photo": null,
+                                        "rebate": "12123",
+                                        "amount": 1,
+                                        "goodsId": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        /* 等待付款 */
+                        page: 1,
+                        data: []
+                    },
+                    {
+                        /* 等待发货 */
+                        page: 1,
+                        data: []
+                    },
+                    {
+                        /* 等待收货 */
+                        page: 1,
+                        data: []
+                    }
+                ]
             }
         },
         methods: {
@@ -127,21 +159,33 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
-            getList ($state) {
-                setTimeout(() => {
-                    this.bottomCount += 10
-                    if (this.bottomCount < 50) {
+            getList($state) {
+                this.$http.post(api.orderIndex,{
+                    page: this.orders[this.type].page,
+                    status: this.type
+                }).then(res => {
+                    if (res.data.length) {
+                        this.orders[this.type].data = this.orders[this.type].data.concat(res.data);
+                        this.orders[this.type].page++;
                         $state.loaded();
                     } else {
                         $state.complete();
                     }
-                }, 1000)
+                }).catch(e => {
+                    $state.complete();
+                })
             },
             gotoOrderDetail(id){
                 this.$router.push({
                     path: `/orderDetail?order_id=${id}`
                 })
-            }
+            },
+            onItemClick(index){
+                this.type = index
+                this.$nextTick(() => {
+                    this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+                })
+            },
         },
         mounted() {
             //  设置标题

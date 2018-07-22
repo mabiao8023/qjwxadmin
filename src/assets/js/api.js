@@ -22,5 +22,7 @@ export default {
     addressManage: '/api/address/index',                  // 地址管理
     addressEditConfirm: '/api/address/editConfirm',       // 地址编辑确认
     addressGet: '/api/address/edit',                     // 编辑收地址页面数据获取
-
+    confirmOrder: '/api/Order/confirmOrder',             // 确认订单页面
+    settlementOrder: '/api/Order/SettlementOrder',       // 结算订单
+    orderIndex: '/api/Order/index',                      // 订单管理页面
 }

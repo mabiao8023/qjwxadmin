@@ -62,23 +62,21 @@
             </div>
         </div>
         <div class="pay-shop-box">
-            <div v-for="i in bottomCount" class="shop-container vux-1px-t">
+            <div v-for="(item,index) in detail.list" class="shop-container vux-1px-t">
                 <div class="shop-img">
                     <x-img class="shop-detail-image"
-                           src="http://weikongimg.oss-cn-shenzhen.aliyuncs.com/uploads/20180516/a325eaa661da68f423eca4beb8fa5168.png"
+                           :src="item.good_photo"
                            alt="">
                     </x-img>
                 </div>
                 <div class="shop-detail">
                     <div class="shop-title">
-                        沐浴露旺旺
-
-
+                        {{item.good_name}}
                     </div>
                     <div class="shop-data">
-                        <div class="shop-price">￥28.80(返利¥2.00)</div>
+                        <div class="shop-price">￥{{item.good_price}}(返利¥{{item.rebate}})</div>
                         <div class="shop-choice-nums" style="text-align:center;">
-                            <span>×12</span>
+                            <span>×{{item.amount}}</span>
                         </div>
                     </div>
                 </div>
@@ -92,35 +90,35 @@
 
                 </div>
                 <div class="feiyong">
-                    ￥10.00
+                    ￥{{detail.freight}}
 
 
                 </div>
             </div>
-            <div class="others-item coupon vux-1px-t">
-                <div class="title">
-                    优惠券
+            <!--<div class="others-item coupon vux-1px-t">-->
+                <!--<div class="title">-->
+                    <!--优惠券-->
 
 
-                </div>
-                <div class="feiyong">
-                    -￥10.00
+                <!--</div>-->
+                <!--<div class="feiyong">-->
+                    <!-- -￥10.00-->
 
 
-                </div>
-                <div class="more-arrow">
+                <!--</div>-->
+                <!--<div class="more-arrow">-->
 
-                </div>
-            </div>
+                <!--</div>-->
+            <!--</div>-->
         </div>
         <!-- 去购物车 -->
         <div class="shopping-cart-js">
             <div class="total-price">
                 <div>
-                    合计：<span>￥1234</span>
+                    合计：<span>￥{{detail.total}}</span>
                 </div>
                 <div class="no-yunfei">
-                    含运费 | 返利¥20
+                    含运费 | 返利¥{{detail.totalRebate}}
 
 
                 </div>
@@ -146,7 +144,7 @@
                         </div>
                     </div>
                     <div class="pay-price">
-                        需支付<span>￥1434.00</span>
+                        需支付<span>￥{{detail.total}}</span>
                     </div>
                     <div class="online-pay pay-item vux-1px-b"
                          @click="gotoOnlinePay"
@@ -197,6 +195,8 @@
 
 <script>
     import {XImg, CheckIcon, TransferDom, Popup} from 'vux'
+    import {getParams,weChatPay} from '../../assets/js/util'
+    import api from '../../assets/js/api'
     export default {
         directives: {
             TransferDom
@@ -210,12 +210,41 @@
             return {
                 demo1: true,
                 bottomCount: 2,
-                isPost: true,
                 showChoice: false,
-                hasAddress: true
+                hasAddress: true,
+                isPost: true,
+                order_id: getParams()['order_id'] || '',
+                detail: {
+                    "total": 1,
+                    "list": [
+                        {
+                            "good_name": "测试测试",
+                            "good_price": 1,
+                            "rebate": 1,
+                            "amount": 1,
+                            "good_id": "",
+                            "good_photo": ""
+                        }
+                    ],
+                    "totalRebate": 1,
+                    "freight": 1,
+                    "ordersn": "",
+                    "address": "ewrwer"
+                }
             }
         },
         methods: {
+            layer(text){
+                this.$vux.toast.text(text || 'hello', 'middle')
+            },
+            showLoading(text){
+                this.$vux.loading.show({
+                    text: text || '加载中'
+                })
+            },
+            hideLoading(){
+                this.$vux.loading.hide()
+            },
             setRecvier(){
                 if (this.isPost) {
                     this.$router.push({
@@ -231,21 +260,60 @@
                 console.log(start)
             },
             gotoOnlinePay(){
-                if (this.isPost) {
-                    this.$router.push({
-                        path: `/postSuc?order_id=234234`
-                    })
-                } else {
-                    this.$router.push({
-                        path: `/selfGetSuc?order_id=234234`
-                    })
-                }
+                this.settlementOrder(2)
+                location.href = weChatPay(23423432432)
             },
             gotoOffinePay(){
+                this.settlementOrder(1)
                 this.$router.push({
                     path: '/offinePay'
                 })
+            },
+            /* 获取确认订单的信息 */
+            getOrderData(){
+                this.showLoading('获取中')
+                this.$http.post(api.confirmOrder,{
+                    ordersn: this.order_id
+                }).then(res => {
+                    this.hideLoading()
+                    this.detail = res.data
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            },
+            /* 结算支付 */
+            settlementOrder(payType){
+                this.showLoading('提交中')
+                this.$http.post(api.settlementOrder,{
+                    ordersn: this.order_id,
+                    delivery: this.isPost ? 1 : 2,
+                    username: '',
+                    phone: 112324343,
+                    province: '广东省',
+                    city: '广州市',
+                    district: '黄浦区',
+                    address: '瑞东花园',
+                    payType: payType
+                }).then(res => {
+                    this.hideLoading()
+                    if( payType == 1 ){
+                        /*线下支付*/
+                        this.$router.push({
+                            path: `/offinePay?order_id=${res.ordersn}&isPost=${this.isPost}`
+                        })
+                    }else{
+                        /*线上支付*/
+                        this.$router.push({
+                            path: `/weChatPay?order_id=${res.ordersn}&isPost=${this.isPost}`
+                        })
+                    }
+                }).catch(e => {
+                    this.hideLoading()
+                })
             }
+        },
+        mounted(){
+            this.getOrderData();
         }
     }
 </script>
