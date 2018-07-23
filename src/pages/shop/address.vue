@@ -11,7 +11,7 @@
 
 
             </div>
-            <div class="edit complete" v-else>
+            <div class="edit complete" @click="isEdit = false" v-else>
                 完成
 
 
@@ -41,24 +41,29 @@
                 </div>
                 <div class="edit-address vux-1px-t" v-if="isEdit">
                     <div class="main-address"
-                         @click="setMainAddress"
-
                     >
-                        <div v-show="item.type != 'default'">
-                            <check-icon size="20" :value.sync="demo1"></check-icon>
-                            <span>设为默认地址</span>
+                        <div v-if="item.type != 'default'"
+                             class="default"
+                             @click="setMainAddress(item.address_id)"
+                        >
+                            <div class="checked-icon">
+                            </div>
+                            <span>设为默认</span>
+                        </div>
+                        <div class="default"
+                            v-else
+                        >
+                            <div class="checked-icon selected">
+                            </div>
+                            <span>默认地址</span>
                         </div>
                     </div>
                     <div class="edit-address-option">
                         <div class="edit" @click="gotoEditAddress(item.address_id)">
                             编辑
-
-
                         </div>
-                        <div class="delete" @click="deleteAddress">
+                        <div class="delete" @click="deleteAddress(item.address_id)">
                             删除
-
-
                         </div>
                     </div>
                 </div>
@@ -67,8 +72,6 @@
         <Nodata v-if="list.length <= 0"></Nodata>
         <div class="add-adress" @click="gotoAddAddress">
             添加新地址
-
-
         </div>
     </div>
 </template>
@@ -118,7 +121,7 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
-            deleteAddress(){
+            deleteAddress(id){
                 const _this = this;
                 this.$vux.confirm.show({
 //                    title: '系统提示',
@@ -129,10 +132,11 @@
                         console.log(_this) // 当前 vm
                     },
                     onConfirm () {
+                        _this.operateAddress(id,'delete')
                     }
                 })
             },
-            setMainAddress(){
+            setMainAddress(id){
                 const _this = this;
                 this.$vux.confirm.show({
                     //                    title: '系统提示',
@@ -143,6 +147,7 @@
                         console.log(_this) // 当前 vm
                     },
                     onConfirm () {
+                        _this.operateAddress(id,'modifyDefault')
                     }
                 })
             },
@@ -154,6 +159,20 @@
             gotoAddAddress(){
                 this.$router.push({
                     path: '/addAddress?type=add'
+                })
+            },
+            // 设置地址内容
+            operateAddress(id,type){
+                this.showLoading('修改中')
+                this.$http.post(api.operateAddress,{
+                    addres_id: id,
+                    type: type
+                }).then(res => {
+                    this.hideLoading()
+                    this.layer('修改成功')
+                    this.getAddressList()
+                }).catch(e => {
+                    this.hideLoading()
                 })
             },
             // 获取地址列表
@@ -210,6 +229,21 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+            }
+            .default{
+                display: flex;
+                align-items: center;
+            }
+            .checked-icon {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 1px solid #B9B9B9;
+                margin-right: 5px;
+                &.selected {
+                    border: 0;
+                    background: url(../../assets/image/selected-yellow.png) no-repeat center center/20px 20px;
+                }
             }
             .adress {
                 span {

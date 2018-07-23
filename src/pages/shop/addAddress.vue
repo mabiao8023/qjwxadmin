@@ -122,11 +122,9 @@
                         name: this.name,
                         phone: this.phone,
                         address: this.addressDetail,
-                        area: {
-                            province: area[0],
-                            city: area[1],
-                            district: area[2]
-                        }
+                        province: area[0],
+                        city: area[1],
+                        district: area[2]
                     }
                     if (this.type === 'edit') {
                         data.address_id = this.address_id

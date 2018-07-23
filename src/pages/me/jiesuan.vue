@@ -15,7 +15,7 @@
         <ul class="js-list">
             <li class="js-item"
                 v-for="(item,index) in frostLog"
-                @click="gotoSettleDetail(item.nid)"
+                @click="gotoSettleDetail(item.id)"
             >
                 <div class="js-item-part1">
                     <div class="left">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="js-item-part2">
                     <div class="left">
-                        返利时间：{{ item.addtime | dateFormat('YYYY-MM-DD') }}
+                        返利时间：{{ item.addTime | dateFormat('YYYY-MM-DD') }}
 
 
                     </div>
@@ -71,11 +71,11 @@
                 frost: 0,
                 frostLog: [
                     {
-                        "money": 1,
-                        "addtime": 1,
+                        "rebate": 1,
+                        "addTime": 1,
                         "thawingTime": 1,
                         "status": 1,
-                        "nid": "11"
+                        "id": "11"
                     }
                 ]
             }

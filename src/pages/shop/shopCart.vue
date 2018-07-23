@@ -182,12 +182,12 @@
                 this.$http.post(api.shoppingTrolley)
                     .then(res => {
                         this.count = res.count
-                        if (res.list.length) {
-                            res.list.forEach(val => {
+                        if (res.data.list.length) {
+                            res.data.list.forEach(val => {
                                 val.checked = true
                             })
                             this.page++
-                            this.goods = this.goods.concat(res.list)
+                            this.goods = this.goods.concat(res.data.list)
                             $state.loaded();
                         } else {
                             $state.complete();
@@ -230,7 +230,7 @@
                 this.showLoading('提交中')
                 this.$http.post(api.shoppingTrolleyEdit, {
                     type: 'modify',
-                    good: this.editArr
+                    goodList: JSON.stringify(editArr)
                 }).then(res => {
                     this.isEdit = false;
                     this.hideLoading();
@@ -260,7 +260,7 @@
                 });
                 this.showLoading('加载中')
                 this.$http.post(api.addOrder,{
-                    good: addGoodsArr
+                    goodList: JSON.stringify(addGoodsArr)
                 }).then(res => {
                     this.hideLoading()
                     this.$router.push({

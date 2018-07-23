@@ -18,11 +18,18 @@ export default {
     shoppingTrolley: '/api/Good/shoppingTrolley',     // 购物车内容
     shoppingTrolleyEdit: '/api/Good/shoppingTrolleyEdit', // 编辑购物车
     shoppingTrolleyAdd: '/api/Good/shoppingTrolleyAdd',   // 添加进购物车
-    addOrder: '/api/Good/addOrder',                       // 确认订单
-    addressManage: '/api/address/index',                  // 地址管理
-    addressEditConfirm: '/api/address/editConfirm',       // 地址编辑确认
-    addressGet: '/api/address/edit',                     // 编辑收地址页面数据获取
+    addOrder: '/api/Order/addOrder',                       // 确认订单
+    addressManage: '/api/Address/index',                  // 地址管理
+    addressEditConfirm: '/api/Address/editConfirm',       // 地址编辑确认
+    addressGet: '/api/Address/edit',                     // 编辑收地址页面数据获取
     confirmOrder: '/api/Order/confirmOrder',             // 确认订单页面
     settlementOrder: '/api/Order/SettlementOrder',       // 结算订单
     orderIndex: '/api/Order/index',                      // 订单管理页面
+    operateAddress: '/api/Address/operateAddress',       // 编辑地址
+    getSelfAddress: '/api/Address/getSelfAddress',       // 获取提货人信息
+    editSelfAddress: '/api/Address/editSelfAddress',     // 编辑提货人信息
+    changeOrderStatus: '/api/Order/changeOrderStatus',   // 改变订单状态
+    logistics: '/api/Order/logistics',                   // 查看物流信息
+    uploadVoucher: '/api/Order/uploadVoucher',           // 上传支付凭证
+    getVoucher: '/api/Order/getVoucher',                 // 查看支付凭证
 }

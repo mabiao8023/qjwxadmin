@@ -2,9 +2,13 @@
     <div class="order-detail-container">
         <div class="header">
             <div>{{detail.condition}}</div>
-            <div class="look" @click="gotoViewCer">查看凭证></div>
+            <div class="look"
+                 v-if="detail.payType == 1"
+                 @click="gotoViewCer">查看凭证>
+            </div>
         </div>
-        <template v-if="false">
+        <!-- 邮寄状态 -->
+        <template v-if="detail.delivery == 1">
             <div class="wuliu-msg">
                 <div class="title">
                     物流信息：
@@ -27,7 +31,7 @@
                         收货人：{{detail.username}}
                     </div>
                     <div class="phone">
-                       {{detail.phone}}
+                        {{detail.phone}}
                     </div>
                 </div>
                 <div class="sh-adress">
@@ -35,7 +39,7 @@
                 </div>
             </div>
         </template>
-        <template v-if="true">
+        <template v-else>
             <div class="shouhuo">
                 <div class="tihuo-ads">
                     <div class="sh-ad-title">
@@ -97,35 +101,67 @@
             <div class="progress-item">
                 订单号：{{detail.ordersn}}
             </div>
-            <div class="progress-item">
+            <div class="progress-item" v-if="detail.addTime">
                 创建时间：{{detail.addTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
-            <div class="progress-item">
+            <div class="progress-item" v-if="detail.payTime && detail.payType == 2">
                 支付时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
-            <div class="progress-item">
+            <div class="progress-item" v-if="detail.payTime && detail.payType == 1">
+                上传凭证时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+            </div>
+            <div class="progress-item" v-if="detail.deliveryTime">
                 发货时间：{{detail.deliveryTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
-            <div class="progress-item">
+            <div class="progress-item" v-if="detail.finishTime">
                 完成时间：{{detail.finishTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+            </div>
+            <div class="progress-item" v-if="detail.verifyVoucherTime">
+                审核时间：{{detail.verifyVoucherTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+            </div>
+            <div class="progress-item" v-if="detail.editTime && detail.condition == '已取消'">
+                申请取消时间：{{detail.editTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+            </div>
+            <div class="progress-item" v-if="detail.editTime && detail.condition == '已退款'">
+                申请退款时间：{{detail.editTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+            </div>
+            <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已取消'">
+                申请取消时间：{{detail.confirmEditTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+            </div>
+            <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已退款'">
+                申请退款时间：{{detail.confirmEditTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
         </div>
         <div class="fixed-option-btn">
-            <div class="btn">
-                查看物流
+            <div class="btn active"
+                 v-if="detail.condition == '待收货'"
+            >
+                申请退款
             </div>
-            <div class="btn" @click="sureShouhuo">
-                确认收货
-            </div>
-            <div class="btn active">
+            <div class="btn"
+                 v-if="detail.condition == '待上传凭证' || detail.condition == '待付款' "
+            >
                 取消订单
             </div>
-            <!--<div class="btn">-->
-            <!--删除订单-->
-            <!--</div>-->
-            <!--<div class="btn">-->
-            <!--去支付-->
-            <!--</div>-->
+            <div class="btn"
+                 v-if="detail.condition == '已退款' || detail.condition == '已取消' || detail.condition == '已完成'"
+            >
+                删除订单
+            </div>
+            <div class="btn active"
+                 v-if="detail.condition == '待付款' && detail.payType == 1">
+                上传凭证
+            </div>
+            <div class="btn active"
+                 v-if="detail.condition == '待收货'"
+                 @click="sureShouhuo">
+                确认收货
+            </div>
+            <div class="btn active"
+                 v-if="detail.condition == '待付款' && detail.payType == 2"
+            >
+                去支付
+            </div>
         </div>
     </div>
 </template>

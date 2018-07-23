@@ -3,13 +3,9 @@
         <div class="js-detail-header">
             <div class="title">
                 入账金额
-
-
             </div>
             <div class="amount">
                 {{detail.money}}
-
-
             </div>
         </div>
         <div class="js-detail-section vux-1px-tb">
@@ -31,8 +27,6 @@
             </div>
             <div class="goto-order">
                 查看订单>
-
-
             </div>
         </div>
     </div>
@@ -51,12 +45,13 @@
                 detail: {
                     "money": 88,
                     "remark": "入账金额",
-                    "addtime": 1,
-                    "nid": "123123131",
+                    "addTime": 1,
+                    "id": "123123131",
                     "url": "",
                     "thawingTime": 1
                 },
-                nid: getParams()['nid'] || ''
+                id: getParams()['id'] || '',
+                type: getParams()['type'] || ''
             }
         },
         methods: {
@@ -74,7 +69,8 @@
             getDetail() {
                 this.showLoading('加载中')
                 this.$http.post(api.accountLogDetail, {
-                    nid: this.nid
+                    id: this.id,
+                    type: this.type
                 }).then(res => {
                     this.hideLoading()
                     this.detail = res.data

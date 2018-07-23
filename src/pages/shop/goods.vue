@@ -283,7 +283,7 @@
                 }
                 this.showLoading('正在添加')
                 this.$http.post(api.shoppingTrolleyAdd, {
-                    good: JSON.stringify(checkedGoods)
+                    goodList: JSON.stringify(checkedGoods)
                 }).then(res => {
                     this.hideLoading()
                     this.$router.push({

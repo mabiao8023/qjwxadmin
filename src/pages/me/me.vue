@@ -20,7 +20,7 @@
             </div>
             <div class="jiesuan" @click="gotoPage('/settle')">
                 <p class="money-title">待结算(元)</p>
-                <p class="money-num">{{ account.frost }}</p>
+                <p class="money-num">{{ account.rebate }}</p>
             </div>
         </div>
         <!-- 九宫格 -->
@@ -80,7 +80,7 @@
                 },
                 account: {
                     balance: 0,
-                    frost: 0
+                    rebate: 0
                 }
             }
         },

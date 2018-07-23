@@ -20,7 +20,7 @@
         <ul class="b-d-list">
             <li class="b-item vux-1px-b"
                 v-for="(item,index) in accountLog"
-                @click="gotoAccountDetail(item.nid)"
+                @click="gotoAccountDetail(item.id)"
             >
                 <div class="b-item-left">
                     <div class="title">
@@ -91,7 +91,7 @@
                         "addtime": 1,
                         "income": "88",
                         "expend": "",
-                        "nid": "123"
+                        "id": "123"
                     }
                 ],
                 page: 1,
