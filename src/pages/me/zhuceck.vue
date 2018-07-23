@@ -6,17 +6,12 @@
 
         </div>
         <ul class="input-list">
-            <li class="input-item vux-1px-b">
+            <li class="input-item  vux-1px-b">
                 <div class="title num1-title">
                     所属创客空间
-
-
                 </div>
                 <div class="input">
-                    <x-input
-                        v-model="tjname"
-                        placeholder="xx创客空间"
-                    ></x-input>
+                    {{tjname}}
                 </div>
             </li>
             <li class="input-item vux-1px-b">
@@ -158,7 +153,6 @@
         },
         data () {
             return {
-                tjname: '',
                 name: '',
                 phone: '',
                 code: '',
@@ -168,7 +162,8 @@
                 start: true,
                 isSendCoding: false,
                 list: [],
-                id: getParams()['id'] || ''
+                id: getParams()['id'] || '',
+                tjname: getParams()['name'] || '',
             }
         },
         methods: {
@@ -247,6 +242,21 @@
                     this.layer('请上传合同')
                 } else {
                     this.showLoading('提交中')
+                    this.$http.post(api.registerMaker,{
+                        makerId: this.id,
+                        realname: this.name,
+                        phone: this.phone,
+                        password: this.password,
+                        contract: '2343434534545'
+                    }).then(res => {
+                        this.hideLoading()
+                        this.layer('注册完成请登录')
+                        this.$router.push({
+                            path: '/'
+                        })
+                    }).catch(e =>{
+                        this.hideLoading()
+                    })
                 }
             }
         },
@@ -278,6 +288,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            &:first-child{
+                padding: 10px 0;
+                .title {
+                    width: 100px;
+                    color: #323232;
+                }
+             }
             .title {
                 width: 70px;
                 color: #323232;

@@ -9,21 +9,48 @@
     </div>
 </template>
 <script>
+    import api from '../../assets/js/api'
     export default {
         components: {},
         data () {
-            return {}
+            return {
+                makerId: '',
+                name: '老王'
+            }
         },
         methods: {
+            layer(text){
+                this.$vux.toast.text(text || 'hello', 'middle')
+            },
+            showLoading(text){
+                this.$vux.loading.show({
+                    text: text || '加载中'
+                })
+            },
+            hideLoading(){
+                this.$vux.loading.hide()
+            },
             gotoInputInfo(){
                 this.$router.push({
-                    path: '/reschuangke'
+                    path:  `/reschuangke?id=${this.makerId}&name=${this.name}`
                 })
+            },
+            inviteMaker(){
+                this.showLoading()
+                this.$http.post(api.inviteMaker)
+                    .then(res => {
+                        this.hideLoading()
+                        this.makerId = res.makerId
+                        this.name = res.name
+                    }).catch( e => {
+                        this.hideLoading()
+                    })
             }
         },
         mounted() {
+            this.inviteMaker()
             //  设置标题
-            document.getElementsByTagName('title')[0].textContent = '邀请';
+            document.getElementsByTagName('title')[0].textContent = '邀请创客';
         }
     }
 </script>

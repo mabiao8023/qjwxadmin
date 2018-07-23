@@ -1,27 +1,32 @@
 <template>
     <div class="order-detail-container">
         <div class="header">
-            <div>{{detail.condition}}</div>
+            <div>订单{{detail.condition}}</div>
             <div class="look"
-                 v-if="detail.payType == 1"
+                 v-if="detail.payType == 1 && detail.condition != '待付款' && detail.condition != '待上传凭证'"
                  @click="gotoViewCer">查看凭证>
             </div>
         </div>
         <!-- 邮寄状态 -->
         <template v-if="detail.delivery == 1">
-            <div class="wuliu-msg">
+            <div class="wuliu-msg" v-if="detail.logistics[0].company">
                 <div class="title">
                     物流信息：
                 </div>
                 <div class="wuliu-method">
-                    {{detail.logistics.company}}
+                    {{detail.logistics[0].company}}
                 </div>
                 <div class="wuliu-number" id="copyValue" ref="numbers">
-                    {{detail.logistics.number}}
+                    {{detail.logistics[0].number}}
                 </div>
-                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics.number'>
+                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics[0].number'>
                     复制
                 </button>
+            </div>
+            <div class="wuliu-msg" v-else>
+                <div class="title">
+                    暂无物流信息
+                </div>
             </div>
             <div class="dashed-line">
             </div>
@@ -46,12 +51,12 @@
                         提货地址：
                     </div>
                     <div class="sh-ad-con">
-                        {{detail.makerAddress.province + detail.makerAddress.city + detail.makerAddress.district + detail.makerAddress.address }}
+                        {{detail.makerAddress[0].province + detail.makerAddress[0].city + detail.makerAddress[0].district + detail.makerAddress[0].address }}
                     </div>
                 </div>
                 <div class="sh-info">
                     <div class="name">
-                        电话：{{detail.makerAddress.phone}}
+                        电话：{{detail.makerAddress[0].phone}}
                     </div>
                     <div class="phone">
                         周一至周五 9:00-18:00
@@ -110,7 +115,7 @@
             <div class="progress-item" v-if="detail.payTime && detail.payType == 1">
                 上传凭证时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
-            <div class="progress-item" v-if="detail.deliveryTime">
+            <div class="progress-item" v-if="detail.deliveryTime && detail.delivery == 1">
                 发货时间：{{detail.deliveryTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.finishTime">
@@ -133,32 +138,38 @@
             </div>
         </div>
         <div class="fixed-option-btn">
-            <div class="btn active"
-                 v-if="detail.condition == '待收货'"
+            <div class="btn"
+                 v-if="detail.condition == '待自提' || detail.condition == '待收货' || detail.condition == '待发货' ||  detail.condition == '已发货' || detail.condition == '待审核凭证'"
+                 @click="changeOrderStatus('refund')"
             >
                 申请退款
             </div>
             <div class="btn"
                  v-if="detail.condition == '待上传凭证' || detail.condition == '待付款' "
+                 @click="changeOrderStatus('cancel')"
             >
                 取消订单
             </div>
             <div class="btn"
                  v-if="detail.condition == '已退款' || detail.condition == '已取消' || detail.condition == '已完成'"
+                 @click="changeOrderStatus('delete')"
             >
                 删除订单
             </div>
             <div class="btn active"
-                 v-if="detail.condition == '待付款' && detail.payType == 1">
+                 v-if="detail.condition == '待上传凭证' || detail.condition == '待付款' && detail.payType == 1"
+                @click="uploadVoucher"
+            >
                 上传凭证
             </div>
             <div class="btn active"
-                 v-if="detail.condition == '待收货'"
-                 @click="sureShouhuo">
+                 v-if="detail.condition == '待自提' || detail.condition == '待收货' || detail.condition == '待发货' || detail.condition == '已发货'"
+                 @click="changeOrderStatus('confirm')">
                 确认收货
             </div>
             <div class="btn active"
                  v-if="detail.condition == '待付款' && detail.payType == 2"
+                @click="gotoWeChatPay"
             >
                 去支付
             </div>
@@ -170,7 +181,7 @@
     import {dateFormat} from 'vux'
     import '../../assets/js/clipboard'
     import api from '../../assets/js/api'
-    import {getParams} from '../../assets/js/util'
+    import {getParams,weChatPay} from '../../assets/js/util'
     export default {
         components: {},
         filters: {
@@ -187,7 +198,7 @@
                     "amount": 88,
                     "freight": "123123",
                     "rebate": "11",
-                    "delivery": 0,
+                    "delivery": 2,
                     "province": "广东省",
                     "city": "广州市",
                     "district": "天河区",
@@ -195,7 +206,7 @@
                     "username": "马彪",
                     "phone": 1231232,
                     "addTime": 1,
-                    "payType": 0,
+                    "payType": 1,
                     "payTime": 13412343243,
                     "deliveryTime": 13412343243,
                     "finishTime": 13412343243,
@@ -208,11 +219,11 @@
                             "amount": 1
                         }
                     ],
-                    "condition": "待付款",
+                    "condition": "已取消",
                     "logistics": [
                         {
-                            "company": "圆通",
-                            "number": "1232132343243234"
+//                            "company": "圆通",
+//                            "number": "1232132343243234"
                         }
                     ],
                     "makerAddress": [
@@ -250,14 +261,32 @@
                     this.layer('复制失败，请手动复制');
                 });
             },
+            //  改变订单状态
+            changeOrderStatus(status){
+                this.showLoading('提交中')
+                this.$http.post(api.changeOrderStatus,{
+                    ordersn: this.detail.ordersn,
+                    status: status
+                }).then(res => {
+                    this.hideLoading()
+                    this.layer('修改成功')
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            },
             gotoViewCer(){
                 this.$router.push({
                     path: `/viewcer?id=`
                 })
             },
-            sureShouhuo(){
+            /*跳转微信支付*/
+            gotoWeChatPay(){
+                location.href = weChatPay(this.detail.ordersn)
+            },
+            /*跳转上传凭证页面*/
+            uploadVoucher(){
                 this.$router.push({
-                    path: '/received'
+                    path: `/offinePay?order_id=${this.detail.ordersn}&isPost=${this.detail.delivery}`
                 })
             }
         },

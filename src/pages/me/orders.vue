@@ -1,7 +1,7 @@
 <template>
     <div class="orders-container">
         <div class="orders-nav">
-            <tab class="tab" scroll-threshold="5">
+            <tab class="tab">
                 <tab-item selected @on-item-click="onItemClick">全部</tab-item>
                 <tab-item @on-item-click="onItemClick">待付款</tab-item>
                 <tab-item @on-item-click="onItemClick">待发货</tab-item>
@@ -11,7 +11,7 @@
         <ul class="js-list">
             <li class="js-item"
                 v-for="(item,index) in orders[type].data"
-                @click="gotoOrderDetail(item.ordersn)"
+                @click="gotoOrderitem(item.ordersn)"
             >
                 <div class="order-header">
                     <div class="order-num">
@@ -43,32 +43,38 @@
                 </div>
                 <div class="option-btn">
                     <div class="btn"
-                         v-if="item.condition == '待审核凭证' || item.condition == '待发货' || item.condition == '待自提' || item.condition ==  '已发货'"
+                         v-if="item.condition == '待自提' || item.condition == '待收货' || item.condition == '待发货' ||  item.condition == '已发货' || item.condition == '待审核凭证'"
+                         @click.stop.prevent="changeOrderStatus('refund',item.ordersn)"
                     >
                         申请退款
                     </div>
                     <div class="btn"
-                         v-if="item.condition == '已完成' || item.condition ==  '已发货'">
-                        查看物流
+                         v-if="item.condition == '待上传凭证' || item.condition == '待付款' "
+                         @click.stop.prevent="changeOrderStatus('cancel',item.ordersn)"
+                    >
+                        取消订单
                     </div>
-                    <div class="btn active"
-                         v-if="item.condition == '已完成' || item.condition == '已退款' || item.condition == '已取消'"
+                    <div class="btn"
+                         v-if="item.condition == '已退款' || item.condition == '已取消' || item.condition == '已完成'"
+                         @click.stop.prevent="changeOrderStatus('delete',item.ordersn)"
                     >
                         删除订单
                     </div>
-                    <div class="btn active" v-if="item.condition == '待自提' || item.condition == '已发货' ">
+                    <div class="btn active"
+                         v-if="item.condition == '待上传凭证' || item.condition == '待付款' && item.payType == 1"
+                         @click.stop.prevent="uploadVoucher(item.ordersn,item.delivery)"
+                    >
+                        上传凭证
+                    </div>
+                    <div class="btn active"
+                         v-if="item.condition == '待自提' || item.condition == '待收货' || item.condition == '待发货' || item.condition == '已发货'"
+                         @click.stop.prevent="changeOrderStatus('confirm',item.ordersn)">
                         确认收货
                     </div>
                     <div class="btn active"
-                         v-if="item.condition == '待上传凭证' ">
-                        上传凭证
-                    </div>
-                    <div class="btn"
-                         v-if="item.condition == '待上传凭证' || item.condition == '待付款' ">
-                        取消订单
-                    </div>
-                    <div class="btn active"
-                         v-if="item.condition == '待付款'">
+                         v-if="item.condition == '待付款' && item.payType == 2"
+                         @click.stop.prevent="gotoWeChatPay(item.ordersn)"
+                    >
                         去支付
                     </div>
                 </div>
@@ -175,7 +181,7 @@
                     $state.complete();
                 })
             },
-            gotoOrderDetail(id){
+            gotoOrderitem(id){
                 this.$router.push({
                     path: `/orderDetail?order_id=${id}`
                 })
@@ -186,6 +192,29 @@
                     this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
                 })
             },
+            //  改变订单状态
+            changeOrderStatus(status,order_id){
+                this.showLoading('提交中')
+                this.$http.post(api.changeOrderStatus,{
+                    ordersn: order_id,
+                    status: status
+                }).then(res => {
+                    this.hideLoading()
+                    this.layer('修改成功')
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            },
+            /*跳转微信支付*/
+            gotoWeChatPay(order_id){
+                location.href = weChatPay(order_id)
+            },
+            /*跳转上传凭证页面*/
+            uploadVoucher(order_id,delivery){
+                this.$router.push({
+                    path: `/offinePay?order_id=${order_id}&isPost=${delivery}`
+                })
+            }
         },
         mounted() {
             //  设置标题

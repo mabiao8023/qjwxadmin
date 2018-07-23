@@ -43,6 +43,7 @@
 
 <script>
     import {XInput} from 'vux'
+    import api from '../../assets/js/api'
     export default {
         components: {
             XInput
@@ -67,18 +68,35 @@
                 this.$vux.loading.hide()
             },
             saveInformaton(){
-                if (this.$refs.nameInput.valid) {
+                if (!this.$refs.nameInput.valid) {
                     this.layer('请输入收货人')
-                } else if (this.$refs.phoneInput.valid) {
+                } else if (!this.$refs.phoneInput.valid) {
                     this.layer('请输入手机号码')
                 } else {
                     this.showLoading('正在保存')
                     // 保存信息
-
+                    this.$http.post(api.editSelfAddress,{
+                        username: this.name,
+                        phone: this.phone
+                    }).then(res => {
+                        this.hideLoading()
+                        this.layer('修改成功')
+                    }).catch(e => {
+                        this.hideLoading()
+                    })
                 }
+            },
+            /*获取收货人信息*/
+            getSelfAddress(){
+                this.$http.post(api.getSelfAddress)
+                    .then(res => {
+                        this.name = res.username
+                        this.phone = res.phone
+                    })
             }
         },
         mounted(){
+            this.getSelfAddress()
             //  设置标题
             document.getElementsByTagName('title')[0].textContent = '自提设置';
         }

@@ -32,4 +32,6 @@ export default {
     logistics: '/api/Order/logistics',                   // 查看物流信息
     uploadVoucher: '/api/Order/uploadVoucher',           // 上传支付凭证
     getVoucher: '/api/Order/getVoucher',                 // 查看支付凭证
+    inviteMaker: '/api/Maker/invite',                    // 邀请创客
+    registerMaker: '/api/Maker/register',                // 创客注册
 }
