@@ -61,8 +61,9 @@ router.beforeEach((to, from, next) => {
 // 初始化axio请求参数
 //添加一个请求拦截器
 Vue.http.interceptors.request.use(function (config) {
+    console.log(config)
     let userToken = cookie.get('token') || '';
-    config.timeout = 2000;
+    config.timeout = 10000;
     config.transformRequest = [function (data = {}, headers) {
         //依自己的需求对请求数据进行处理
         data.token = userToken;
@@ -79,6 +80,7 @@ Vue.http.interceptors.request.use(function (config) {
 
 //添加一个返回拦截器
 Vue.http.interceptors.response.use(function (response) {
+    console.log(response)
     //  对返回的数据进行一些处理
     //  对code码进行统一处理
     let data = response.data;

@@ -37,6 +37,7 @@ const PostSuc = () => import(/* webpackChunkName: "part3" */ '../pages/me/youjis
 const ResCK = () => import(/* webpackChunkName: "part3" */ '../pages/me/zhuceck.vue');	  // 注册创客
 const SelfGetSuc = () => import(/* webpackChunkName: "part3" */ '../pages/me/zitisuc.vue');	  // 自提成功
 const Fahuo = () => import(/* webpackChunkName: "part3" */ '../pages/me/fahuo.vue');	  // 发货管理
+const FahuoDetail = () => import(/* webpackChunkName: "part3" */ '../pages/me/fahuoDetail.vue');	  // 发货管理
 const NotFoundComponent = () => import(/* webpackChunkName: "part3" */ '../components/nodata.vue');	  // 发货管理
 // 微信
 const WeChatPay = () => import(/* webpackChunkName: "part4" */ '../pages/wechat/pay.vue');	  // 微信支付
@@ -215,6 +216,12 @@ export default {
             /* 发货管理 */
             path: '/fahuo',
             component: Fahuo,
+            meta: {}
+        },
+        {
+            /* 发货详情 */
+            path: '/fahuoDetail',
+            component: FahuoDetail,
             meta: {}
         },
         {

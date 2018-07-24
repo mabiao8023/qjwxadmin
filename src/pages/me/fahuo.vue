@@ -8,101 +8,90 @@
             </tab>
         </div>
         <ul class="js-list">
-            <li class="js-item" v-for="i in bottomCount">
+            <li class="js-item"
+                v-for="(item,index) in orders[type].data"
+                @click="gotoOrderitem(item.ordersn)"
+            >
                 <div class="order-header">
                     <div class="order-num">
-                        订单号：2018062312345678
-
-
+                        订单号：{{item.ordersn}}
                     </div>
                     <div class="order-status">
-                        已支付
-
-
+                        {{item.condition}}
                     </div>
                 </div>
                 <div>
                     <div class="dashed-line">
-
                     </div>
-                    <div class="tihuo-info">
+                    <div class="tihuo-info" v-if="item.delivery == 2">
                         <div class="tihuo-container">
                             <div class="tihuo-title">
-                                提货人：王琪
-
-
+                                提货人：{{item.username}}
                             </div>
                             <div class="tihuo-phone">
-                                1214732894781
-
-
+                                {{item.phone}}
                             </div>
+                        </div>
+                    </div>
+                    <div class="tihuo-info" v-if="item.delivery == 1">
+                        <div class="tihuo-container">
+                            <div class="tihuo-title">
+                                收货人：{{item.username}}
+                            </div>
+                            <div class="tihuo-phone">
+                                {{item.phone}}
+                            </div>
+                        </div>
+                        <div class="shouhuo-address">
+                            {{item.province + item.city + item.district + item.address}}
                         </div>
                     </div>
                 </div>
                 <div class="goods-list">
-                    <div class="goods-item">
+                    <div class="goods-item"
+                         v-for="(val,index) in item.good"
+                    >
                         <div class="img">
-                            <img src="../../assets/image/logo.png" alt="">
+                            <img :src="val.good_photo" alt="">
                         </div>
                         <div class="name">
-                            产品名称产品名称
-
-
+                            {{val.good_name}}
                         </div>
                         <div class="data">
-                            <p class="price">￥88</p>
-                            <p class="fanli">返利￥2.00</p>
-                            <p class="numbers">×12</p>
-                        </div>
-                    </div>
-                    <div class="goods-item">
-                        <div class="img">
-                            <img src="../../assets/image/logo.png" alt="">
-                        </div>
-                        <div class="name">
-                            产品名称产品名称
-
-
-                        </div>
-                        <div class="data">
-                            <p class="price">￥88</p>
-                            <p class="fanli">返利￥2.00</p>
-                            <p class="numbers">×12</p>
+                            <p class="price">￥{{val.good_price}}</p>
+                            <p class="fanli">返利￥{{val.rebate}}</p>
+                            <p class="numbers">×{{val.amount}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="total vux-1px-b">
-                    共13件 合计：<span>¥1230</span>（含运费¥0.00） <span>已返利￥26</span>
+                    共{{item.amount}}件 合计：<span>{{item.total}}</span>（含运费¥{{item.freight}}） <span>已返利￥{{item.rebate}}</span>
                 </div>
                 <div class="option-btn">
-                    <div class="btn">
-                        查看物流
-
-
+                    <div class="btn" v-if="type == 1"
+                        @click.stop.prevent="changeOrderStatus('delete',item.ordersn)"
+                    >
+                        删除订单
                     </div>
-                    <div class="btn">
-                        确认收货
-
-
+                    <div class="btn active"
+                         v-if="type == 0 && item.condition == '待审核凭证'"
+                         @click.stop.prevent="passVerify(item.ordersn,'voucher')"
+                    >
+                        通过审核
                     </div>
-                    <div class="btn active">
-                        取消订单
-
-
+                    <div class="btn active"
+                         v-if="item.condition == '待退款'"
+                         @click.stop.prevent="passVerify(item.ordersn,'refund')"
+                    >
+                        通过审核
                     </div>
-                    <!--<div class="btn">-->
-                    <!--删除订单-->
-                    <!--</div>-->
-                    <!--<div class="btn">-->
-                    <!--去支付-->
-                    <!--</div>-->
                 </div>
             </li>
         </ul>
+        <Nodata v-if="!orders[type].data.length"></Nodata>
         <infinite-loading @infinite="getList" :distance="100" spinner="circles" ref="infiniteLoading">
           <span slot="no-results">
-              暂无数据
+              <!--暂无数据-->
           </span>
             <span slot="no-more">
               暂无更多数据
@@ -114,16 +103,64 @@
 <script>
     import InfiniteLoading from 'vue-infinite-loading';
     import {Tab, TabItem,} from 'vux'
+    import api from '../../assets/js/api'
+    import Nodata from '../../components/nodata.vue'
 
     export default {
         components: {
             Tab,
             TabItem,
-            InfiniteLoading
+            InfiniteLoading,
+            Nodata
         },
         data () {
             return {
                 bottomCount: 0,
+                type: 0,
+                orders: [
+                    {
+                        /* 空间待处理 */
+                        page: 1,
+                        data: [
+                            {
+                                "id": 1,
+                                "ordersn": "",
+                                "amount": 1,
+                                "total": "",
+                                "rebate": "",
+                                "freight": "",
+                                "condition": "待付款",
+                                "good": [
+                                    {
+                                        "good_name": "",
+                                        "good_price": "",
+                                        "good_photo": null,
+                                        "rebate": "",
+                                        "amount": 1,
+                                        "goodsId": 1
+                                    }
+                                ],
+                                "delivery": "",
+                                "province": "",
+                                "city": "",
+                                "district": "",
+                                "address": "",
+                                "username": "",
+                                "phone": ""
+                            }
+                        ]
+                    },
+                    {
+                        /* 历史订单 */
+                        page: 1,
+                        data: []
+                    },
+                    {
+                        /* 总部待处理 */
+                        page: 1,
+                        data: []
+                    }
+                ]
             }
         },
         methods: {
@@ -138,16 +175,61 @@
             hideLoading(){
                 this.$vux.loading.hide()
             },
+            onItemClick(index){
+                this.type = index
+                this.$nextTick(() => {
+                    this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+                })
+            },
             getList ($state) {
-                setTimeout(() => {
-                    this.bottomCount += 10
-                    if (this.bottomCount < 50) {
+                let status = this.type == 0 ? 1 : this.type == 1 ? 3 : 4;
+                this.$http.post(api.delivery,{
+                    page: this.orders[this.type].page,
+                    status: status
+                }).then(res => {
+                    if (res.data.length) {
+                        this.orders[this.type].data = this.orders[this.type].data.concat(res.data);
+                        this.orders[this.type].page++;
                         $state.loaded();
                     } else {
                         $state.complete();
                     }
-                }, 1000)
+                }).catch(e => {
+                    $state.complete();
+                })
             },
+            /*订单操作删除，通过审核*/
+            passVerify(order_id,type){
+                this.showLoading('提交中')
+                this.$http.post(api.verify,{
+                    ordersn: order_id,
+                    type: type
+                }).then(res => {
+                    this.hideLoading()
+                    this.layer('审核通过')
+                    /* todo:审核通过后的操作 */
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            },
+            //  改变订单状态
+            changeOrderStatus(status,order_id){
+                this.showLoading('提交中')
+                this.$http.post(api.changeOrderStatus,{
+                    ordersn: order_id,
+                    status: status
+                }).then(res => {
+                    this.hideLoading()
+                    this.layer('修改成功')
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            },
+            gotoOrderitem(id){
+                this.$router.push({
+                    path: `/fahuoDetail?order_id=${id}`
+                })
+            }
         },
         mounted() {
             //  设置标题

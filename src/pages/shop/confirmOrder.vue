@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="adress vux-1px-t" @click="setRecvier">
-                <template v-if="!hasAddress">
+                <template v-if="!detail.">
                     <div v-if="isPost" class="choice-adress">
                         请填写收货信息
 
@@ -40,7 +40,7 @@
                     </div>
                 </template>
 
-                <div v-else class="choice-adress has-adress">
+                <div class="choice-adress has-adress" v-else>
                     <div class="adress-info">
                         <div>
                             收货人：王琪
@@ -211,25 +211,39 @@
                 demo1: true,
                 bottomCount: 2,
                 showChoice: false,
-                hasAddress: true,
                 isPost: true,
                 order_id: getParams()['order_id'] || '',
                 detail: {
                     "total": 1,
                     "list": [
                         {
-                            "good_name": "测试测试",
+                            "good_name": "测试内容",
                             "good_price": 1,
                             "rebate": 1,
                             "amount": 1,
-                            "good_id": "",
+                            "good_id": "12312",
                             "good_photo": ""
                         }
                     ],
                     "totalRebate": 1,
                     "freight": 1,
                     "ordersn": "",
-                    "address": "ewrwer"
+                    "post_address": [
+                        {
+                            "province": "光",
+                            "city": "四射",
+                            "district": "啊啊",
+                            "address": "啊啊啊",
+                            "username": "啊啊",
+                            "phone": "1231312"
+                        }
+                    ],
+                    "self_address": [
+                        {
+                            "username": "四射",
+                            "phone": "1313"
+                        }
+                    ]
                 }
             }
         },

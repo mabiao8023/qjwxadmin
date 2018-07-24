@@ -2,7 +2,7 @@
     <div class="js-detail-container">
         <div class="js-detail-header">
             <div class="title">
-                入账金额
+                {{ type == 'income' ? '入账金额' :  type == 'expend' ? '出账金额' : '待结算金额' }}
             </div>
             <div class="amount">
                 {{detail.money}}
@@ -15,17 +15,23 @@
             </div>
             <div class="item">
                 <div class="left"> 时间</div>
-                <div class="right"> {{detail.addtime * 1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}</div>
+                <div class="right"> {{detail.addTime * 1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}</div>
+            </div>
+            <div class="item" v-if="detail.thawingTime">
+                <div class="left"> 解冻时间</div>
+                <div class="right"> {{detail.thawingTime * 1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}</div>
             </div>
             <div class="item">
                 <div class="left"> 交易单号</div>
-                <div class="right">{{ detail.nid }}</div>
+                <div class="right">{{ detail.ordersn }}</div>
             </div>
             <div class="item">
                 <div class="left"> 订单编号</div>
-                <div class="right">{{ detail.nid }}</div>
+                <div class="right">{{ detail.ordersn }}</div>
             </div>
-            <div class="goto-order">
+            <div class="goto-order"
+                @click="gotoOrderDetail"
+            >
                 查看订单>
             </div>
         </div>
@@ -43,10 +49,10 @@
         data () {
             return {
                 detail: {
-                    "money": 88,
-                    "remark": "入账金额",
+                    "money": 1,
+                    "remark": "",
                     "addTime": 1,
-                    "id": "123123131",
+                    "ordersn": "1231321",
                     "url": "",
                     "thawingTime": 1
                 },
@@ -65,6 +71,11 @@
             },
             hideLoading(){
                 this.$vux.loading.hide()
+            },
+            gotoOrderDetail(){
+                this.$router.push({
+                    path: `/orderDetail?order_id=${this.detail.ordersn}`
+                })
             },
             getDetail() {
                 this.showLoading('加载中')

@@ -34,4 +34,9 @@ export default {
     getVoucher: '/api/Order/getVoucher',                 // 查看支付凭证
     inviteMaker: '/api/Maker/invite',                    // 邀请创客
     registerMaker: '/api/Maker/register',                // 创客注册
+    delivery: '/api/Order/delivery',                     // 发货管理
+    deliveryOrderDetail: '/api/Order/deliveryOrderDetail', // 发货管理详情
+    verify: '/api/order/verify',                         // 审核退款/审核凭证
+    makerManage: '/api/Maker/manage',                    // 创客管理
+    makerVerifyApply: '/api/Maker/verifyApply',          // 拒绝/取消代理资格
 }
