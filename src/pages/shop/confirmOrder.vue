@@ -27,36 +27,38 @@
                 </div>
             </div>
             <div class="adress vux-1px-t" @click="setRecvier">
-                <template v-if="!detail.">
-                    <div v-if="isPost" class="choice-adress">
-                        请填写收货信息
+                <div v-if="isPost && !detail.post_address[0].province" class="choice-adress">
+                    请填写收货信息
+                </div>
+                <div v-if="!isPost && !detail.self_address[0].username" class="choice-adress">
+                    请填写提货人信息
+                </div>
 
-
-                    </div>
-                    <div v-else class="choice-adress">
-                        请填写提货人信息
-
-
-                    </div>
-                </template>
-
-                <div class="choice-adress has-adress" v-else>
+                <div class="choice-adress has-adress"
+                     v-if="isPost && detail.post_address[0].province"
+                >
                     <div class="adress-info">
                         <div>
-                            收货人：王琪
-
-
+                            收货人：{{detail.post_address[0].username}}
                         </div>
                         <div>
-                            12323434354
-
-
+                            {{detail.post_address[0].phone}}
                         </div>
                     </div>
-                    <div class="has-adress" v-if="isPost">
-                        收货地址：广东省广州市天河区建中路66号
-
-
+                    <div class="has-adress">
+                        收货地址：{{detail.post_address[0].province + detail.post_address[0].city + detail.post_address[0].district + detail.post_address[0].address}}
+                    </div>
+                </div>
+                <div class="choice-adress has-adress"
+                     v-if="!isPost && detail.self_address[0].username"
+                >
+                    <div class="adress-info">
+                        <div>
+                            收货人：{{detail.self_address[0].username}}
+                        </div>
+                        <div>
+                            {{detail.self_address[0].phone}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,13 +88,9 @@
             <div class="others-item">
                 <div class="title">
                     配送费
-
-
                 </div>
                 <div class="feiyong">
                     ￥{{detail.freight}}
-
-
                 </div>
             </div>
             <!--<div class="others-item coupon vux-1px-t">-->

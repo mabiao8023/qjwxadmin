@@ -163,6 +163,7 @@
     import {XInput, Previewer, TransferDom} from 'vux'
     import UploadPhoto from '../../components/uploadPhoto.vue'
     import {getParams} from '../../assets/js/util'
+    import api from '../../assets/js/api'
     export default {
         directives: {
             TransferDom
@@ -243,6 +244,25 @@
                 } else if (!this.list.length) {
                     this.layer('请上传打款凭证')
                 } else {
+                    let imgs = []
+                    this.list.forEach( val => {
+                        imgs.push(val.src)
+                    } )
+                    this.showLoading('上传中')
+                    this.$http.post(api.uploadVoucher,{
+                        ordersn: this.order_id,
+                        money: this.amount,
+                        remark: this.desc,
+                        voucher: imgs
+                    }).then(res => {
+                        this.hideLoading()
+                        this.layer('上传凭证成功')
+                        this.$router.push({
+                            path: `/uploadsuc?order_id=1234`
+                        })
+                    }).catch(e => {
+                        this.hideLoading()
+                    })
                     this.$router.push({
                         path: `/uploadsuc?order_id=1234`
                     })

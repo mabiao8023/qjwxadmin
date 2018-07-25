@@ -40,3 +40,4 @@ export default {
     makerManage: '/api/Maker/manage',                    // 创客管理
     makerVerifyApply: '/api/Maker/verifyApply',          // 拒绝/取消代理资格
 }
+

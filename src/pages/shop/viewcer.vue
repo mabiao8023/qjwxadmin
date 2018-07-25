@@ -8,7 +8,8 @@
 
                 </div>
                 <div class="amount">
-                    ￥1234
+                    ￥{{amount}}
+
 
 
                 </div>
@@ -16,20 +17,16 @@
             <div class="viewcer-desc">
                 <div class="title">
                     打款备注：
-
-
                 </div>
                 <div class="desc">
-                    圣诞节哈收到回复对方哈哈发货附近发掘到
-
+                    {{desc}}
 
                 </div>
             </div>
         </div>
         <div class="viewcer-part2">
             <div class="title">
-                打款凭证（共3张）
-
+                打款凭证（共{{list.length}}张）
 
             </div>
             <div class="img-preview">
@@ -43,13 +40,16 @@
             </div>
         </div>
         <div v-transfer-dom>
-            <previewer :list="list" ref="previewer" @on-index-change="logIndexChange"></previewer>
+            <previewer :list="list" ref="previewer"></previewer>
         </div>
     </div>
 </template>
 
 <script>
     import {Previewer, TransferDom, Scroller} from 'vux'
+    import api from '../../assets/js/api'
+    import {getParams} from '../../assets/js/util'
+
     export default {
         directives: {
             TransferDom
@@ -62,7 +62,9 @@
             return {
                 isShowDesc: false,
                 isShowZh: false,
+                desc: '',
                 amount: '',
+                order_id : getParams()['order_id'] || '',
                 list: [{
                     msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
                     src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
@@ -91,8 +93,22 @@
             show (index) {
                 this.$refs.previewer.show(index)
             },
-            logIndexChange(index){
+            getVoucher(){
+                this.$http.post(api.getVoucher,{
+                    ordersn: this.order_id
+                }).then(res => {
+                    this.amount = res.money
+                    res.photo.forEach(val => {
+                        this.list.push({
+                            msrc: val,
+                            src: val
+                        })
+                    })
+                    this.desc = res.remark
 
+                }).catch(e => {
+
+                })
             }
         },
         mounted() {
