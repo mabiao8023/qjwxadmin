@@ -20,35 +20,28 @@
         <ul class="b-d-list">
             <li class="b-item vux-1px-b"
                 v-for="(item,index) in accountLog"
-                @click="gotoAccountDetail(item.id)"
+                @click="gotoAccountDetail(item.id,item.income ? 'income' : 'expend')"
             >
                 <div class="b-item-left">
                     <div class="title">
                         {{ item.remark }}
-
-
                     </div>
                     <div class="time">
-                        {{ item.addtime * 1000 | dateFormat('YYYY-MM-DD HH:mm:ss') }}
-
-
+                        {{ item.addTime * 1000 | dateFormat('YYYY-MM-DD HH:mm:ss') }}
                     </div>
                 </div>
                 <div class="b-data" v-if="item.income">
                     + {{ item.income }}
-
-
                 </div>
                 <div class="b-data" v-else>
                     - {{ item.expend }}
-
-
                 </div>
             </li>
         </ul>
+        <Nodata v-if="!accountLog.length"></Nodata>
         <infinite-loading @infinite="getList" :distance="100" spinner="circles" ref="infiniteLoading">
            <span slot="no-results">
-                暂无数据
+                <!--暂无数据-->
             </span>
             <span slot="no-more">
                 暂无更多数据
@@ -60,13 +53,15 @@
     import {Popup, TransferDom, Group, Radio, dateFormat} from 'vux'
     import InfiniteLoading from 'vue-infinite-loading'
     import api from '../../assets/js/api'
+    import Nodata from '../../components/nodata.vue'
 
     export default {
         components: {
             Popup,
             Group,
             Radio,
-            InfiniteLoading
+            InfiniteLoading,
+            Nodata
         },
         filters: {
             dateFormat
@@ -85,19 +80,11 @@
                 isShowRadio: false,
                 year: new Date().getFullYear(),
                 month: new Date().getMonth() + 1,
-                accountLog: [
-                    {
-                        "remark": "返利收入",
-                        "addtime": 1,
-                        "income": "88",
-                        "expend": "",
-                        "id": "123"
-                    }
-                ],
+                accountLog: [],
                 page: 1,
             }
         },
-        compouted: {
+        computed: {
             type(){
                 return this.option1 == '全部' ? 'all' :
                     this.option1 == '返利' ? 'income' : 'expend';
@@ -151,6 +138,7 @@
             },
             getList ($state) {
                 this.$http.post(api.accountLog, {
+                    page: this.page,
                     type: this.type,
                     year: this.year,
                     month: this.month
@@ -166,9 +154,9 @@
                     $state.complete();
                 })
             },
-            gotoAccountDetail(id){
+            gotoAccountDetail(id,type){
                 this.$router.push({
-                    path: `/settleDetail?nid=${id}`
+                    path: `/settleDetail?id=${id}&type=${type}`
                 })
             }
         },

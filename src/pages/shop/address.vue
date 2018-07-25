@@ -165,7 +165,7 @@
             operateAddress(id,type){
                 this.showLoading('修改中')
                 this.$http.post(api.operateAddress,{
-                    addres_id: id,
+                    address_id: id,
                     type: type
                 }).then(res => {
                     this.hideLoading()

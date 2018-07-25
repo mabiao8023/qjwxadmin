@@ -50,10 +50,10 @@
             return {
                 detail: {
                     "money": 1,
-                    "remark": "",
+                    "remark": "入账金额",
                     "addTime": 1,
                     "ordersn": "1231321",
-                    "url": "",
+                    "url": "去问问无",
                     "thawingTime": 1
                 },
                 id: getParams()['id'] || '',

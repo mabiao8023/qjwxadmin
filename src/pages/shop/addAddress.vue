@@ -134,6 +134,7 @@
                         .then(res => {
                             this.hideLoading()
                             this.layer('添加成功')
+                            this.$router.go(-1)
                         }).catch(e => {
                         this.hideLoading()
                     })

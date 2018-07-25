@@ -14,7 +14,7 @@
         components: {},
         data () {
             return {
-                makerId: '',
+                makerId: '1',
                 name: '老王'
             }
         },
@@ -31,6 +31,7 @@
                 this.$vux.loading.hide()
             },
             gotoInputInfo(){
+                // 可能需要跳转才行
                 this.$router.push({
                     path:  `/reschuangke?id=${this.makerId}&name=${this.name}`
                 })

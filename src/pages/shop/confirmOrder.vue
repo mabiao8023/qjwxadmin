@@ -288,7 +288,7 @@
                     ordersn: this.order_id
                 }).then(res => {
                     this.hideLoading()
-                    this.detail = res.data
+//                    this.detail = res.data
                 }).catch(e => {
                     this.hideLoading()
                 })

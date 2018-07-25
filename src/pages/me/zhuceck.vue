@@ -2,11 +2,9 @@
     <div class="page-container">
         <div class="header">
             欢迎注册成为我司创客，请您务必认真填写以下信息
-
-
         </div>
         <ul class="input-list">
-            <li class="input-item  vux-1px-b">
+            <li class="input-item num1-item vux-1px-b">
                 <div class="title num1-title">
                     所属创客空间
                 </div>
@@ -17,8 +15,6 @@
             <li class="input-item vux-1px-b">
                 <div class="title">
                     *真实信息
-
-
                 </div>
                 <div class="input">
                     <x-input
@@ -33,8 +29,6 @@
             <li class="input-item vux-1px-b">
                 <div class="title">
                     *电话
-
-
                 </div>
                 <div class="input">
                     <x-input
@@ -49,8 +43,6 @@
             <li class="input-item vux-1px-b">
                 <div class="title">
                     *验证码
-
-
                 </div>
                 <div class="input">
                     <x-input
@@ -64,23 +56,14 @@
                      v-if="!isSendCoding"
                      @click="sendCode">
                     获取验证码
-
-
                 </div>
                 <div class="code disable" v-else>
-                    重发(
-
-                    <countdown v-model="time" :start="isSendCoding" @on-finish="finish"></countdown>
-                    )
-
-
+                    重发(<countdown v-model="time" :start="isSendCoding" @on-finish="finish"></countdown>)
                 </div>
             </li>
             <li class="input-item vux-1px-b">
                 <div class="title">
                     *密码
-
-
                 </div>
                 <div class="input">
                     <x-input
@@ -94,8 +77,6 @@
             <li class="input-item vux-1px-b">
                 <div class="title">
                     *确认密码
-
-
                 </div>
                 <div class="input">
                     <x-input
@@ -109,20 +90,25 @@
             <li class="input-item hetong vux-1px-b">
                 <div class="title">
                     *上传合同
-
-
                 </div>
                 <div class="input">
-                    <div class="upload-item" @click="chooseImg">
+                    <div class="upload-photo">
+                        <div class="upload-item" v-for="(item, index) in list">
+                            <div class="delete-photo" @click="deletePhoto(index)">
+                            </div>
+                            <img :src="item.src" @click="show(index)" alt="">
+                        </div>
+                        <div class="upload-item" @click.stop.prevent="chooseImg">
 
+                        </div>
                     </div>
+                    <!--<div class="upload-item" @click="chooseImg">-->
+                    <!--</div>-->
                 </div>
             </li>
         </ul>
-        <div class="logout" @click="submit">
+        <div class="logout" @click.stop.prevent="submit">
             提交申请
-
-
         </div>
         <!-- 图片上传组件 -->
         <UploadPhoto ref="uploadPhoto"
@@ -131,7 +117,7 @@
                      @uploadResData="uploadResData"
         ></UploadPhoto>
         <div v-transfer-dom>
-            <previewer :list="list" ref="previewer" :options="options" @on-index-change="logIndexChange"></previewer>
+            <previewer :list="list" ref="previewer"></previewer>
         </div>
     </div>
 </template>
@@ -161,7 +147,19 @@
                 time: 90,
                 start: true,
                 isSendCoding: false,
-                list: [],
+                list: [
+                    {
+                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
+                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
+                    },
+                    {
+                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
+                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
+                    }, {
+                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwwcynw2j20p00b4js9.jpg',
+                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwwcynw2j20p00b4js9.jpg'
+                    }
+                ],
                 id: getParams()['id'] || '',
                 tjname: getParams()['name'] || '',
             }
@@ -202,7 +200,7 @@
             // 父组件监听子组件上传图片返回的base64的数据，用于本地显示图片
             getImgDataUrl(value){
                 //  value -> 图片base64的数
-                //  console.log(value);
+                alert(value);
             },
             uploadProgress(value){
                 // value -> 图片上传的进度百分比，会实时更新，用于进度条显示
@@ -301,9 +299,11 @@
             }
             .num1-title {
                 width: 90px;
+
             }
             .input {
                 flex: 1;
+                color: #323232;
             }
             .code {
                 line-height: 30px;
@@ -319,6 +319,11 @@
                 color: #fff;
             }
         }
+        /*.num1-item{*/
+            /*.input{*/
+                /*color: #323232;*/
+            /*}*/
+        /*}*/
         .hetong {
             display: block;
             padding: 10px 0;
@@ -339,7 +344,12 @@
         background: @mainColor;
         border-radius: 22px;
     }
-
+    .upload-photo {
+        /*padding: 12px 15px;*/
+        font-size: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
     .upload-item {
         position: relative;
         width: 74px;

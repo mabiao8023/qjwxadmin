@@ -43,9 +43,10 @@
                 </div>
             </li>
         </ul>
+        <Nodata v-if="!frostLog.length"></Nodata>
         <infinite-loading @infinite="getList" :distance="100" spinner="circles" ref="infiniteLoading">
           <span slot="no-results">
-              暂无数据
+              <!--暂无数据-->
           </span>
             <span slot="no-more">
               暂无更多数据
@@ -58,9 +59,11 @@
     import InfiniteLoading from 'vue-infinite-loading';
     import api from '../../assets/js/api'
     import {dateFormat} from 'vux'
+    import Nodata from '../../components/nodata.vue'
     export default {
         components: {
-            InfiniteLoading
+            InfiniteLoading,
+            Nodata
         },
         filters: {
             dateFormat
@@ -70,13 +73,6 @@
                 page: 1,
                 frost: 0,
                 frostLog: [
-                    {
-                        "rebate": 1,
-                        "addTime": 1,
-                        "thawingTime": 1,
-                        "status": 1,
-                        "id": "11"
-                    }
                 ]
             }
         },
@@ -111,7 +107,7 @@
             },
             gotoSettleDetail(id){
                 this.$router.push({
-                    path: `/settleDetail?nid=${id}`
+                    path: `/settleDetail?id=${id}&type=rebate`
                 })
             }
         },

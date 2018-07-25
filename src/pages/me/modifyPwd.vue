@@ -99,7 +99,7 @@
                     this.$http.post(api.modifyPwd, {
                         oldpassword: this.oldPwd,
                         newpassword: this.newPwd,
-                        reNewPwd: this.reNewPwd
+                        renewpassword: this.reNewPwd
                     }).then(res => {
                         this.hideLoading();
                         if (res.code == 1) {

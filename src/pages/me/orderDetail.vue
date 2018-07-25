@@ -4,7 +4,7 @@
             <div>订单{{detail.condition}}</div>
             <div class="look"
                  v-if="detail.payType == 1 && detail.condition != '待付款' && detail.condition != '待上传凭证'"
-                 @click="gotoViewCer">查看凭证>
+                 @click="gotoViewCer(detail.ordersn)">查看凭证>
             </div>
         </div>
         <!-- 邮寄状态 -->
@@ -274,9 +274,9 @@
                     this.hideLoading()
                 })
             },
-            gotoViewCer(){
+            gotoViewCer(id){
                 this.$router.push({
-                    path: `/viewcer?id=`
+                    path: `/viewcer?order_id=${id}`
                 })
             },
             /*跳转微信支付*/

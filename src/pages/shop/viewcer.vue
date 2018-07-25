@@ -112,6 +112,7 @@
             }
         },
         mounted() {
+            this.getVoucher()
             document.getElementsByTagName('title')[0].textContent = '订单凭证';
         }
     }

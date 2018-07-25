@@ -112,7 +112,7 @@
                     "stock": 10,
                     "good_price": 188,
                     "rebate": 5,
-                    "id": "1",
+                    "good_id": "1",
                     "checked": true,
                     "amount": 12,
                     "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
@@ -198,18 +198,19 @@
             },
 
             deleteGoods(){
-                let deleteArr = []
+                let editArr = [];
                 this.goods.forEach(val => {
-                    if (val.checked) {
-                        deleteArr.push({
-                            good_id: val.good_id
+                        if (val.checked) {
+                        editArr.push({
+                            good_id: val.good_id,
+                            amount: val.amount
                         });
                     }
                 });
                 this.showLoading('删除中')
                 this.$http.post(api.shoppingTrolleyEdit, {
                     type: 'delete',
-                    good: this.deleteArr
+                    goodList: JSON.stringify(editArr)
                 }).then(res => {
                     this.hideLoading();
                     this.layer('删除成功')

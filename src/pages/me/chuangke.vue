@@ -76,12 +76,15 @@
                 </template>
                 <template v-if="type == 2">
                     <div class="js-item-part1">
-                        <div class="sq-info">
+                        <div class="sq-info" v-if="item.status == 2">
                             申请人：{{item.realname}} {{item.phone}}
-                    </div>
+                        </div>
+                        <div class="sq-info" v-if="item.status == 3">
+                            代理：{{item.realname}} {{item.phone}}
+                        </div>
                         <div class="sq-status">
                             {{getStatus(item.status)}}
-                    </div>
+                        </div>
                     </div>
                     <div class="js-item-part2 vux-1px-tb">
                         <div>
@@ -188,7 +191,7 @@
                         data: [{
                             "realname": "哈哈",
                             "phone": "1231321",
-                            "status": "1",
+                            "status": "2",
                             "level": "创客",
                             "addTime": 1312313223,
                             "updateTime": 131321321,
@@ -228,9 +231,9 @@
                 })
             },
             getStatus(status){
-                return status == 0 ? '审核中' :  status == 1 ? '通过' : status == 2 ? '拒绝' : '已取消资格';
+                return status == 0 ? '审核中' :  status == 1 ? '已通过' : status == 2 ? '已拒绝' : '已取消资格';
             },
-            getList ($state) {
+            getList($state){
                 let type = this.type == 0 ? 'verify' : this.type == 1 ? 'agent' : 'refuse';
                 this.$http.post(api.makerManage,{
                     page: this.markers[this.type].page,
@@ -248,6 +251,7 @@
                 })
             },
             showRefuseConfirm(id){
+                const _this = this
                 this.$vux.confirm.show({
                     // 组件除show外的属性
                     showInput: true,
@@ -258,7 +262,6 @@
                     },
                     onCancel () {
                         console.log(this) // 非当前 vm
-                        console.log(_this) // 当前 vm
                     },
                     onConfirm (msg) {
                         _this.makerVerifyApply(id,'refuse',msg)

@@ -7,7 +7,7 @@
     >
 </template>
 <script>
-    //  import { apiPath } from '../../common/js/config.js';
+    import api from '../assets/js/api'
     export default {
         name: 'UploadPhoto',
         data() {
@@ -19,9 +19,9 @@
             layer(text){
                 this.$vux.toast.text(text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading(text){
                 this.$vux.loading.show({
-                    text: '加载中'
+                    text: text || '加载中'
                 })
             },
             hideLoading(){
@@ -63,7 +63,7 @@
                 let form = new FormData();
                 let that = this;
                 form.append("Filedata", this.file);
-                this.$http.post(apiPath.uploadPhoto, form, {
+                this.$http.post(api.uploadPhoto, form, {
                     'headers': {
                         'mimeType': 'multipart/form-data'
                     },
