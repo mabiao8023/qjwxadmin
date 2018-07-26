@@ -16,7 +16,7 @@
                     ></x-input>
                 </div>
             </div>
-            <div class="item vux-1px-tb">
+            <div class="item vux-1px-b">
                 <div class="title">
                     联系电话
 
@@ -44,6 +44,7 @@
 <script>
     import {XInput} from 'vux'
     import api from '../../assets/js/api'
+    import {getParams} from '../../assets/js/util'
     export default {
         components: {
             XInput
@@ -51,7 +52,8 @@
         data () {
             return {
                 name: '',
-                phone: ''
+                phone: '',
+                order_id: getParams()['order_id'] || ''
             }
         },
         computed: {},
@@ -81,6 +83,9 @@
                     }).then(res => {
                         this.hideLoading()
                         this.layer('修改成功')
+                        this.$router.push({
+                            path: `/pay?order_id=${this.order_id}&delivery=2`
+                        })
                     }).catch(e => {
                         this.hideLoading()
                     })
@@ -88,11 +93,15 @@
             },
             /*获取收货人信息*/
             getSelfAddress(){
+                this.showLoading('获取中')
                 this.$http.post(api.getSelfAddress)
                     .then(res => {
-                        this.name = res.username
-                        this.phone = res.phone
-                    })
+                        this.hideLoading()
+                        this.name = res.data.username
+                        this.phone = res.data.phone
+                    }).catch(e => {
+                    this.hideLoading()
+                })
             }
         },
         mounted(){

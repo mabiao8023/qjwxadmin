@@ -142,14 +142,14 @@
             },
             getAddress(){
                 this.showLoading()
-                this.$http.get(api.addressGet, {
+                this.$http.post(api.addressGet, {
                     address_id: this.address_id
                 }).then(res => {
                     this.hideLoading()
-                    this.name = res.name
-                    this.phone = res.phone
-                    this.addressDetail = res.address
-                    this.value = [res.area.province, res.area.city, res.area.district]
+                    this.name = res.data.username
+                    this.phone = res.data.phone
+                    this.addressDetail = res.data.address
+                    this.value = [res.data.province, res.data.city, res.data.district]
                 }).catch(e => {
                     this.hideLoading()
                 })

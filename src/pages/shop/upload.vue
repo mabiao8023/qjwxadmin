@@ -258,13 +258,13 @@
                         this.hideLoading()
                         this.layer('上传凭证成功')
                         this.$router.push({
-                            path: `/uploadsuc?order_id=1234`
+                            path: `/uploadsuc?order_id=${this.order_id}`
                         })
                     }).catch(e => {
                         this.hideLoading()
                     })
                     this.$router.push({
-                        path: `/uploadsuc?order_id=1234`
+                        path: `/uploadsuc?order_id=${this.order_id}`
                     })
                 }
             }
@@ -364,6 +364,7 @@
             }
         }
         .input {
+            color: #646464;
             background: #fff;
         }
     }

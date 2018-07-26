@@ -228,12 +228,12 @@
             gotoShopCart(){
                 let checkedGoods = [];
                 this.all.data.forEach(val => {
-                    if (val.number > 0) {
+//                    if (val.number > 0) {
                         checkedGoods.push({
                             good_id: val.id,
                             amount: val.number
                         })
-                    }
+//                    }
                 })
                 this.discount.data.forEach(val => {
                     if (val.number > 0) {

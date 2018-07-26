@@ -120,6 +120,7 @@
 
 <script>
     import {XInput} from 'vux'
+    import {getParams} from '../../assets/js/util'
     export default {
         components: {
             XInput
@@ -128,6 +129,7 @@
             return {
                 isShowDesc: false,
                 isShowZh: false,
+                order_id: getParams()['order_id'] || ''
             }
         },
         methods: {
@@ -144,12 +146,12 @@
             },
             gotoUpload(){
                 this.$router.push({
-                    path: `/upload?order_id=234`
+                    path: `/upload?order_id=${this.order_id}`
                 })
             },
             gotoOrderDetail(){
                 this.$router.push({
-                    path: `/orderDetail?order_id=1232`
+                    path: `/orderDetail?order_id=${this.order_id}`
                 })
             }
         },

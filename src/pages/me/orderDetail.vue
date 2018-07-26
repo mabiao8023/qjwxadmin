@@ -9,17 +9,17 @@
         </div>
         <!-- 邮寄状态 -->
         <template v-if="detail.delivery == 1">
-            <div class="wuliu-msg" v-if="detail.logistics[0].company">
+            <div class="wuliu-msg" v-if="detail.logistics">
                 <div class="title">
                     物流信息：
                 </div>
                 <div class="wuliu-method">
-                    {{detail.logistics[0].company}}
+                    {{detail.logistics.company}}
                 </div>
                 <div class="wuliu-number" id="copyValue" ref="numbers">
-                    {{detail.logistics[0].number}}
+                    {{detail.logistics.number}}
                 </div>
-                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics[0].number'>
+                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics.number'>
                     复制
                 </button>
             </div>
@@ -45,18 +45,18 @@
             </div>
         </template>
         <template v-else>
-            <div class="shouhuo">
+            <div class="shouhuo" v-if="detail.makerAddress">
                 <div class="tihuo-ads">
                     <div class="sh-ad-title">
                         提货地址：
                     </div>
                     <div class="sh-ad-con">
-                        {{detail.makerAddress[0].province + detail.makerAddress[0].city + detail.makerAddress[0].district + detail.makerAddress[0].address }}
+                        {{detail.makerAddress.province + detail.makerAddress.city + detail.makerAddress.district + detail.makerAddress.address }}
                     </div>
                 </div>
                 <div class="sh-info">
                     <div class="name">
-                        电话：{{detail.makerAddress[0].phone}}
+                        电话：{{detail.makerAddress.phone}}
                     </div>
                     <div class="phone">
                         周一至周五 9:00-18:00
@@ -190,52 +190,8 @@
         data () {
             return {
                 wuliu: '1231231231',
-                orderId: getParams()['oreder_id'] || '',
-                detail: {
-                    "id": 1,
-                    "ordersn": "1232324343",
-                    "total": "99999",
-                    "amount": 88,
-                    "freight": "123123",
-                    "rebate": "11",
-                    "delivery": 2,
-                    "province": "广东省",
-                    "city": "广州市",
-                    "district": "天河区",
-                    "address": "瑞东花园",
-                    "username": "马彪",
-                    "phone": 1231232,
-                    "addTime": 1,
-                    "payType": 1,
-                    "payTime": 13412343243,
-                    "deliveryTime": 13412343243,
-                    "finishTime": 13412343243,
-                    "good": [
-                        {
-                            "good_name": "测试商品",
-                            "good_price": "88",
-                            "good_photo": null,
-                            "rebate": "2",
-                            "amount": 1
-                        }
-                    ],
-                    "condition": "已取消",
-                    "logistics": [
-                        {
-//                            "company": "圆通",
-//                            "number": "1232132343243234"
-                        }
-                    ],
-                    "makerAddress": [
-                        {
-                            "phone": 12332432,
-                            "province": "广东省",
-                            "city": "广州市",
-                            "district": "黄浦区",
-                            "address": "瑞东花园"
-                        }
-                    ]
-                }
+                order_id: getParams()['order_id'] || '',
+                detail: {}
             }
         },
         methods: {
@@ -288,10 +244,18 @@
                 this.$router.push({
                     path: `/offinePay?order_id=${this.detail.ordersn}&isPost=${this.detail.delivery}`
                 })
+            },
+            getOrderDetail(){
+                this.$http.post(api.orderDetail,{
+                    ordersn: this.order_id
+                }).then(res => {
+                    this.detail = res.data
+                })
             }
         },
         mounted() {
             this.copy();
+            this.getOrderDetail();
             //  设置标题
             document.getElementsByTagName('title')[0].textContent = '订单详情';
         }

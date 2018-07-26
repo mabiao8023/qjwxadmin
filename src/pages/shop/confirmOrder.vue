@@ -27,37 +27,37 @@
                 </div>
             </div>
             <div class="adress vux-1px-t" @click="setRecvier">
-                <div v-if="isPost && !detail.post_address[0].province" class="choice-adress">
+                <div v-if="isPost && !detail.post_address" class="choice-adress">
                     请填写收货信息
                 </div>
-                <div v-if="!isPost && !detail.self_address[0].username" class="choice-adress">
+                <div v-if="!isPost && !detail.self_address" class="choice-adress">
                     请填写提货人信息
                 </div>
 
                 <div class="choice-adress has-adress"
-                     v-if="isPost && detail.post_address[0].province"
+                     v-if="isPost && detail.post_address.province"
                 >
                     <div class="adress-info">
                         <div>
-                            收货人：{{detail.post_address[0].username}}
+                            收货人：{{detail.post_address.username}}
                         </div>
                         <div>
-                            {{detail.post_address[0].phone}}
+                            {{detail.post_address.phone}}
                         </div>
                     </div>
                     <div class="has-adress">
-                        收货地址：{{detail.post_address[0].province + detail.post_address[0].city + detail.post_address[0].district + detail.post_address[0].address}}
+                        收货地址：{{detail.post_address.province + detail.post_address.city + detail.post_address.district + detail.post_address.address}}
                     </div>
                 </div>
                 <div class="choice-adress has-adress"
-                     v-if="!isPost && detail.self_address[0].username"
+                     v-if="!isPost && detail.self_address"
                 >
                     <div class="adress-info">
                         <div>
-                            收货人：{{detail.self_address[0].username}}
+                            收货人：{{detail.self_address.username}}
                         </div>
                         <div>
-                            {{detail.self_address[0].phone}}
+                            {{detail.self_address.phone}}
                         </div>
                     </div>
                 </div>
@@ -116,15 +116,11 @@
                     合计：<span>￥{{detail.total}}</span>
                 </div>
                 <div class="no-yunfei">
-                    含运费 | 返利¥{{detail.totalRebate}}
-
-
+                    含运费 | 返利¥{{detail.rebate}}
                 </div>
             </div>
             <div class="shopping-cart-btn" @click="showChoice = true">
                 结算
-
-
             </div>
         </div>
         <!-- 选择支付类型弹窗 -->
@@ -136,8 +132,6 @@
                 <div class="paypop">
                     <div class="paypop-header vux-1px-b">
                         请选择支付方式
-
-
                         <div class="paypop-close" @click="showChoice = false">
                         </div>
                     </div>
@@ -152,13 +146,9 @@
                         <div class="content">
                             <div class="title">
                                 线上支付
-
-
                             </div>
                             <div class="desc">
                                 立即支付给创客空间或总部
-
-
                             </div>
                         </div>
                     </div>
@@ -170,18 +160,12 @@
                         <div class="content">
                             <div class="title">
                                 线下支付
-
-
                             </div>
                             <div class="desc">
                                 自行打款给创客空间或总部
-
-
                             </div>
                             <div class="desc">
                                 *备注：您可以使用微信、支付宝、银行卡或是现金方式将货款转给空间或总部，并截取或打印凭证上传至此
-
-
                             </div>
                         </div>
                     </div>
@@ -209,40 +193,9 @@
                 demo1: true,
                 bottomCount: 2,
                 showChoice: false,
-                isPost: true,
+                isPost: getParams()['delivery'] == 2 ? false : true,
                 order_id: getParams()['order_id'] || '',
-                detail: {
-                    "total": 1,
-                    "list": [
-                        {
-                            "good_name": "测试内容",
-                            "good_price": 1,
-                            "rebate": 1,
-                            "amount": 1,
-                            "good_id": "12312",
-                            "good_photo": ""
-                        }
-                    ],
-                    "totalRebate": 1,
-                    "freight": 1,
-                    "ordersn": "",
-                    "post_address": [
-                        {
-                            "province": "光",
-                            "city": "四射",
-                            "district": "啊啊",
-                            "address": "啊啊啊",
-                            "username": "啊啊",
-                            "phone": "1231312"
-                        }
-                    ],
-                    "self_address": [
-                        {
-                            "username": "四射",
-                            "phone": "1313"
-                        }
-                    ]
-                }
+                detail: {}
             }
         },
         methods: {
@@ -260,11 +213,11 @@
             setRecvier(){
                 if (this.isPost) {
                     this.$router.push({
-                        path: '/address'
+                        path: `/address?order_id=${this.detail.ordersn}`
                     })
                 } else {
                     this.$router.push({
-                        path: '/selfGet'
+                        path: `/selfGet?order_id=${this.detail.ordersn}`
                     })
                 }
             },
@@ -273,13 +226,9 @@
             },
             gotoOnlinePay(){
                 this.settlementOrder(2)
-                location.href = weChatPay(23423432432)
             },
             gotoOffinePay(){
                 this.settlementOrder(1)
-                this.$router.push({
-                    path: '/offinePay'
-                })
             },
             /* 获取确认订单的信息 */
             getOrderData(){
@@ -288,7 +237,7 @@
                     ordersn: this.order_id
                 }).then(res => {
                     this.hideLoading()
-//                    this.detail = res.data
+                    this.detail = res.data
                 }).catch(e => {
                     this.hideLoading()
                 })
@@ -296,28 +245,49 @@
             /* 结算支付 */
             settlementOrder(payType){
                 this.showLoading('提交中')
-                this.$http.post(api.settlementOrder,{
-                    ordersn: this.order_id,
-                    delivery: this.isPost ? 1 : 2,
-                    username: '',
-                    phone: 112324343,
-                    province: '广东省',
-                    city: '广州市',
-                    district: '黄浦区',
-                    address: '瑞东花园',
-                    payType: payType
-                }).then(res => {
+                let data = {}
+                if( this.isPost ){
+                    if( !this.detail.post_address ){
+                        return this.layer('请选择邮寄地址')
+                    }
+                    data = {
+                        ordersn: this.detail.ordersn,
+                        delivery: 1,
+                        username: this.detail.post_address.username,
+                        phone: this.detail.post_address.phone,
+                        province: this.detail.post_address.province,
+                        city: this.detail.post_address.city,
+                        district: this.detail.post_address.district,
+                        address: this.detail.post_address.address,
+                        payType: payType
+                    }
+                }else{
+                    if( !this.detail.self_address ){
+                        return this.layer('请填写提货信息')
+                    }
+                    data = {
+                        ordersn: this.detail.ordersn,
+                        delivery: 2,
+                        username: this.detail.self_address.username,
+                        phone: this.detail.self_address.phone,
+                        province: '',
+                        city: '',
+                        district: '',
+                        address: '',
+                        payType: payType
+                    }
+                }
+
+                this.$http.post(api.settlementOrder,data).then(res => {
                     this.hideLoading()
                     if( payType == 1 ){
                         /*线下支付*/
                         this.$router.push({
-                            path: `/offinePay?order_id=${res.ordersn}&isPost=${this.isPost}`
+                            path: `/offinePay?order_id=${this.detail.ordersn}&isPost=${this.isPost}`
                         })
                     }else{
                         /*线上支付*/
-                        this.$router.push({
-                            path: `/weChatPay?order_id=${res.ordersn}&isPost=${this.isPost}`
-                        })
+                        location.href = weChatPay(this.detail.ordersn,this.isPost)
                     }
                 }).catch(e => {
                     this.hideLoading()

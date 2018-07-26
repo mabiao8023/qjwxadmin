@@ -36,8 +36,6 @@
                 </div>
                 <div class="adress">
                     <span v-if="item.type == 'default'">[默认地址]</span>{{item.address}}
-
-
                 </div>
                 <div class="edit-address vux-1px-t" v-if="isEdit">
                     <div class="main-address"
@@ -80,7 +78,7 @@
     import {CheckIcon} from 'vux'
     import api from '../../assets/js/api'
     import Nodata  from '../../components/nodata.vue'
-
+    import {getParams} from '../../assets/js/util'
     export default {
         components: {
             CheckIcon,
@@ -91,22 +89,8 @@
                 demo1: false,
                 bottomCount: 2,
                 isEdit: false,
-                list: [
-                    {
-                        "name": "张三",
-                        "phone": 12323,
-                        "address": "广东省广州市",
-                        "type": "default",
-                        "address_id": 1
-                    },
-                    {
-                        "name": "张三",
-                        "phone": 12323,
-                        "address": "北京省天津市",
-                        "type": "normal",
-                        "address_id": 2
-                    },
-                ]
+                list: [],
+                order_id: getParams()['order_id'] || ''
             }
         },
         methods: {
@@ -170,7 +154,13 @@
                 }).then(res => {
                     this.hideLoading()
                     this.layer('修改成功')
-                    this.getAddressList()
+                    if( type == 'modifyDefault'){
+                        this.$router.push({
+                            path: `/pay?order_id=${this.order_id}`
+                        })
+                    }else{
+                        this.getAddressList()
+                    }
                 }).catch(e => {
                     this.hideLoading()
                 })

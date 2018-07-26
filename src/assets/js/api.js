@@ -25,6 +25,7 @@ export default {
     confirmOrder: '/api/Order/confirmOrder',             // 确认订单页面
     settlementOrder: '/api/Order/SettlementOrder',       // 结算订单
     orderIndex: '/api/Order/index',                      // 订单管理页面
+    orderDetail: '/api/Order/orderDetail',               // 订单详情
     operateAddress: '/api/Address/operateAddress',       // 编辑地址
     getSelfAddress: '/api/Address/getSelfAddress',       // 获取提货人信息
     editSelfAddress: '/api/Address/editSelfAddress',     // 编辑提货人信息

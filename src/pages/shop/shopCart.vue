@@ -54,6 +54,7 @@
                 </div>
             </div>
         </div>
+        <Nodata v-if="!goods.length"></Nodata>
         <infinite-loading @infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
             <span slot="no-results">
                 暂无商品
@@ -93,12 +94,14 @@
     import {XImg, InlineXNumber, CheckIcon} from 'vux'
     import InfiniteLoading from 'vue-infinite-loading';
     import api from '../../assets/js/api'
+    import Nodata from '../../components/nodata.vue'
     export default {
         components: {
             XImg,
             InlineXNumber,
             CheckIcon,
-            InfiniteLoading
+            InfiniteLoading,
+            Nodata
         },
         data () {
             return {
@@ -136,10 +139,10 @@
                 this.goods.forEach(val => {
                     if (val.checked) {
                         deleteArr.push({
-                            good_id: val.good_id
+                            good_id: val.id
                         });
                         editArr.push({
-                            good_id: val.good_id,
+                            good_id: val.id,
                             amount: val.amount
                         });
                     }
@@ -170,9 +173,10 @@
                 this.$vux.loading.hide()
             },
             getGoods ($state) {
-                this.$http.post(api.shoppingTrolley)
-                    .then(res => {
-                        this.count = res.count
+                this.$http.post(api.shoppingTrolley,{
+                    page: this.page
+                }).then(res => {
+//                        this.count = res.data.count
                         if (res.data.list.length) {
                             res.data.list.forEach(val => {
                                 val.checked = true
@@ -193,7 +197,7 @@
                 this.goods.forEach(val => {
                         if (val.checked) {
                         editArr.push({
-                            good_id: val.good_id,
+                            good_id: val.id,
                             amount: val.amount
                         });
                     }
@@ -214,7 +218,7 @@
                 this.goods.forEach(val => {
                     if (val.checked) {
                         editArr.push({
-                            good_id: val.good_id,
+                            good_id: val.id,
                             amount: val.amount
                         });
                     }
@@ -245,7 +249,7 @@
                 this.goods.forEach(val => {
                     if (val.checked) {
                         addGoodsArr.push({
-                            good_id: val.good_id,
+                            good_id: val.id,
                             amount: val.amount
                         });
                     }
@@ -256,13 +260,10 @@
                 }).then(res => {
                     this.hideLoading()
                     this.$router.push({
-                        path: `/pay?order_id=${res.ordersn}`
+                        path: `/pay?order_id=${res.data.ordersn}`
                     })
                 }).catch(e => {
                     this.hideLoading()
-                })
-                this.$router.push({
-                    path: `/pay?order_id=13123`
                 })
             },
         },
@@ -388,6 +389,7 @@
         height: 45px;
         font-size: 15px;
         background: #fff;
+        border-top: 1px solid #eaeaea;
         .no-yunfei {
             color: #909090;
             font-size: 13px;
