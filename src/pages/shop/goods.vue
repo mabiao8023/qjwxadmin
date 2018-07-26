@@ -90,42 +90,15 @@
                 types: ['all', 'discount', 'count'],
                 all: {
                     page: 1,
-                    data: [
-//                        {
-//                            "good_name": "杜蕾斯",
-//                            "stock": 10,
-//                            "good_price": 88,
-//                            "rebate": 2,
-//                            "id": "1",
-//                            "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-//                        }
-                    ]
+                    data: []
                 },
                 discount: {
                     page: 1,
-                    data: [
-//                        {
-//                        "good_name": "杜蕾斯",
-//                        "stock": 10,
-//                        "good_price": 288,
-//                        "rebate": 12,
-//                        "id": "1",
-//                        "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-//                    }
-                    ]
+                    data: []
                 },
                 count: {
                     page: 1,
-                    data: [
-//                        {
-//                        "good_name": "杜蕾斯",
-//                        "stock": 10,
-//                        "good_price": 188,
-//                        "rebate": 5,
-//                        "id": "1",
-//                        "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-//                    }
-                    ]
+                    data: []
                 },
                 shoppingTrolley: 0,
                 // 添加进购物车

@@ -113,27 +113,7 @@
                     {
                         /* 全部订单 */
                         page: 1,
-                        data: [
-                            {
-                                "id": 1,
-                                "ordersn": "qwrewrwe",
-                                "amount": 1,
-                                "total": "1123",
-                                "rebate": "123",
-                                "freight": "223",
-                                "condition": '待付款',
-                                "good": [
-                                    {
-                                        "good_name": "测试测试",
-                                        "good_price": "666",
-                                        "good_photo": null,
-                                        "rebate": "12123",
-                                        "amount": 1,
-                                        "goodsId": 1
-                                    }
-                                ]
-                            }
-                        ]
+                        data: []
                     },
                     {
                         /* 等待付款 */

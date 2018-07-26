@@ -107,16 +107,7 @@
                 value: 1,
                 demo1: true,
                 isEdit: false,          // 是否处于编辑状态
-                goods: [{
-                    "good_name": "杜蕾斯",
-                    "stock": 10,
-                    "good_price": 188,
-                    "rebate": 5,
-                    "good_id": "1",
-                    "checked": true,
-                    "amount": 12,
-                    "good_photo": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1415756910,4153057836&fm=202&mola=new&crop=v1"
-                }],
+                goods: [],
                 count: 0,
                 page: 1,
             }

@@ -33,7 +33,9 @@
                              @click.stop.prevent='showRefuseConfirm(item.id)'>
                             拒绝申请
                         </div>
-                        <div class="btn active">
+                        <div class="btn active"
+                            @click.stop.prevent="makerVerifyApply(item.id,'verify')"
+                        >
                             通过申请
                         </div>
                     </div>
