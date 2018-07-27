@@ -21,8 +21,8 @@ import {
     cookie
 } from 'vux'
 
-const FastClick = require('fastclick')
-FastClick.attach(document.body)
+// const FastClick = require('fastclick')
+// FastClick.attach(document.body)
 
 Vue.use(VueRouter)
 Vue.use(AlertPlugin)
@@ -61,14 +61,16 @@ router.beforeEach((to, from, next) => {
 // 初始化axio请求参数
 //添加一个请求拦截器
 Vue.http.interceptors.request.use(function (config) {
-    console.log(config)
+    console.dir(config)
     let userToken = cookie.get('token') || '';
     config.timeout = 10000;
     config.transformRequest = [function (data = {}, headers) {
         //依自己的需求对请求数据进行处理
         data.token = userToken;
         data.js_code = new Date().getTime();
-        data = Qs.stringify(data);
+        if( config.url !== '/api/Common/upload' ){
+            data = Qs.stringify(data);
+        }
         return data;
     }];
     //在请求发送之前做一些事

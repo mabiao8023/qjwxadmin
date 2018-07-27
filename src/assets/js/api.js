@@ -40,5 +40,6 @@ export default {
     verify: '/api/order/verify',                         // 审核退款/审核凭证
     makerManage: '/api/Maker/manage',                    // 创客管理
     makerVerifyApply: '/api/Maker/verifyApply',          // 拒绝/取消代理资格
+    uploadImage: '/api/Common/upload',                   // 上传图片
 }
 

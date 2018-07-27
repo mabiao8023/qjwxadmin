@@ -112,6 +112,7 @@
         </div>
         <!-- 图片上传组件 -->
         <UploadPhoto ref="uploadPhoto"
+                     class="needsclick"
                      @getImgData="getImgDataUrl"
                      @progress="uploadProgress"
                      @uploadResData="uploadResData"
@@ -148,17 +149,17 @@
                 start: true,
                 isSendCoding: false,
                 list: [
-                    {
-                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-                    },
-                    {
-                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-                    }, {
-                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwwcynw2j20p00b4js9.jpg',
-                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwwcynw2j20p00b4js9.jpg'
-                    }
+//                    {
+//                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
+//                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
+//                    },
+//                    {
+//                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
+//                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
+//                    }, {
+//                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwwcynw2j20p00b4js9.jpg',
+//                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwwcynw2j20p00b4js9.jpg'
+//                    }
                 ],
                 id: getParams()['id'] || '',
                 tjname: getParams()['name'] || '',
@@ -195,25 +196,29 @@
             chooseImg(){
                 /* 解决fastClick的延迟的bug */
                 this.$refs['uploadPhoto'].$el.click();
-                this.$refs['uploadPhoto'].$el.click();
             },
             // 父组件监听子组件上传图片返回的base64的数据，用于本地显示图片
             getImgDataUrl(value){
                 //  value -> 图片base64的数
-                alert(value);
             },
             uploadProgress(value){
                 // value -> 图片上传的进度百分比，会实时更新，用于进度条显示
                 // console.log(value);
             },
             uploadResData(value){
+                let _this = this
                 if (value.type == 'success') {
                     let img = new Image();
                     let that = this;
-                    img.src = value.image_url;
+                    let imgUrl = 'http://qjwx.dianduode.com' +  value.url;
+                    img.src = imgUrl
                     // 加载完成后在进行发消息
                     img.onload = function () {
-                        //  提示上传成功
+                        //  提示上传成功，显示图片
+                        _this.list.push({
+                            msrc: imgUrl,
+                            src: imgUrl
+                        })
                     }
                 } else {
                     // 上传失败

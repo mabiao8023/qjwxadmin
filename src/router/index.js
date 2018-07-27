@@ -38,6 +38,9 @@ const ResCK = () => import(/* webpackChunkName: "part3" */ '../pages/me/zhuceck.
 const SelfGetSuc = () => import(/* webpackChunkName: "part3" */ '../pages/me/zitisuc.vue');	  // 自提成功
 const Fahuo = () => import(/* webpackChunkName: "part3" */ '../pages/me/fahuo.vue');	  // 发货管理
 const FahuoDetail = () => import(/* webpackChunkName: "part3" */ '../pages/me/fahuoDetail.vue');	  // 发货管理
+const Contract = () => import(/* webpackChunkName: "part3" */ '../pages/me/contract.vue');	  // 合同页面
+
+
 const NotFoundComponent = () => import(/* webpackChunkName: "part3" */ '../components/nodata.vue');	  // 发货管理
 // 微信
 const WeChatPay = () => import(/* webpackChunkName: "part4" */ '../pages/wechat/pay.vue');	  // 微信支付
@@ -246,6 +249,12 @@ export default {
             /* 查看凭证 */
             path: '/viewcer',
             component: ViewCer,
+            meta: {}
+        },
+        {
+            /* 查看凭证 */
+            path: '/contract',
+            component: Contract,
             meta: {}
         },
         {

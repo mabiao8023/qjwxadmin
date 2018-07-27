@@ -208,7 +208,7 @@
             chooseImg(){
                 /* 解决fastClick的延迟的bug */
                 this.$refs['uploadPhoto'].$el.click();
-                this.$refs['uploadPhoto'].$el.click();
+//                this.$refs['uploadPhoto'].$el.click();
             },
             // 父组件监听子组件上传图片返回的base64的数据，用于本地显示图片
             getImgDataUrl(value){
@@ -220,13 +220,19 @@
                 // console.log(value);
             },
             uploadResData(value){
+                let _this = this
                 if (value.type == 'success') {
                     let img = new Image();
                     let that = this;
-                    img.src = value.image_url;
+                    let imgUrl = 'http://qjwx.dianduode.com' +  value.url;
+                    img.src = imgUrl
                     // 加载完成后在进行发消息
                     img.onload = function () {
-                        //  提示上传成功
+                        //  提示上传成功，显示图片
+                        _this.list.push({
+                            msrc: imgUrl,
+                            src: imgUrl
+                        })
                     }
                 } else {
                     // 上传失败

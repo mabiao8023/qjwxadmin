@@ -3,11 +3,8 @@
         <div class="zhmx" @click="gotoPage('/balanceDetail')">
             <div class="zhmx-title">
                 账户明细
-
-
             </div>
             <div class="zhmx-arrow">
-
             </div>
         </div>
         <img class="money-icon" src="../../assets/image/money.png" alt="">
@@ -20,8 +17,6 @@
         <!-- 提现 -->
         <div class="tixian-btn" @click="submit">
             提现
-
-
         </div>
     </div>
 
@@ -71,17 +66,19 @@
                 })
             },
             submit() {
-                this.$router.push({
-                    path: '/tixian'
-                })
+                if(this.account.balance <= 0){
+                     this.layer('暂无余额可提现')
+                }else{
+                    this.$router.push({
+                        path: '/tixian'
+                    })
+                }
             },
             getUserInfo(){
                 this.$http.post(api.getUserInfo)
                     .then(res => {
-                        if (res.code == 1) {
-                            this.userInfo = res.data.userinfo;
-                            this.account = res.data.account;
-                        }
+                        this.userInfo = res.data.userinfo;
+                        this.account = res.data.account;
                     })
             }
         },

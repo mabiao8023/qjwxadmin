@@ -1,179 +1,181 @@
 <template>
     <div class="order-detail-container">
-        <div class="header">
-            <div>订单{{detail.condition}}</div>
-            <div class="look"
-                 v-if="detail.payType == 1 && detail.condition != '待付款' && detail.condition != '待上传凭证'"
-                 @click="gotoViewCer(detail.ordersn)">查看凭证>
-            </div>
-        </div>
-        <!-- 邮寄状态 -->
-        <template v-if="detail.delivery == 1">
-            <div class="wuliu-msg" v-if="detail.logistics">
-                <div class="title">
-                    物流信息：
-                </div>
-                <div class="wuliu-method">
-                    {{detail.logistics.company}}
-                </div>
-                <div class="wuliu-number" id="copyValue" ref="numbers">
-                    {{detail.logistics.number}}
-                </div>
-                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics.number'>
-                    复制
-                </button>
-            </div>
-            <div class="wuliu-msg" v-else>
-                <div class="title">
-                    暂无物流信息
+        <template v-if="detail.ordersn">
+            <div class="header">
+                <div>订单{{detail.condition}}</div>
+                <div class="look"
+                     v-if="detail.payType == 1 && detail.condition != '待付款' && detail.condition != '待上传凭证'"
+                     @click="gotoViewCer(detail.ordersn)">查看凭证>
                 </div>
             </div>
-            <div class="dashed-line">
-            </div>
-            <div class="shouhuo">
-                <div class="sh-info">
-                    <div class="name">
-                        收货人：{{detail.username}}
+            <!-- 邮寄状态 -->
+            <template v-if="detail.delivery == 1">
+                <div class="wuliu-msg" v-if="detail.logistics">
+                    <div class="title">
+                        物流信息：
                     </div>
-                    <div class="phone">
-                        {{detail.phone}}
+                    <div class="wuliu-method">
+                        {{detail.logistics.company}}
+                    </div>
+                    <div class="wuliu-number" id="copyValue" ref="numbers">
+                        {{detail.logistics.number}}
+                    </div>
+                    <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics.number'>
+                        复制
+                    </button>
+                </div>
+                <div class="wuliu-msg" v-else>
+                    <div class="title">
+                        暂无物流信息
                     </div>
                 </div>
-                <div class="sh-adress">
-                    收货地址：{{detail.province + detail.city + detail.district + detail.address}}
+                <div class="dashed-line">
                 </div>
-            </div>
-        </template>
-        <template v-else>
-            <div class="shouhuo" v-if="detail.makerAddress">
-                <div class="tihuo-ads">
-                    <div class="sh-ad-title">
-                        提货地址：
+                <div class="shouhuo">
+                    <div class="sh-info">
+                        <div class="name">
+                            收货人：{{detail.username}}
+                        </div>
+                        <div class="phone">
+                            {{detail.phone}}
+                        </div>
                     </div>
-                    <div class="sh-ad-con">
-                        {{detail.makerAddress.province + detail.makerAddress.city + detail.makerAddress.district + detail.makerAddress.address }}
-                    </div>
-                </div>
-                <div class="sh-info">
-                    <div class="name">
-                        电话：{{detail.makerAddress.phone}}
-                    </div>
-                    <div class="phone">
-                        周一至周五 9:00-18:00
+                    <div class="sh-adress">
+                        收货地址：{{detail.province + detail.city + detail.district + detail.address}}
                     </div>
                 </div>
-            </div>
-            <div class="dashed-line">
+            </template>
+            <template v-if="detail.delivery == 2">
+                <div class="shouhuo" v-if="detail.makerAddress">
+                    <div class="tihuo-ads">
+                        <div class="sh-ad-title">
+                            提货地址：
+                        </div>
+                        <div class="sh-ad-con">
+                            {{detail.makerAddress.province + detail.makerAddress.city + detail.makerAddress.district + detail.makerAddress.address }}
+                        </div>
+                    </div>
+                    <div class="sh-info">
+                        <div class="name">
+                            电话：{{detail.makerAddress.phone}}
+                        </div>
+                        <div class="phone">
+                            周一至周五 9:00-18:00
+                        </div>
+                    </div>
+                </div>
+                <div class="dashed-line">
 
-            </div>
-            <div class="tihuo-info">
+                </div>
+                <div class="tihuo-info">
 
-                <div class="tihuo-container">
-                    <div class="tihuo-title">
-                        提货人：{{detail.username}}
-                    </div>
-                    <div class="tihuo-phone">
-                        {{detail.phone}}
+                    <div class="tihuo-container">
+                        <div class="tihuo-title">
+                            提货人：{{detail.username}}
+                        </div>
+                        <div class="tihuo-phone">
+                            {{detail.phone}}
+                        </div>
                     </div>
                 </div>
+            </template>
+            <div class="goods-container">
+                <div class="goods-list">
+                    <div class="goods-item"
+                         v-for="(item,index) in detail.good"
+                    >
+                        <div class="img">
+                            <img :src="item.good_photo" alt="">
+                        </div>
+                        <div class="name">
+                            {{item.good_name}}
+                        </div>
+                        <div class="data">
+                            <p class="price">￥{{item.good_price}}</p>
+                            <p class="fanli">返利￥{{item.rebate}}</p>
+                            <p class="numbers">×{{item.amount}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="total vux-1px-b">
+                    共{{detail.amount}}件 合计：<span>¥{{detail.total}}</span>（含运费¥{{detail.freight}}） <span>已返利￥{{detail.rebate}}</span>
+                </div>
             </div>
-        </template>
 
-        <div class="goods-container">
-            <div class="goods-list">
-                <div class="goods-item"
-                    v-for="(item,index) in detail.good"
+            <div class="progress-time">
+                <div class="progress-item">
+                    订单号：{{detail.ordersn}}
+                </div>
+                <div class="progress-item" v-if="detail.addTime">
+                    创建时间：{{detail.addTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.payTime && detail.payType == 2">
+                    支付时间：{{detail.payTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.payTime && detail.payType == 1">
+                    上传凭证时间：{{detail.payTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.deliveryTime && detail.delivery == 1">
+                    发货时间：{{detail.deliveryTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.finishTime">
+                    完成时间：{{detail.finishTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.verifyVoucherTime">
+                    审核时间：{{detail.verifyVoucherTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.editTime && detail.condition == '已取消'">
+                    申请取消时间：{{detail.editTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.editTime && detail.condition == '已退款'">
+                    申请退款时间：{{detail.editTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已取消'">
+                    申请取消时间：{{detail.confirmEditTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+                <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已退款'">
+                    申请退款时间：{{detail.confirmEditTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                </div>
+            </div>
+            <div class="fixed-option-btn">
+                <div class="btn"
+                     v-if="detail.condition == '待自提' || detail.condition == '待收货' || detail.condition == '待发货' ||  detail.condition == '已发货' || detail.condition == '待审核凭证'"
+                     @click="changeOrderStatus('refund')"
                 >
-                    <div class="img">
-                        <img :src="item.good_photo" alt="">
-                    </div>
-                    <div class="name">
-                        {{item.good_name}}
-                    </div>
-                    <div class="data">
-                        <p class="price">￥{{item.good_price}}</p>
-                        <p class="fanli">返利￥{{item.rebate}}</p>
-                        <p class="numbers">×{{item.amount}}</p>
-                    </div>
+                    申请退款
+                </div>
+                <div class="btn"
+                     v-if="detail.condition == '待上传凭证' || detail.condition == '待付款' "
+                     @click="changeOrderStatus('cancel')"
+                >
+                    取消订单
+                </div>
+                <div class="btn"
+                     v-if="detail.condition == '已退款' || detail.condition == '已取消' || detail.condition == '已完成'"
+                     @click="changeOrderStatus('delete')"
+                >
+                    删除订单
+                </div>
+                <div class="btn active"
+                     v-if="detail.condition == '待上传凭证' || detail.condition == '待付款' && detail.payType == 1"
+                     @click="uploadVoucher"
+                >
+                    上传凭证
+                </div>
+                <div class="btn active"
+                     v-if="detail.condition == '待自提' || detail.condition == '待收货' || detail.condition == '待发货' || detail.condition == '已发货'"
+                     @click="changeOrderStatus('confirm')">
+                    确认收货
+                </div>
+                <div class="btn active"
+                     v-if="detail.condition == '待付款' && detail.payType == 2"
+                     @click="gotoWeChatPay"
+                >
+                    去支付
                 </div>
             </div>
-            <div class="total vux-1px-b">
-                共{{detail.amount}}件 合计：<span>¥{{detail.total}}</span>（含运费¥{{detail.freight}}） <span>已返利￥{{detail.rebate}}</span>
-            </div>
-        </div>
-
-        <div class="progress-time">
-            <div class="progress-item">
-                订单号：{{detail.ordersn}}
-            </div>
-            <div class="progress-item" v-if="detail.addTime">
-                创建时间：{{detail.addTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.payTime && detail.payType == 2">
-                支付时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.payTime && detail.payType == 1">
-                上传凭证时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.deliveryTime && detail.delivery == 1">
-                发货时间：{{detail.deliveryTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.finishTime">
-                完成时间：{{detail.finishTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.verifyVoucherTime">
-                审核时间：{{detail.verifyVoucherTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.editTime && detail.condition == '已取消'">
-                申请取消时间：{{detail.editTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.editTime && detail.condition == '已退款'">
-                申请退款时间：{{detail.editTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已取消'">
-                申请取消时间：{{detail.confirmEditTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-            <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已退款'">
-                申请退款时间：{{detail.confirmEditTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
-            </div>
-        </div>
-        <div class="fixed-option-btn">
-            <div class="btn"
-                 v-if="detail.condition == '待自提' || detail.condition == '待收货' || detail.condition == '待发货' ||  detail.condition == '已发货' || detail.condition == '待审核凭证'"
-                 @click="changeOrderStatus('refund')"
-            >
-                申请退款
-            </div>
-            <div class="btn"
-                 v-if="detail.condition == '待上传凭证' || detail.condition == '待付款' "
-                 @click="changeOrderStatus('cancel')"
-            >
-                取消订单
-            </div>
-            <div class="btn"
-                 v-if="detail.condition == '已退款' || detail.condition == '已取消' || detail.condition == '已完成'"
-                 @click="changeOrderStatus('delete')"
-            >
-                删除订单
-            </div>
-            <div class="btn active"
-                 v-if="detail.condition == '待上传凭证' || detail.condition == '待付款' && detail.payType == 1"
-                @click="uploadVoucher"
-            >
-                上传凭证
-            </div>
-            <div class="btn active"
-                 v-if="detail.condition == '待自提' || detail.condition == '待收货' || detail.condition == '待发货' || detail.condition == '已发货'"
-                 @click="changeOrderStatus('confirm')">
-                确认收货
-            </div>
-            <div class="btn active"
-                 v-if="detail.condition == '待付款' && detail.payType == 2"
-                @click="gotoWeChatPay"
-            >
-                去支付
-            </div>
-        </div>
+        </template>
+        <Nodata v-if="!detail.ordersn"></Nodata>
     </div>
 </template>
 
@@ -182,14 +184,16 @@
     import '../../assets/js/clipboard'
     import api from '../../assets/js/api'
     import {getParams,weChatPay} from '../../assets/js/util'
+    import Nodata from '../../components/nodata.vue'
     export default {
-        components: {},
+        components: {
+            Nodata
+        },
         filters: {
             dateFormat
         },
         data () {
             return {
-                wuliu: '1231231231',
                 order_id: getParams()['order_id'] || '',
                 detail: {}
             }
@@ -198,9 +202,9 @@
             layer(text){
                 this.$vux.toast.text(text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading(text){
                 this.$vux.loading.show({
-                    text: '加载中'
+                    text: text || '加载中'
                 })
             },
             hideLoading(){
@@ -226,6 +230,7 @@
                 }).then(res => {
                     this.hideLoading()
                     this.layer('修改成功')
+                    this. getOrderDetail()
                 }).catch(e => {
                     this.hideLoading()
                 })
@@ -237,19 +242,23 @@
             },
             /*跳转微信支付*/
             gotoWeChatPay(){
-                location.href = weChatPay(this.detail.ordersn)
+                location.href = weChatPay(this.detail.ordersn,this.detail.delivery)
             },
             /*跳转上传凭证页面*/
             uploadVoucher(){
                 this.$router.push({
-                    path: `/offinePay?order_id=${this.detail.ordersn}&isPost=${this.detail.delivery}`
+                    path: `/offinePay?order_id=${this.detail.ordersn}&delivery=${this.detail.delivery}`
                 })
             },
             getOrderDetail(){
+                this.showLoading('获取订单中')
                 this.$http.post(api.orderDetail,{
                     ordersn: this.order_id
                 }).then(res => {
+                    this.hideLoading()
                     this.detail = res.data
+                }).catch(e => {
+                    this.hideLoading()
                 })
             }
         },

@@ -50,7 +50,7 @@
                 <p>邀请创客</p>
             </router-link>
 
-            <router-link :to="{}" class="me-item vux-1px-l vux-1px-r">
+            <router-link :to="{path: '/contract'}" class="me-item vux-1px-l vux-1px-r">
                 <img src="../../assets/image/shouquan.png" alt="">
                 <p>授权合同</p>
             </router-link>

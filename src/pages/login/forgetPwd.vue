@@ -127,9 +127,6 @@
             <p class="suc-tip">恭喜您！修改成功</p>
             <router-link class="go-login"
                          :to="{path:'/login'}">去登陆>
-
-
-
             </router-link>
         </div>
     </div>

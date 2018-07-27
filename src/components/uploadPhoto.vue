@@ -1,5 +1,5 @@
 <template>
-    <input class="upload-photo"
+    <input class="upload-photo needsclick"
            type="file"
            ref="photos"
            accept="image/*"
@@ -61,31 +61,18 @@
             ajaxUploadApi(){
                 // 表单上传图片方式
                 let form = new FormData();
-                let that = this;
-                form.append("Filedata", this.file);
-                this.$http.post(api.uploadPhoto, form, {
-                    'headers': {
-                        'mimeType': 'multipart/form-data'
-                    },
-                    progress: function (event) {
-                        let precent = event.loaded / event.total * 100 + "%";
-                        // 广播上传的进度d的百分比
-                        that.$emit('progress', precent);
-                    }
-                }).then(res => {
-                    that.hideLoading();
-                    if (res.body.code == 1) {
-                        res.body.data.type = 'success';
-                        that.$emit('uploadResData', res.body.data);
-                    } else {
-                        that.layer('发送失败，请重新发送');
-                        that.$emit('uploadResData', {type: 'fail'});
-                    }
-                }, err => {
-                    that.hideLoading();
-                    that.layer('上传失败，请重新发送');
-                    that.$emit('uploadResData', {type: 'fail'});
-                });
+                form.append("file", this.file);
+                this.$http.post(api.uploadImage, form).then(res => {
+                    this.hideLoading();
+                    this.$emit('uploadResData', {
+                        url: res.data.url,
+                        type: 'success'
+                    });
+                }).catch( e => {
+                    this.hideLoading();
+                    this.layer('上传失败，请重新发送');
+                    this.$emit('uploadResData', {type: 'fail'});
+                })
             },
         }
     }
