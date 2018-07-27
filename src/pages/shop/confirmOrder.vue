@@ -225,10 +225,10 @@
                 console.log(start)
             },
             gotoOnlinePay(){
-                this.settlementOrder(2)
+                this.settlementOrder(1)
             },
             gotoOffinePay(){
-                this.settlementOrder(1)
+                this.settlementOrder(2)
             },
             /* 获取确认订单的信息 */
             getOrderData(){
@@ -245,7 +245,7 @@
             /* 结算支付 */
             settlementOrder(payType){
                 this.showLoading('提交中')
-                let data = {}
+                let data = {}, delivery = 1;
                 if( this.isPost ){
                     if( !this.detail.post_address ){
                         return this.layer('请选择邮寄地址')
@@ -262,6 +262,7 @@
                         payType: payType
                     }
                 }else{
+                    delivery = 2;
                     if( !this.detail.self_address ){
                         return this.layer('请填写提货信息')
                     }
@@ -280,14 +281,14 @@
 
                 this.$http.post(api.settlementOrder,data).then(res => {
                     this.hideLoading()
-                    if( payType == 1 ){
+                    if( payType == 2 ){
                         /*线下支付*/
                         this.$router.push({
-                            path: `/offinePay?order_id=${this.detail.ordersn}&isPost=${this.isPost}`
+                            path: `/offinePay?order_id=${this.detail.ordersn}&delivery=${delivery}`
                         })
                     }else{
                         /*线上支付*/
-                        location.href = weChatPay(this.detail.ordersn,this.isPost)
+                        location.href = weChatPay(this.detail.ordersn,delivery)
                     }
                 }).catch(e => {
                     this.hideLoading()

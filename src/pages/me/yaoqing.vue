@@ -41,8 +41,8 @@
                 this.$http.post(api.inviteMaker)
                     .then(res => {
                         this.hideLoading()
-                        this.makerId = res.makerId
-                        this.name = res.name
+                        this.makerId = res.data.makerId
+                        this.name = res.data.name
                     }).catch( e => {
                         this.hideLoading()
                     })

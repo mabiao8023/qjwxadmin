@@ -45,7 +45,7 @@ const WeChatAuth = () => import(/* webpackChunkName: "part4" */ '../pages/wechat
 
 export default {
     mode: 'history',
-    base: '/dist',
+    // base: '/dist',
     // scrollBehavior (to, from, savedPosition) {
     // 	if (savedPosition) {
     // 		// savedPosition is only available for popstate navigations.

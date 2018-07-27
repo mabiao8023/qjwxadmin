@@ -181,6 +181,12 @@
                 }).then(res => {
                     this.hideLoading()
                     this.layer('修改成功')
+                    /* 更改订单状态成功 */
+                    this.orders[this.type].data = [];
+                    this.orders[this.type].page = 1;
+                    this.$nextTick(() => {
+                        this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+                    })
                 }).catch(e => {
                     this.hideLoading()
                 })

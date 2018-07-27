@@ -57,7 +57,7 @@
         <Nodata v-if="!goods.length"></Nodata>
         <infinite-loading @infinite="getGoods" :distance="100" spinner="circles" ref="infiniteLoading">
             <span slot="no-results">
-                暂无商品
+                <!--暂无商品-->
             </span>
             <span slot="no-more">
                 暂无更多商品

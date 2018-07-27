@@ -202,9 +202,12 @@
                         newpassword: this.password,
                         captcha: this.code
                     }).then(res => {
-                        if (res.code == 1) {
+                        this.hideLoading()
+                        if(res.code == 1) {
                             this.step = 3;
                         }
+                    }).catch(e => {
+                        this.hideLoading()
                     })
                 }
             },

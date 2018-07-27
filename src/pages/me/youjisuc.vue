@@ -15,7 +15,7 @@
         components: {},
         data () {
             return {
-                order_id: getParams()['order_id']
+                order_id: getParams()['order_id'] || ''
             }
         },
         methods: {},

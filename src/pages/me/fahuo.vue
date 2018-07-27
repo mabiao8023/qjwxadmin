@@ -121,34 +121,7 @@
                     {
                         /* 空间待处理 */
                         page: 1,
-                        data: [
-                            {
-                                "id": 1,
-                                "ordersn": "",
-                                "amount": 1,
-                                "total": "",
-                                "rebate": "",
-                                "freight": "",
-                                "condition": "待付款",
-                                "good": [
-                                    {
-                                        "good_name": "",
-                                        "good_price": "",
-                                        "good_photo": null,
-                                        "rebate": "",
-                                        "amount": 1,
-                                        "goodsId": 1
-                                    }
-                                ],
-                                "delivery": "",
-                                "province": "",
-                                "city": "",
-                                "district": "",
-                                "address": "",
-                                "username": "",
-                                "phone": ""
-                            }
-                        ]
+                        data: []
                     },
                     {
                         /* 历史订单 */

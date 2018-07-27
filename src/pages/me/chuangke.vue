@@ -140,76 +140,17 @@
                     {
                         /* 待审核 */
                         page: 1,
-                        data: [
-                            {
-                                "realname": "哈哈",
-                                "phone": "1231321",
-                                "status": "1",
-                                "level": "创客",
-                                "addTime": 1312313223,
-                                "updateTime": 131321321,
-                                "remark": "拒绝原因你太菜了",
-                                "order": [
-                                    {
-                                        "totalAmount": 111,
-                                        "totalPurchase": "11",
-                                        "totalRebate": "1222",
-                                        "amount": "3131",
-                                        "purchase": "13123",
-                                        "rebate": "131"
-                                    }
-                                ],
-                                "id": "5"
-                            }
-                        ]
+                        data: []
                     },
                     {
                         /* 已代理 */
                         page: 1,
-                        data: [{
-                            "realname": "哈哈",
-                            "phone": "1231321",
-                            "status": "1",
-                            "level": "创客",
-                            "addTime": 1312313223,
-                            "updateTime": 131321321,
-                            "remark": "拒绝原因你太菜了",
-                            "order": [
-                                {
-                                    "totalAmount": 1,
-                                    "totalPurchase": "11",
-                                    "totalRebate": "1222",
-                                    "amount": "3131",
-                                    "purchase": "13123",
-                                    "rebate": "131"
-                                }
-                            ],
-                            "id": "5"
-                        }]
+                        data: []
                     },
                     {
                         /* 已拒绝 */
                         page: 1,
-                        data: [{
-                            "realname": "哈哈",
-                            "phone": "1231321",
-                            "status": "2",
-                            "level": "创客",
-                            "addTime": 1312313223,
-                            "updateTime": 131321321,
-                            "remark": "拒绝原因你太菜了",
-                            "order": [
-                                {
-                                    "totalAmount": 1,
-                                    "totalPurchase": "11",
-                                    "totalRebate": "1222",
-                                    "amount": "3131",
-                                    "purchase": "13123",
-                                    "rebate": "131"
-                                }
-                            ],
-                            "id": "5"
-                        }]
+                        data: []
                     }
                 ]
             }

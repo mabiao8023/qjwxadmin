@@ -16,7 +16,8 @@
         data () {
             return {
                 code: getParams()['code'] || '',
-                order_id: getParams()['order_id'] || ''
+                order_id: getParams()['order_id'] || '',
+                delivery: getParams()['delivery'] || '',   //  1  邮寄   2 自提
             }
         },
         methods: {
@@ -65,9 +66,15 @@
                         success: function (res) {
                             // 支付成功后的回调函数
                             /*分邮寄和自提支付成功*/
-                            _this.$router.push({
-                                path: `/postSuc?order_id=${this.order_id}`
-                            })
+                            if(this.delivery == 1){
+                                _this.$router.push({
+                                    path: `/postSuc?order_id=${this.order_id}`
+                                })
+                            }else{
+                                _this.$router.push({
+                                    path: `/selfGetSuc?order_id=${this.order_id}`
+                                })
+                            }
                         },
                         fail: function (e) {
                             _this.layer(e)

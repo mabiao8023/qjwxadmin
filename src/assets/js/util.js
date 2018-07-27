@@ -11,8 +11,9 @@ export let getParams = () => {
     return querystring.parse(search)
 }
 
-export let weChatPay = order_id => {
-    return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${wechatPayUrl}${order_id}&response_type=code&scope=snsapi_login,snsapi_userinfo&state=1,0#wechat_redirect`
+export let weChatPay = (order_id,isPost) => {
+    let redirect_url = `${wechatPayUrl}${order_id}&isPost=${isPost}`
+    return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_url}&response_type=code&scope=snsapi_login,snsapi_userinfo&state=1,0#wechat_redirect`
 }
 
 export let weChatAuth = () => {

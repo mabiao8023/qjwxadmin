@@ -129,7 +129,8 @@
             return {
                 isShowDesc: false,
                 isShowZh: false,
-                order_id: getParams()['order_id'] || ''
+                order_id: getParams()['order_id'] || '',
+                delivery: getParams()['delivery'] || '',   //  1  邮寄   2 自提
             }
         },
         methods: {
