@@ -357,8 +357,13 @@
             justify-content: space-between;
             align-items: center;
             color: #E1B113;
+            .shop-price{
+                flex: 1;
+            }
             .shop-choice-nums {
                 color: #909090;
+                /*flex: 1;*/
+                margin-left: 5px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;

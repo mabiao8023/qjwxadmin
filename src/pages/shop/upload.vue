@@ -60,8 +60,9 @@
                     </div>
                     <img :src="item.src" @click="show(index)" alt="">
                 </div>
-                <div class="upload-item" @click.stop.prevent="chooseImg">
-
+                <div class="upload-item"
+                     v-if="list.length <= 6"
+                     @click.stop.prevent="chooseImg">
                 </div>
             </div>
         </div>
@@ -118,29 +119,21 @@
                 <div class="desc-pop-box">
                     <div class="title vux-1px-b">
                         指定打款帐号
-
-
                     </div>
                     <div class="sub-desc vux-1px-b">
-                        以下为总部指定财务账户，请选择一种打款方式
-
-
+                        以下为{{detail.isHeadquarters ? '总部' : '创客空间' }}指定财务账户，请选择一种打款方式
                     </div>
                     <div class="sm-content vux-1px-b">
                         <div class="sub-content">
-                            支付宝账户：123456@111.com<br/>
-                            支付宝户名：xxx
-
-
+                            支付宝账户：{{detail.alipayAccount}}<br/>
+                            支付宝户名：{{detail.alipayName}}
                         </div>
                     </div>
                     <div class="sm-content">
                         <div class="sub-content">
-                            开户行：中国银行xxxx支行 <br/>
-                            账号：1234578995555<br/>
-                            户名：xxx
-
-
+                            开户行：{{detail.bank}} <br/>
+                            账号：{{detail.account}}<br/>
+                            户名：{{detail.name}}
                         </div>
                     </div>
                     <div class="pop-sure-btn" @click="isShowZh = false">确定</div>
@@ -179,18 +172,9 @@
                 isShowZh: false,
                 amount: 88,
                 desc: '',
-                list: [{
-                    msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-                    src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-                },
-                    {
-                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-                    }, {
-                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwwcynw2j20p00b4js9.jpg',
-                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwwcynw2j20p00b4js9.jpg'
-                    }],
-                order_id: getParams()['order_id'] || ''
+                list: [],
+                order_id: getParams()['order_id'] || '',
+                detail: {}
             }
         },
         methods: {
@@ -259,7 +243,7 @@
                         ordersn: this.order_id,
                         money: this.amount,
                         remark: this.desc,
-                        voucher: imgs
+                        voucher: JSON.stringify(imgs)
                     }).then(res => {
                         this.hideLoading()
                         this.layer('上传凭证成功')
@@ -273,10 +257,18 @@
                         path: `/uploadsuc?order_id=${this.order_id}`
                     })
                 }
+            },
+            getAccount(){
+                this.$http.post(api.orderAccount,{
+                    ordersn: this.order_id
+                }).then(res => {
+                    this.detail = res.data
+                })
             }
         },
         mounted() {
             document.getElementsByTagName('title')[0].textContent = '上传凭证';
+            this.getAccount()
         }
     }
 </script>
@@ -406,6 +398,7 @@
             width: 74px;
             height: 74px;
             margin-right: 10px;
+            margin-bottom: 10px;
             /*border-radius: 10px;*/
             background: url(../../assets/image/add-photo.png) no-repeat center center/100% 100%;
             img {

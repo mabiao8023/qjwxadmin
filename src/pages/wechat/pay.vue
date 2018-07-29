@@ -33,46 +33,28 @@
                 this.$vux.loading.hide()
             },
             goPay(){
-                this.showLoading('正在支付')
-                this.$http.post(api.pay, {
-                    code: this.code,
-                    order_id: this.order_id,
-                    url: location.href.split('?')[0]
+                this.$http.post(api.paymentReady, {
+                    ordersn: this.order_id,
                 }).then(res => {
+                    let _this = this
                     this.hideLoading()
-                    this.weChatPay()
                     // 调起微信支付
-                }).catch(e => {
-                    this.hideLoading()
-                })
-            },
-            weChatPay(){
-                let _this = this
-                this.$wechat.config({
-                    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                    appId: '', // 必填，公众号的唯一标识
-                    timestamp: 12123, // 必填，生成签名的时间戳
-                    nonceStr: '', // 必填，生成签名的随机串
-                    signature: '',// 必填，签名
-                    jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
-                })
-                this.$wechat.ready(() => {
                     this.$wechat.chooseWXPay({
-                        timestamp: 0, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                        nonceStr: '', // 支付签名随机串，不长于 32 位
-                        package: '', // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-                        signType: '', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                        paySign: '', // 支付签名
+                        timestamp: res.data.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                        nonceStr: res.data.nonceStr, // 支付签名随机串，不长于 32 位
+                        package: res.data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                        signType: res.data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                        paySign: res.data.paySign, // 支付签名
                         success: function (res) {
                             // 支付成功后的回调函数
                             /*分邮寄和自提支付成功*/
-                            if(this.delivery == 1){
-                                _this.$router.push({
-                                    path: `/postSuc?order_id=${this.order_id}`
+                            if(_this.delivery == 1){
+                                _this.$router.replace({
+                                    path: `/postSuc?order_id=${_this.order_id}`
                                 })
                             }else{
-                                _this.$router.push({
-                                    path: `/selfGetSuc?order_id=${this.order_id}`
+                                _this.$router.replace({
+                                    path: `/selfGetSuc?order_id=${_this.order_id}`
                                 })
                             }
                         },
@@ -80,12 +62,55 @@
                             _this.layer(e)
                         }
                     });
+                }).catch(e => {
+                    this.hideLoading()
                 })
-            }
+            },
+            getConfig(){
+                this.$http.post(api.orderPayment, {
+                    ordersn: this.order_id,
+                }).then(res => {
+                    this.$wechat.config({
+                        debug: false,
+                        appId: res.data.signPackage.appId,
+                        timestamp: res.data.signPackage.timestamp,
+                        nonceStr: res.data.signPackage.nonceStr,
+                        signature: res.data.signPackage.signature,
+                        jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
+                    })
+                    // 调起微信支付
+                    this.$wechat.ready(() => {
+                        this.goPay()
+                    })
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            },
+            login(){
+                this.$http.post(api.wxLogin, {
+                    wx_code: this.code
+                }).then(res => {
+                    //  登陆完成后跳转到上一次保存的路径地方
+                    if(res.data.openId){
+                        cookie.set('my_openId',res.data.openId, {
+                            expires: 30
+                        })
+                    }
+                    this.getConfig()
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            },
         },
         mounted() {
             //  设置标题
             document.getElementsByTagName('title')[0].textContent = '正在支付';
+            this.showLoading('正在支付')
+            if( cookie.get('my_openId') ){
+                this.getConfig()
+            }else{
+                this.login()
+            }
         }
     }
 </script>

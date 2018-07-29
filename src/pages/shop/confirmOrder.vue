@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="choice-adress has-adress"
-                     v-if="isPost && detail.post_address.province"
+                     v-if="isPost && detail.post_address"
                 >
                     <div class="adress-info">
                         <div>
@@ -244,7 +244,7 @@
             },
             /* 结算支付 */
             settlementOrder(payType){
-                this.showLoading('提交中')
+//                this.showLoading('提交中')
                 let data = {}, delivery = 1;
                 if( this.isPost ){
                     if( !this.detail.post_address ){

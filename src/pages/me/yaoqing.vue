@@ -31,20 +31,22 @@
                 this.$vux.loading.hide()
             },
             gotoInputInfo(){
+                // todo: 需要复制链接
+                location.href =  `/reschuangke?id=${this.makerId}&name=${this.name}`
                 // 可能需要跳转才行
-                this.$router.push({
-                    path:  `/reschuangke?id=${this.makerId}&name=${this.name}`
-                })
+//                this.$router.push({
+//                    path:  `/reschuangke?id=${this.makerId}&name=${this.name}`
+//                })
             },
             inviteMaker(){
-                this.showLoading()
+//                this.showLoading()
                 this.$http.post(api.inviteMaker)
                     .then(res => {
-                        this.hideLoading()
+//                        this.hideLoading()
                         this.makerId = res.data.makerId
                         this.name = res.data.name
                     }).catch( e => {
-                        this.hideLoading()
+//                        this.hideLoading()
                     })
             }
         },

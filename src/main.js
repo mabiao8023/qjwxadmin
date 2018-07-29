@@ -61,14 +61,13 @@ router.beforeEach((to, from, next) => {
 // 初始化axio请求参数
 //添加一个请求拦截器
 Vue.http.interceptors.request.use(function (config) {
-    console.dir(config)
     let userToken = cookie.get('token') || '';
     config.timeout = 10000;
     config.transformRequest = [function (data = {}, headers) {
         //依自己的需求对请求数据进行处理
         data.token = userToken;
         data.js_code = new Date().getTime();
-        if( config.url !== '/api/Common/upload' ){
+        if( config.url.indexOf('/api/Common/upload') === -1 ){
             data = Qs.stringify(data);
         }
         return data;
@@ -76,32 +75,38 @@ Vue.http.interceptors.request.use(function (config) {
     //在请求发送之前做一些事
     return config;
 }, function (error) {
+    // alert('请求出错')
     //当出现请求错误是做一些事
     return Promise.reject(error);
 });
 
+const errorHandler = (error, vm)=>{
+    // alert(JSON.stringify(error));
+}
+
+Vue.config.errorHandler = errorHandler;
+
 //添加一个返回拦截器
 Vue.http.interceptors.response.use(function (response) {
-    console.log(response)
     //  对返回的数据进行一些处理
     //  对code码进行统一处理
-    let data = response.data;
-    if (data.code == 0) {
-        Vue.$vux.toast.text(data.msg, 'middle')
-        return Promise.reject(data.msg);
-    } else if (data.code == 401) {
-        Vue.$vux.toast.text('未登录', 'middle')
-        // location.href = '/login'
-        return Promise.reject(data.msg);
-    } else if (data.code == 403) {
-        Vue.$vux.toast.text('未授权', 'middle')
-        // 跳转授权
-        // location.href = weChatAuth()
-        return Promise.reject(data.msg)
-        //  跳转授权
-    } else {
-        return data;
-    }
+        let data = response.data;
+        if (data.code == 0) {
+            Vue.$vux.toast.text(data.msg, 'middle')
+            return Promise.reject(data.msg);
+        } else if (data.code == 401) {
+            Vue.$vux.toast.text('未登录', 'middle')
+            // location.href = '/login'
+            return Promise.reject(data.msg);
+        } else if (data.code == 403) {
+            Vue.$vux.toast.text('未授权', 'middle')
+            // 跳转授权
+            // location.href = weChatAuth()
+            return Promise.reject(data.msg)
+            //  跳转授权
+        } else {
+            return data;
+        }
 }, function (error) {
     //对返回的错误进行一些处理
     let status = error.response.status;

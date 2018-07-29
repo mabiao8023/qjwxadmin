@@ -31,12 +31,12 @@
                 </div>
                 <div class="js-item-part2">
                     <div class="left">
-                        返利时间：{{ item.addTime | dateFormat('YYYY-MM-DD') }}
+                        返利时间：{{ item.addTime*1000 | dateFormat('YYYY-MM-DD') }}
 
 
                     </div>
                     <div>
-                        预计解冻时间：{{ item.thawingTime | dateFormat('YYYY-MM-DD') }}
+                        预计解冻时间：{{ item.thawingTime*1000 | dateFormat('YYYY-MM-DD') }}
 
 
                     </div>
@@ -80,9 +80,9 @@
             layer(text){
                 this.$vux.toast.text(text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading(text){
                 this.$vux.loading.show({
-                    text: '加载中'
+                    text: text || '加载中'
                 })
             },
             hideLoading(){
@@ -91,7 +91,6 @@
             getList ($state) {
                 this.$http.post(api.accountFrostLog)
                     .then(res => {
-                        if (res.code == 1) {
                             this.frost = res.data.frost
                             if (res.data.frostLog.length) {
                                 this.page++
@@ -100,10 +99,9 @@
                             } else {
                                 $state.complete()
                             }
-                        }
                     }).catch(e => {
-                    $state.complete()
-                })
+                        $state.complete()
+                    })
             },
             gotoSettleDetail(id){
                 this.$router.push({

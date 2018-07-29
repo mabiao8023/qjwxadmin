@@ -87,7 +87,7 @@
                     ></x-input>
                 </div>
             </li>
-            <li class="input-item hetong vux-1px-b">
+            <li class="input-item hetong">
                 <div class="title">
                     *上传合同
                 </div>
@@ -112,7 +112,6 @@
         </div>
         <!-- 图片上传组件 -->
         <UploadPhoto ref="uploadPhoto"
-                     class="needsclick"
                      @getImgData="getImgDataUrl"
                      @progress="uploadProgress"
                      @uploadResData="uploadResData"
@@ -244,13 +243,17 @@
                 } else if (this.list.length <= 0) {
                     this.layer('请上传合同')
                 } else {
+                    let imgs = []
+                    this.list.forEach( val => {
+                        imgs.push(val.src)
+                    } )
                     this.showLoading('提交中')
                     this.$http.post(api.registerMaker,{
                         makerId: this.id,
                         realname: this.name,
                         phone: this.phone,
                         password: this.password,
-                        contract: '2343434534545'
+                        contract: JSON.stringify(imgs)
                     }).then(res => {
                         this.hideLoading()
                         this.layer('注册完成请登录')
@@ -360,6 +363,7 @@
         width: 74px;
         height: 74px;
         margin-right: 10px;
+        margin-bottom: 10px;
         /*border-radius: 10px;*/
         background: url(../../assets/image/add-photo.png) no-repeat center center/100% 100%;
         img {

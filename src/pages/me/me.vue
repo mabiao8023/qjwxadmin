@@ -104,10 +104,8 @@
             getUserInfo(){
                 this.$http.post(api.getUserInfo)
                     .then(res => {
-                        if (res.code == 1) {
-                            this.userInfo = res.data.userinfo;
-                            this.account = res.data.account;
-                        }
+                        this.userInfo = res.data.userinfo;
+                        this.account = res.data.account;
                     })
             }
         },

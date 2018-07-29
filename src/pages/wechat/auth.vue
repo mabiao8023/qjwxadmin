@@ -32,22 +32,28 @@
             },
             login(){
                 this.showLoading('正在登录')
-                this.$http.post(api.auth, {
-                    code: this.code,
+                this.$http.post(api.wxLogin, {
+                    wx_code: this.code
                 }).then(res => {
                     this.hideLoading()
+                    //  登陆完成后跳转到上一次保存的路径地方
+                    if(res.data.openId){
+                        cookie.set('my_openId',res.data.openId, {
+                            expires: 30
+                        })
+                    }
                     this.$router.replace({
-                        path: ''
+                        path: '/tixian'
                     })
-                    // 调起微信支付
-                }).catch(e => {
-                    this.hideLoading()
+                }).catch( e => {
+                    this.hideLoading();
                 })
-            },
+            }
         },
         mounted() {
             // 设置标题
             document.getElementsByTagName('title')[0].textContent = '正在登录';
+            this.login()
         }
     }
 </script>

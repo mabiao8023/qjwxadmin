@@ -4,8 +4,6 @@
             <li class="setting-item">
                 <div class="setting-title">
                     旧密码
-
-
                 </div>
                 <div class="setting-con">
                     <x-input
@@ -16,13 +14,10 @@
                         placeholder="请输入旧密码"
                     ></x-input>
                 </div>
-
             </li>
             <li class="setting-item vux-1px-t">
                 <div class="setting-title">
                     新密码
-
-
                 </div>
                 <div class="setting-con">
                     <x-input
@@ -37,8 +32,6 @@
             <li class="setting-item vux-1px-t">
                 <div class="setting-title">
                     确认新密码
-
-
                 </div>
                 <div class="setting-con">
                     <x-input
@@ -54,11 +47,8 @@
         <!-- 确认修改 -->
         <div class="logout" @click="surePwd">
             确认修改
-
-
         </div>
     </div>
-
 </template>
 
 <script>
@@ -102,13 +92,11 @@
                         renewpassword: this.reNewPwd
                     }).then(res => {
                         this.hideLoading();
-                        if (res.code == 1) {
-                            this.layer('修改成功，重新登录')
-                            cookie.remove('token')
-                            this.$router.push({
-                                path: '/login'
-                            })
-                        }
+                        this.layer('修改成功，重新登录')
+                        cookie.remove('token')
+                        this.$router.push({
+                            path: '/login'
+                        })
                     }).catch(e => {
                         this.hideLoading()
                     })
@@ -126,15 +114,6 @@
     @import '~vux/src/styles/1px.less';
     @import '~vux/src/styles/close.less';
     @import "../../assets/css/common.less";
-
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
 
     .modify-list {
         margin-top: 10px;

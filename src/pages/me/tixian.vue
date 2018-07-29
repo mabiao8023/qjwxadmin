@@ -39,8 +39,9 @@
 </template>
 
 <script>
-    import {XInput} from 'vux'
+    import {XInput,cookie} from 'vux'
     import api from '../../assets/js/api'
+    import {getParams,weChatAuth} from '../../assets/js/util'
 
     export default {
         components: {
@@ -86,6 +87,10 @@
                     .then(res => {
                         this.userInfo = res.data.userinfo || {};
                         this.account = res.data.account || {};
+                        /*先授权*/
+                        if(!cookie.get('my_openId')){
+                            location.href = weChatAuth()
+                        }
                     })
             },
             submitCash(){
@@ -102,9 +107,6 @@
                         })
                     }).catch(e => {
                         this.hideLoading();
-                    })
-                    this.$router.push({
-                        path: '/tixiansuc'
                     })
                 }
             }

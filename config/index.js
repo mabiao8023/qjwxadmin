@@ -13,8 +13,8 @@ module.exports = {
     proxyTable: {
       '/api': {
         // 代理到测试服
-        target: 'http://qjwx.dianduode.com',
-        //  target: 'http://qdwx.1sk1.com',
+        // target: 'http://qjwx.dianduode.com',
+        target: 'http://qjwx.1sk1.com',
         secure: false,
 
         // 搞了半天。。target为具体域名，而非ip地址的形式时，这个属性必须为true

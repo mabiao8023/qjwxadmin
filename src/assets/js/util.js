@@ -4,8 +4,8 @@
 // 解析链接查询字符串
 import  {querystring} from 'vux'
 let appid = 'wx638359a81275bd8d'
-let wechatPayUrl = `${location.origin}/weChatPay?order_id=`
-let wechatAuthUrl = `${location.origin}/weChatAuth`
+let wechatPayUrl = encodeURIComponent(`${location.origin}/weChatPay?order_id=`)
+let wechatAuthUrl = encodeURIComponent(`${location.origin}/weChatAuth`)
 export let getParams = () => {
     let search = location.search
     return querystring.parse(search)

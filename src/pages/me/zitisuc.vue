@@ -7,39 +7,25 @@
             <div class="zt-ad-item">
                 <div class="title">
                     提货地址：
-
-
                 </div>
                 <div class="content">
-                    广州市天河区建中路77号五度大厦 东塔1201室
-
-
+                    {{detail.province + detail.city + detail.district + detail.address}}
                 </div>
             </div>
             <div class="zt-ad-item">
                 <div class="title">
                     联系电话：
-
-
                 </div>
                 <div class="content">
-                    020-123456789
-
-
+                    {{detail.phone}}
                 </div>
             </div>
             <div class="zt-ad-item">
                 <div class="title">
                     提货时间：
-
-
-
                 </div>
                 <div class="content">
-                    周一至周五 9:00-18:00
-
-
-
+                    {{detail.remark}}
                 </div>
             </div>
         </div>
@@ -50,6 +36,8 @@
 
 <script>
     import {getParams} from '../../assets/js/util'
+    import api from '../../assets/js/api'
+
     export default {
         components: {},
         data () {
@@ -57,8 +45,17 @@
                 order_id: getParams()['order_id'] || ''
             }
         },
-        methods: {},
+        methods: {
+            getAddress(){
+                this.$http.post(api.deliveryAddress,{
+                    ordersn: this.order_id
+                }).then(res => {
+                    this.detail = res.data
+                })
+            }
+        },
         mounted() {
+            this.getAddress()
             document.getElementsByTagName('title')[0].textContent = '交易成功';
         }
     }

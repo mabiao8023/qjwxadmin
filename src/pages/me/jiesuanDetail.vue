@@ -48,14 +48,7 @@
         },
         data () {
             return {
-                detail: {
-                    "money": 1,
-                    "remark": "入账金额",
-                    "addTime": 1,
-                    "ordersn": "1231321",
-                    "url": "去问问无",
-                    "thawingTime": 1
-                },
+                detail: {},
                 id: getParams()['id'] || '',
                 type: getParams()['type'] || ''
             }

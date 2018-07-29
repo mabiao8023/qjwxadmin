@@ -9,17 +9,17 @@
         </div>
         <!-- 邮寄状态 -->
         <template v-if="detail.delivery == 1">
-            <div class="wuliu-msg" v-if="detail.logistics[0].company">
+            <div class="wuliu-msg" v-if="detail.logistics.company">
                 <div class="title">
                     物流信息：
                 </div>
                 <div class="wuliu-method">
-                    {{detail.logistics[0].company}}
+                    {{detail.logistics.company}}
                 </div>
                 <div class="wuliu-number" id="copyValue" ref="numbers">
-                    {{detail.logistics[0].number}}
+                    {{detail.logistics.number}}
                 </div>
-                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics[0].number'>
+                <button type="button" class="copy-btn" id="copy" :data-clipboard-text='detail.logistics.number'>
                     复制
                 </button>
             </div>
@@ -51,12 +51,12 @@
                         提货地址：
                     </div>
                     <div class="sh-ad-con">
-                        {{detail.makerAddress[0].province + detail.makerAddress[0].city + detail.makerAddress[0].district + detail.makerAddress[0].address }}
+                        {{detail.makerAddress.province + detail.makerAddress.city + detail.makerAddress.district + detail.makerAddress.address }}
                     </div>
                 </div>
                 <div class="sh-info">
                     <div class="name">
-                        电话：{{detail.makerAddress[0].phone}}
+                        电话：{{detail.makerAddress.phone}}
                     </div>
                     <div class="phone">
                         周一至周五 9:00-18:00
@@ -107,34 +107,34 @@
                 订单号：{{detail.ordersn}}
             </div>
             <div class="progress-item" v-if="detail.addTime">
-                创建时间：{{detail.addTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                创建时间：{{detail.addTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.payTime && detail.payType == 2">
-                支付时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                支付时间：{{detail.payTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.payTime && detail.payType == 1">
-                上传凭证时间：{{detail.payTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                上传凭证时间：{{detail.payTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.deliveryTime && detail.delivery == 1">
-                发货时间：{{detail.deliveryTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                发货时间：{{detail.deliveryTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.finishTime">
-                完成时间：{{detail.finishTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                完成时间：{{detail.finishTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.verifyVoucherTime">
-                审核时间：{{detail.verifyVoucherTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                审核时间：{{detail.verifyVoucherTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.editTime && detail.condition == '已取消'">
-                申请取消时间：{{detail.editTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                申请取消时间：{{detail.editTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.editTime && detail.condition == '已退款'">
-                申请退款时间：{{detail.editTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                申请退款时间：{{detail.editTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已取消'">
-                申请取消时间：{{detail.confirmEditTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                申请取消时间：{{detail.confirmEditTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
             <div class="progress-item" v-if="detail.confirmEditTime && detail.condition == '已退款'">
-                申请退款时间：{{detail.confirmEditTime | dateFormat('YYYY-MM-DD HH:mm:ss')}}
+                申请退款时间：{{detail.confirmEditTime*1000 | dateFormat('YYYY-MM-DD HH:mm:ss')}}
             </div>
         </div>
         <div class="fixed-option-btn">
@@ -166,62 +166,17 @@
         },
         data () {
             return {
-                wuliu: '1231231231',
-                orderId: getParams()['oreder_id'] || '',
-                detail: {
-                    "id": 1,
-                    "ordersn": "1232324343",
-                    "total": "99999",
-                    "amount": 88,
-                    "freight": "123123",
-                    "rebate": "11",
-                    "delivery": 2,
-                    "province": "广东省",
-                    "city": "广州市",
-                    "district": "天河区",
-                    "address": "瑞东花园",
-                    "username": "马彪",
-                    "phone": 1231232,
-                    "addTime": 1,
-                    "payType": 1,
-                    "payTime": 13412343243,
-                    "deliveryTime": 13412343243,
-                    "finishTime": 13412343243,
-                    "good": [
-                        {
-                            "good_name": "测试商品",
-                            "good_price": "88",
-                            "good_photo": null,
-                            "rebate": "2",
-                            "amount": 1
-                        }
-                    ],
-                    "condition": "待审核凭证",
-                    "logistics": [
-                        {
-//                            "company": "圆通",
-//                            "number": "1232132343243234"
-                        }
-                    ],
-                    "makerAddress": [
-                        {
-                            "phone": 12332432,
-                            "province": "广东省",
-                            "city": "广州市",
-                            "district": "黄浦区",
-                            "address": "瑞东花园"
-                        }
-                    ]
-                }
+                order_id: getParams()['oreder_id'] || '',
+                detail: { }
             }
         },
         methods: {
             layer(text){
                 this.$vux.toast.text(text || 'hello', 'middle')
             },
-            showLoading(){
+            showLoading(text){
                 this.$vux.loading.show({
-                    text: '加载中'
+                    text: text || '加载中'
                 })
             },
             hideLoading(){
@@ -230,11 +185,9 @@
             copy(){
                 var clipboard = new Clipboard('button');
                 clipboard.on('success', e => {
-                    //  e.clearSelection();
                     this.layer('复制成功');
                 });
                 clipboard.on('error', e => {
-                    //   e.clearSelection();
                     this.layer('复制失败，请手动复制');
                 });
             },
@@ -251,19 +204,19 @@
                     this.hideLoading()
                 })
             },
-            gotoViewCer(){
+            gotoViewCer(order_id){
                 this.$router.push({
-                    path: `/viewcer?id=`
+                    path: `/viewcer?order_id=${order_id}`
                 })
             },
             /*跳转微信支付*/
             gotoWeChatPay(){
-                location.href = weChatPay(this.detail.ordersn)
+                location.href = weChatPay(this.detail.ordersn,this.detail.delivery)
             },
             /*跳转上传凭证页面*/
             uploadVoucher(){
                 this.$router.push({
-                    path: `/offinePay?order_id=${this.detail.ordersn}&isPost=${this.detail.delivery}`
+                    path: `/offinePay?order_id=${this.detail.ordersn}&delivery=${this.detail.delivery}`
                 })
             },
             /*订单操作删除，通过审核*/

@@ -1,17 +1,21 @@
 <template>
     <div class="shouhuosuc-container">
         <img class="success-icon" src="../../assets/image/success-icon.png" alt="">
-        <p class="success-tip">确认收货</p>
-        <p class="success-desc">提现申请已提交，我们将进行1-3个工作日进行审核 届时打入您的微信账户</p>
+        <p class="success-tip">交易成功</p>
+        <p class="success-desc">交易成功，又到一波返利在来的路上～</p>
+        <router-link class="goto" :to="{path:'/orderDetail?order_id=' + order_id}">查看订单详情></router-link>
         <router-link class="back" :to="{path:'/meIndex'}"></router-link>
     </div>
 </template>
 
 <script>
+    import {getParams} from '../../assets/js/util'
     export default {
         components: {},
         data () {
-            return {}
+            return {
+                order_id: getParams()['order_id'] || ''
+            }
         },
         methods: {
             layer(text){
