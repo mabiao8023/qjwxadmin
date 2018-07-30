@@ -60,6 +60,15 @@
                         },
                         fail: function (e) {
                             _this.layer(e)
+                            _this.$router.replace({
+                                path: `/pay?order_id=${_this.order_id}`
+                            })
+                        },
+                        cancel: function(){
+                            _this.layer('您已放弃支付')
+                            _this.$router.replace({
+                                path: `/orderDetail?order_id=${_this.order_id}`
+                            })
                         }
                     });
                 }).catch(e => {

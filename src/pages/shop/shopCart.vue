@@ -139,10 +139,10 @@
                 this.goods.forEach(val => {
                     if (val.checked) {
                         deleteArr.push({
-                            good_id: val.id
+                            good_id: val.good_id
                         });
                         editArr.push({
-                            good_id: val.id,
+                            good_id: val.good_id,
                             amount: val.amount
                         });
                     }
@@ -197,7 +197,7 @@
                 this.goods.forEach(val => {
                         if (val.checked) {
                         editArr.push({
-                            good_id: val.id,
+                            good_id: val.good_id,
                             amount: val.amount
                         });
                     }
@@ -209,8 +209,16 @@
                 }).then(res => {
                     this.hideLoading();
                     this.layer('删除成功')
+                    this.resData()
                 }).catch(e => {
                     this.hideLoading();
+                })
+            },
+            resData(){
+                this.page = 1;
+                this.goods = [];
+                this.$nextTick(() => {
+                    this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
                 })
             },
             editGoods(){
@@ -218,7 +226,7 @@
                 this.goods.forEach(val => {
                     if (val.checked) {
                         editArr.push({
-                            good_id: val.id,
+                            good_id: val.good_id,
                             amount: val.amount
                         });
                     }
@@ -231,6 +239,7 @@
                     this.isEdit = false;
                     this.hideLoading();
                     this.layer('编辑成功')
+                    this.resData()
                 }).catch(e => {
                     this.hideLoading();
                 })
@@ -249,11 +258,17 @@
                 this.goods.forEach(val => {
                     if (val.checked) {
                         addGoodsArr.push({
-                            good_id: val.id,
+                            good_id: val.good_id,
                             amount: val.amount
                         });
                     }
                 });
+                if(!addGoodsArr.length){
+                    this.layer('清先选择商品')
+                    return this.$router.push({
+                        path: '/market'
+                    })
+                }
                 this.showLoading('加载中')
                 this.$http.post(api.addOrder,{
                     goodList: JSON.stringify(addGoodsArr)

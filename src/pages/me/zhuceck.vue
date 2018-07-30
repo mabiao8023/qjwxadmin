@@ -209,7 +209,7 @@
                 if (value.type == 'success') {
                     let img = new Image();
                     let that = this;
-                    let imgUrl = 'http://qjwx.dianduode.com' +  value.url;
+                    let imgUrl = value.url;
                     img.src = imgUrl
                     // 加载完成后在进行发消息
                     img.onload = function () {

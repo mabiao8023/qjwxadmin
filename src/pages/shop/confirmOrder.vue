@@ -176,7 +176,7 @@
 </template>
 
 <script>
-    import {XImg, CheckIcon, TransferDom, Popup} from 'vux'
+    import {XImg, CheckIcon, TransferDom, Popup,cookie} from 'vux'
     import {getParams,weChatPay} from '../../assets/js/util'
     import api from '../../assets/js/api'
     export default {
@@ -225,10 +225,10 @@
                 console.log(start)
             },
             gotoOnlinePay(){
-                this.settlementOrder(1)
+                this.settlementOrder(2)
             },
             gotoOffinePay(){
-                this.settlementOrder(2)
+                this.settlementOrder(1)
             },
             /* 获取确认订单的信息 */
             getOrderData(){
@@ -244,7 +244,8 @@
             },
             /* 结算支付 */
             settlementOrder(payType){
-//                this.showLoading('提交中')
+                this.showChoice = false
+                this.showLoading('提交中')
                 let data = {}, delivery = 1;
                 if( this.isPost ){
                     if( !this.detail.post_address ){
@@ -281,14 +282,21 @@
 
                 this.$http.post(api.settlementOrder,data).then(res => {
                     this.hideLoading()
-                    if( payType == 2 ){
+                    /*1是线下支付，2是线上支付*/
+                    if( payType == 1 ){
                         /*线下支付*/
                         this.$router.push({
                             path: `/offinePay?order_id=${this.detail.ordersn}&delivery=${delivery}`
                         })
                     }else{
                         /*线上支付*/
-                        location.href = weChatPay(this.detail.ordersn,delivery)
+                        if(cookie.get('my_openId')){
+                            this.$router.push({
+                                path: `/weChatPay?order_id=${this.detail.ordersn}&delivery=${delivery}`
+                            })
+                        }else{
+                            location.href = weChatPay(this.detail.ordersn,delivery)
+                        }
                     }
                 }).catch(e => {
                     this.hideLoading()

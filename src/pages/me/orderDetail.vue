@@ -180,7 +180,7 @@
 </template>
 
 <script>
-    import {dateFormat} from 'vux'
+    import {dateFormat,cookie} from 'vux'
     import '../../assets/js/clipboard'
     import api from '../../assets/js/api'
     import {getParams,weChatPay} from '../../assets/js/util'
@@ -242,7 +242,13 @@
             },
             /*跳转微信支付*/
             gotoWeChatPay(){
-                location.href = weChatPay(this.detail.ordersn,this.detail.delivery)
+                if(cookie.get('my_openId')){
+                    this.$router.push({
+                        path: `/weChatPay?order_id=${this.detail.ordersn}&delivery=${this.detail.delivery}`
+                    })
+                }else{
+                    location.href = weChatPay(this.detail.ordersn,this.detail.delivery)
+                }
             },
             /*跳转上传凭证页面*/
             uploadVoucher(){

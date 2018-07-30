@@ -73,7 +73,7 @@
                     </div>
                     <div class="btn active"
                          v-if="item.condition == '待付款' && item.payType == 2"
-                         @click.stop.prevent="gotoWeChatPay(item.ordersn)"
+                         @click.stop.prevent="gotoWeChatPay(item.ordersn,item.delivery)"
                     >
                         去支付
                     </div>
@@ -94,7 +94,7 @@
 
 <script>
     import InfiniteLoading from 'vue-infinite-loading';
-    import {Tab, TabItem,} from 'vux'
+    import {Tab, TabItem,cookie} from 'vux'
     import api from '../../assets/js/api'
     import Nodata from '../../components/nodata.vue'
 
@@ -192,13 +192,20 @@
                 })
             },
             /*跳转微信支付*/
-            gotoWeChatPay(order_id){
-                location.href = weChatPay(order_id)
+            gotoWeChatPay(order_id,delivery){
+                if(cookie.get('my_openId')){
+                    this.$router.push({
+                        path: `/weChatPay?order_id=${order_id}&delivery=${delivery}`
+                    })
+                }else{
+                    location.href = weChatPay(order_id,delivery)
+                }
+//                location.href = weChatPay(order_id)
             },
             /*跳转上传凭证页面*/
             uploadVoucher(order_id,delivery){
                 this.$router.push({
-                    path: `/offinePay?order_id=${order_id}&isPost=${delivery}`
+                    path: `/offinePay?order_id=${order_id}&delivery=${delivery}`
                 })
             }
         },

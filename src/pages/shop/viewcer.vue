@@ -27,7 +27,6 @@
         <div class="viewcer-part2">
             <div class="title">
                 打款凭证（共{{list.length}}张）
-
             </div>
             <div class="img-preview">
                 <scroller lock-y scrollbar-x>
@@ -65,17 +64,7 @@
                 desc: '',
                 amount: '',
                 order_id : getParams()['order_id'] || '',
-                list: [{
-                    msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-                    src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-                },
-                    {
-                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-                    }, {
-                        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwwcynw2j20p00b4js9.jpg',
-                        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwwcynw2j20p00b4js9.jpg'
-                    }],
+                list: [],
             }
         },
         methods: {
@@ -97,14 +86,14 @@
                 this.$http.post(api.getVoucher,{
                     ordersn: this.order_id
                 }).then(res => {
-                    this.amount = res.money
-                    res.photo.forEach(val => {
+                    this.amount = res.data.money
+                    res.data.photo.forEach(val => {
                         this.list.push({
                             msrc: val,
                             src: val
                         })
                     })
-                    this.desc = res.remark
+                    this.desc = res.data.remark
 
                 }).catch(e => {
 

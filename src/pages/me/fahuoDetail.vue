@@ -9,7 +9,7 @@
         </div>
         <!-- 邮寄状态 -->
         <template v-if="detail.delivery == 1">
-            <div class="wuliu-msg" v-if="detail.logistics.company">
+            <div class="wuliu-msg" v-if="detail.logistics">
                 <div class="title">
                     物流信息：
                 </div>
@@ -139,13 +139,13 @@
         </div>
         <div class="fixed-option-btn">
             <div class="btn active"
-                 v-if="type == 0 && item.condition == '待审核凭证'"
+                 v-if=" detail.condition == '待审核凭证'"
                  @click.stop.prevent="passVerify('voucher')"
             >
                 通过审核
             </div>
             <div class="btn active"
-                 v-if="item.condition == '待审核退款'"
+                 v-if="detail.condition == '待审核退款'"
                  @click.stop.prevent="passVerify('refund')"
             >
                 通过审核
@@ -166,8 +166,9 @@
         },
         data () {
             return {
-                order_id: getParams()['oreder_id'] || '',
-                detail: { }
+                order_id: getParams()['order_id'] || '',
+                detail: { },
+                type: 0
             }
         },
         methods: {
@@ -233,9 +234,21 @@
                     this.hideLoading()
                 })
             },
+            getOrderDetail(){
+                this.showLoading('获取订单中')
+                this.$http.post(api.orderDetail,{
+                    ordersn: this.order_id
+                }).then(res => {
+                    this.hideLoading()
+                    this.detail = res.data
+                }).catch(e => {
+                    this.hideLoading()
+                })
+            }
         },
         mounted() {
             this.copy();
+            this.getOrderDetail();
             //  设置标题
             document.getElementsByTagName('title')[0].textContent = '订单详情';
         }

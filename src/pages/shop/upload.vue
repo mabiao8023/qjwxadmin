@@ -105,8 +105,6 @@
                             1.将订单需要支付的钱打到总部或创客空间指定的账户中，同时将您的打款凭证截图保留。<br/>
                             2.打款成功后，将您的打款凭证上传提交。 <br/>
                             3.总部或创客空间在审核并确认您的打款申请后，将会第一时间进行发货，或您自己前去提货，请及时留意该订单的状态变化。
-
-
                         </div>
                     </div>
                     <div class="pop-sure-btn" @click="isShowDesc = false">确定</div>
@@ -170,7 +168,7 @@
             return {
                 isShowDesc: false,
                 isShowZh: false,
-                amount: 88,
+                amount: '',
                 desc: '',
                 list: [],
                 order_id: getParams()['order_id'] || '',
@@ -208,7 +206,7 @@
                 if (value.type == 'success') {
                     let img = new Image();
                     let that = this;
-                    let imgUrl = 'http://qjwx.dianduode.com' +  value.url;
+                    let imgUrl = value.url;
                     img.src = imgUrl
                     // 加载完成后在进行发消息
                     img.onload = function () {
@@ -252,9 +250,6 @@
                         })
                     }).catch(e => {
                         this.hideLoading()
-                    })
-                    this.$router.push({
-                        path: `/uploadsuc?order_id=${this.order_id}`
                     })
                 }
             },

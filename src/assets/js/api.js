@@ -13,7 +13,7 @@ export default {
     getAccount: `${host}/api/Account/getAccount`,    // 账号余额
     getCash: `${host}/api/Account/cash`,             // 提现现金
     accountLog: `${host}/api/Account/accountLog`,     // 账户明细
-    accountFrostLog: `${host}/api/Account/accountFrostLog`,  // 待结算
+    accountFrostLog: `${host}/api/Account/accountRebate`,  // 待结算
     accountLogDetail: `${host}/api/Account/accountLogDetail`,// 待结算详情
     getGoods: `${host}/api/Good/index`,                      // 获取商品
     shoppingTrolley: `${host}/api/Good/shoppingTrolley`,     // 购物车内容
@@ -32,10 +32,10 @@ export default {
     editSelfAddress: `${host}/api/Address/editSelfAddress`,     // 编辑提货人信息
     changeOrderStatus: `${host}/api/Order/changeOrderStatus`,   // 改变订单状态
     logistics: `${host}/api/Order/logistics`,                   // 查看物流信息
-    uploadVoucher: `${host}/api/Order/uploadVoucher`,           // 上传支付凭证
+    uploadVoucher: `${host}/api/Order/addVoucher`,              // 上传支付凭证
     getVoucher: `${host}/api/Order/getVoucher`,                 // 查看支付凭证
     inviteMaker: `${host}/api/Maker/invite`,                    // 邀请创客
-    registerMaker: `${host}/api/Maker/register`,                // 创客注册
+    registerMaker: `${host}/api/User/register`,                 // 创客注册
     delivery: `${host}/api/Order/delivery`,                     // 发货管理
     deliveryOrderDetail: `${host}/api/Order/deliveryOrderDetail`, // 发货管理详情
     verify: `${host}/api/order/verify`,                         // 审核退款/审核凭证

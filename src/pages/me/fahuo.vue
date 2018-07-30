@@ -1,7 +1,7 @@
 <template>
     <div class="fahuo-container">
         <div class="fahuo-nav">
-            <tab class="tab" scroll-threshold="5">
+            <tab class="tab">
                 <tab-item selected @on-item-click="onItemClick">空间待处理</tab-item>
                 <tab-item @on-item-click="onItemClick">历史订单</tab-item>
                 <tab-item @on-item-click="onItemClick">总部待处理</tab-item>
@@ -102,7 +102,7 @@
 
 <script>
     import InfiniteLoading from 'vue-infinite-loading';
-    import {Tab, TabItem,} from 'vux'
+    import {Tab, TabItem,cookie} from 'vux'
     import api from '../../assets/js/api'
     import Nodata from '../../components/nodata.vue'
 
