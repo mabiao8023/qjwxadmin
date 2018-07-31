@@ -60,6 +60,7 @@
                         },
                         fail: function (e) {
                             _this.layer(e)
+                            cookie.remove('my_openId')
                             _this.$router.replace({
                                 path: `/pay?order_id=${_this.order_id}`
                             })

@@ -128,6 +128,7 @@
             logout(){
 //              this.layer('修改成功，重新登录')
                 cookie.remove('token')
+                cookie.remove('my_openId')
                 this.$router.push({
                     path: '/login'
                 })
