@@ -80,6 +80,9 @@
                 this.$http.post(api.orderPayment, {
                     ordersn: this.order_id,
                 }).then(res => {
+                    if( !res.data.signPackage || !res.data.signPackage.appId ) {
+                        return this.layer('没有返回signPackage')
+                    }
                     this.$wechat.config({
                         debug: false,
                         appId: res.data.signPackage.appId,
@@ -92,6 +95,12 @@
                     this.$wechat.ready(() => {
                         this.goPay()
                     })
+                    this.$wechat.error(res => {
+                        this.layer('微信config验证失败，失败原因：' + JSON.stringify(res))
+                        // 更新签名，重新调用
+//                        this.getConfig()
+                        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                    });
                 }).catch(e => {
                     this.hideLoading()
                 })

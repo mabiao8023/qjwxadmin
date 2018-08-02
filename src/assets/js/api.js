@@ -47,5 +47,7 @@ export default {
     wxLogin: `${host}/api/Common/wxLogin`,                      // 微信登录接口
     orderAccount: `${host}/api/Order/account`,                  // 打款账号
     deliveryAddress: `${host}/api/Order/deliveryAddress`,       // 支付后获取提货地址
+    wxConfig: `${host}/api/Common/wxConfig`,                    // 获取微信的公共配置
+    getContract: `${host}/api/Maker/contract`,                  // 获取合同的接口
 }
 
